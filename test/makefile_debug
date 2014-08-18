@@ -1,0 +1,47 @@
+###
+### Copyright (c) 2004 Keda Telecom, Inc.
+###
+
+#########################################################################
+###
+###  DESCRIPTION:
+###    Common definitions for all Makefiles in UAS linux project.
+###
+#########################################################################
+
+TOP := ..
+
+COMM_DIR := .
+
+SRC_DIR := $(TOP)/test
+
+## Name and type of the target for this Makefile
+
+APP_TARGET := test
+
+## Define debugging symbols
+DEBUG = 1
+LINUX_COMPILER=_LINUX_# _EQUATOR_, _HHPPC_, _LINUX_ and so on
+PWLIB_SUPPORT = 0
+
+CFLAGS += -fno-omit-frame-pointer
+CFLAGS += -D_LINUX
+
+## Object files that compose the target(s)
+
+OBJS :=   $(SRC_DIR)/main  
+
+## Libraries to include in shared object file
+
+LIBS := pthread log4cplusd osp kdvsys rt
+        
+
+## Add driver-specific include directory to the search path
+
+INC_PATH += $(TOP)/include 
+            
+
+LIB_PATH := $(TOP)/lib/linux $(TOP)/lib/osp/debug/linux
+
+INSTALL_APP_PATH = debug
+include $(COMM_DIR)/common.mk
