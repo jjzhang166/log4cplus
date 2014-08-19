@@ -8,7 +8,7 @@
 #include "log4cplus/helpers/loglog.h"
 #include "log4cplus/helpers/pointer.h"
 #include "log4cplus/helpers/property.h"
-#include "log4cplus/spi/loggingevent.h"
+#include "log4cplus/loggingevent.h"
 
 using namespace std;
 using namespace log4cplus;
@@ -41,7 +41,7 @@ public:
 int
 main()
 {
-    log4cplus::initialize ();
+    log4cplus::initializeLog4cplus();
     LogLog::getLogLog()->setInternalDebugging(true);
     {
         AppenderAttachableImpl aai;

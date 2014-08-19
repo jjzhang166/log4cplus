@@ -3,7 +3,7 @@
 
 #include <log4cplus/helpers/stringhelper.h>
 
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/helpers/internal.h>
 
 #include <iterator>
 #include <algorithm>

@@ -33,7 +33,7 @@ OBJS :=  $(SRC_DIR)/appender \
 	$(SRC_DIR)/appenderattachableimpl \
 	$(SRC_DIR)/configurator \
 	$(SRC_DIR)/consoleappender \
-	$(SRC_DIR)/env \
+	$(SRC_DIR)/environment \
 	$(SRC_DIR)/factory \
 	$(SRC_DIR)/fileappender \
 	$(SRC_DIR)/fileinfo \
@@ -48,8 +48,10 @@ OBJS :=  $(SRC_DIR)/appender \
 	$(SRC_DIR)/loglevel \
 	$(SRC_DIR)/loglog \
 	$(SRC_DIR)/logloguser \
+	$(SRC_DIR)/Mutex \
 	$(SRC_DIR)/nullappender \
 	$(SRC_DIR)/objectregistry \
+	$(SRC_DIR)/ospappender \
 	$(SRC_DIR)/patternlayout \
 	$(SRC_DIR)/pointer \
 	$(SRC_DIR)/property \
@@ -59,8 +61,7 @@ OBJS :=  $(SRC_DIR)/appender \
 	$(SRC_DIR)/stringhelper \
 	$(SRC_DIR)/timehelper \
 	$(SRC_DIR)/version \
-	$(SRC_DIR)/Mutex \
-	$(SRC_DIR)/ospappender \
+
 
 
 ## Libraries to include in shared object file

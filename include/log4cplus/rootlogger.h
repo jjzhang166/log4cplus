@@ -9,7 +9,7 @@
 
 #include <log4cplus/config.h>
 
-#include <log4cplus/spi/loggerimpl.h>
+#include <log4cplus/loggerimpl.h>
 
 namespace log4cplus {
 

@@ -2,8 +2,8 @@
 // File:    loggingevent.cpp
 
 
-#include <log4cplus/spi/loggingevent.h>
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/loggingevent.h>
+#include <log4cplus/helpers/internal.h>
 #include <algorithm>
 
 

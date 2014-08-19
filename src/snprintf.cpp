@@ -2,7 +2,7 @@
 
 #include <log4cplus/helpers/snprintf.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/helpers/internal.h>
 #include <cstdarg>
 #include <cstdio>
 #include <stdarg.h>

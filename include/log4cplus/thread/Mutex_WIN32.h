@@ -9,7 +9,7 @@
 
 
 #include <log4cplus/config.h>
-#include <log4cplus/config/windowsh-inc.h>
+#include <log4cplus/windowsh-inc.h>
 
 
 namespace log4cplus { 

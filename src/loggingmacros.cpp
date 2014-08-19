@@ -5,7 +5,7 @@
 /** @file
  * This file implements support function for loggingmacros.h file. */
 
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/helpers/internal.h>
 #include <log4cplus/loggingmacros.h>
 
 

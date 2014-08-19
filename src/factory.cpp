@@ -2,8 +2,8 @@
 // File:    factory.cpp
 
 
-#include <log4cplus/spi/factory.h>
-#include <log4cplus/spi/loggerfactory.h>
+#include <log4cplus/factory.h>
+#include <log4cplus/loggerfactory.h>
 #include <log4cplus/helpers/loglog.h>
 #include <log4cplus/helpers/property.h>
 #include <log4cplus/consoleappender.h>

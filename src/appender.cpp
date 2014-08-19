@@ -8,9 +8,9 @@
 #include <log4cplus/helpers/pointer.h>
 #include <log4cplus/helpers/stringhelper.h>
 #include <log4cplus/helpers/property.h>
-#include <log4cplus/spi/factory.h>
-#include <log4cplus/spi/loggingevent.h>
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/factory.h>
+#include <log4cplus/loggingevent.h>
+#include <log4cplus/helpers/internal.h>
 #include <stdexcept>
 
 

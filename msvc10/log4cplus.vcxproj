@@ -574,7 +574,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\src\env.cpp" />
+    <ClCompile Include="..\src\environment.cpp" />
     <ClCompile Include="..\src\factory.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -849,7 +849,7 @@
     <ClInclude Include="..\include\log4cplus\fileappender.h" />
     <ClInclude Include="..\include\log4cplus\nullappender.h" />
     <CustomBuildStep Include="..\include\log4cplus\syslogappender.h" />
-    <ClInclude Include="..\include\log4cplus\internal\env.h" />
+    <ClInclude Include="..\include\log4cplus\internal\environment.h" />
     <ClInclude Include="..\include\log4cplus\internal\internal.h" />
     <CustomBuildStep Include="..\include\log4cplus\config\macosx.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">true</ExcludedFromBuild>

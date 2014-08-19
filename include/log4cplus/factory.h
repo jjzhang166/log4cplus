@@ -13,8 +13,8 @@
 #include <log4cplus/appender.h>
 #include <log4cplus/layout.h>
 
-#include <log4cplus/spi/filter.h>
-#include <log4cplus/spi/objectregistry.h>
+#include <log4cplus/filter.h>
+#include <log4cplus/objectregistry.h>
 #include <memory>
 #include <vector>
 #include <locale>

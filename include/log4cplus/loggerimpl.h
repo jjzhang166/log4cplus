@@ -13,7 +13,7 @@
 
 #include <log4cplus/helpers/appenderattachableimpl.h>
 #include <log4cplus/helpers/pointer.h>
-#include <log4cplus/spi/loggerfactory.h>
+#include <log4cplus/loggerfactory.h>
 #include <memory>
 #include <vector>
 

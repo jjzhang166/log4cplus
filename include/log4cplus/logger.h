@@ -13,8 +13,8 @@
 
 #include <log4cplus/loglevel.h>
 
-#include <log4cplus/spi/appenderattachable.h>
-#include <log4cplus/spi/loggerfactory.h>
+#include <log4cplus/appenderattachable.h>
+#include <log4cplus/loggerfactory.h>
 
 #include <vector>
 

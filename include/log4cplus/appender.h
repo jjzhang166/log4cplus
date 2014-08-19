@@ -14,7 +14,7 @@
 #include <log4cplus/loglevel.h>
 
 #include <log4cplus/helpers/pointer.h>
-#include <log4cplus/spi/filter.h>
+#include <log4cplus/filter.h>
 
 #include <memory>
 

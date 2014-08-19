@@ -1,6 +1,6 @@
 
 
-#include <log4cplus/internal/env.h>
+#include <log4cplus/helpers/environment.h>
 #include <log4cplus/helpers/stringhelper.h>
 #include <log4cplus/helpers/loglog.h>
 #include <log4cplus/helpers/fileinfo.h>
@@ -25,11 +25,11 @@ std::string const dir_sep("/");
 #endif
 
 
-bool get_env_var(std::string& value, std::string const& name)
+bool get_env_var(std::string& envString, std::string const& name)
 {
     char const * val = std::getenv(name.c_str());
     if(val)
-        value = val;
+        envString = val;
 
     return !!val;
 }
@@ -87,41 +87,25 @@ bool parse_bool(bool & val, std::string const& str)
     return result;
 }
 
-
-namespace 
+static bool is_sep(char ch)
 {
-
-struct path_sep_comp : public std::unary_function<char, bool>
-{
-    bool
-    operator()(char ch) const
-    {
 #if defined(_MSC_VER)
-        return ch == '\\' || ch == '/';
+	return ch == '\\' || ch == '/';
 #else
-        return ch == '/';
+	return ch == '/';
 #endif
-    }
-};
+}
 
-
-struct is_empty_string : public std::unary_function<std::string const&, bool>
+static bool isStringEmpty(std::string const& str)
 {
-    bool
-    operator()(std::string const& str) const
-    {
-        return str.empty();
-    }
-};
-
-} // namespace
+	return str.empty();
+}
 
 
 template <typename Cont>
 static void remove_empty(Cont & cont, std::size_t special)
 {
-    cont.erase(std::remove_if(cont.begin() + special, cont.end(), 
-		is_empty_string()), cont.end());
+    cont.erase(std::remove_if(cont.begin() + special, cont.end(), isStringEmpty), cont.end());
 }
 
 
@@ -213,26 +197,20 @@ static char get_current_drive()
 }
 #endif
 
-
-template <typename PathSepPred, typename Container>
-static void split_into_components(Container & components, std::string const& path, PathSepPred is_sep = PathSepPred())
+static void split_into_components(std::vector<std::string>& components, std::string const& path)
 {
     std::string::const_iterator const end = path.end();
     std::string::const_iterator it = path.begin();
     while(it != end)
     {
-        std::string::const_iterator sep = std::find_if(it, end, is_sep);
-        components.push_back(std::string(it, sep));
+        std::string::const_iterator sep = std::find_if(it, end, is_sep); components.push_back(std::string(it, sep));
         it = sep;
         if(it != end)
             ++it;
     }
 }
 
-
-template <typename PathSepPred, typename Container>
-static void expand_drive_relative_path(
-	Container & components, std::size_t rel_path_index, PathSepPred is_sep = PathSepPred())
+static void expand_drive_relative_path(std::vector<std::string>& components, std::size_t rel_path_index)
 {
     // Save relative path attached to drive,
     // e.g., relpath in "C:relpath\foo\bar".
@@ -240,27 +218,25 @@ static void expand_drive_relative_path(
     std::string relative_path_first_component(components[rel_path_index], 2);
 
     // Get current working directory of a drive.
-
-    std::string const drive_path = get_drive_cwd(components[rel_path_index][0]);
+#ifdef _MSC_VER
+	 std::string const drive_path = get_drive_cwd(components[rel_path_index][0]);
+#else		// __linux__
+	 std::string const drive_path = "";
+#endif
 
     // Split returned path.
-
     std::vector<std::string> drive_cwd_components;
-    split_into_components(drive_cwd_components, drive_path, is_sep);
+    split_into_components(drive_cwd_components, drive_path);
 
     // Move the saved relative path into place.
-
     components[rel_path_index].swap(relative_path_first_component);
 
     // Insert the current working directory for a drive.
-
-    components.insert(components.begin() + rel_path_index, 
-		drive_cwd_components.begin(), drive_cwd_components.end());
+    components.insert(components.begin() + rel_path_index, drive_cwd_components.begin(), drive_cwd_components.end());
 }
 
 
-template <typename PathSepPred, typename Container>
-static void expand_relative_path(Container & components, PathSepPred is_sep = PathSepPred())
+static void expand_relative_path(std::vector<std::string>& components)
 {
     // Get the current working director.
 
@@ -271,7 +247,7 @@ static void expand_relative_path(Container & components, PathSepPred is_sep = Pa
     std::vector<std::string> cwd_components;
 
     // Use qualified call to appease IBM xlC.
-    internal::split_into_components(cwd_components, cwd, is_sep);
+    internal::split_into_components(cwd_components, cwd);
 
     // Insert the CWD components at the beginning of components.
 
@@ -279,7 +255,7 @@ static void expand_relative_path(Container & components, PathSepPred is_sep = Pa
 }
 
 
-bool split_path(std::vector<std::string> & components, std::size_t & special, std::string const& path)
+bool split_path(std::vector<std::string>& components, std::size_t& special, std::string const& path)
 {
     typedef std::string::const_iterator const_iterator;
 
@@ -289,8 +265,7 @@ bool split_path(std::vector<std::string> & components, std::size_t & special, st
     // First split the path into individual components separated by
     // system specific separator.
 
-    path_sep_comp is_sep;
-    split_into_components(components, path, is_sep);
+    split_into_components(components, path);
 	
     // Try to recognize the path to find out how many initial components
     // of the path are special and should not be attempted to be created
@@ -322,8 +297,7 @@ retry_recognition:;
     }
     // comp_count >= 6: "" "" "?" "hostname" "share" "file or dir"
     // comp_count >= 5: "" "" "?" "C:" "file or dir"
-    else if(comp_count >= 5
-        && components[0].empty() && components[1].empty() && components[2] == "?")
+    else if(comp_count >= 5 && components[0].empty() && components[1].empty() && components[2] == "?")
     {
         remove_empty(components, 2);
 
@@ -332,7 +306,7 @@ retry_recognition:;
         if(comp_3_size >= 2 && is_drive_letter(components[3][0]) && components[3][1] == ':')
         {
             if(comp_3_size > 2)
-                expand_drive_relative_path(components, 3, is_sep);
+                expand_drive_relative_path(components, 3);
 
             special = 4;
         }
@@ -388,7 +362,7 @@ retry_recognition:;
 
         // "C:relpath"
         if(comp_0_size > 2)
-            expand_drive_relative_path(components, 0, is_sep);
+            expand_drive_relative_path(components, 0);
 
         special = 1;
         return components.size() >= special + 1;
@@ -407,7 +381,7 @@ retry_recognition:;
     else
     {
         remove_empty(components, 0);
-        expand_relative_path(components, is_sep);
+        expand_relative_path(components);
         goto retry_recognition;
     }
 	

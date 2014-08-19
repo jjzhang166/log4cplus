@@ -24,7 +24,7 @@
 #include <cstdio>
 
 
-#include <log4cplus/spi/loggingevent.h>
+#include <log4cplus/loggingevent.h>
 #include <log4cplus/thread/tls.h>
 #include <log4cplus/helpers/snprintf.h>
 

@@ -3,13 +3,13 @@
 
 
 #include <log4cplus/config.h>
-#include <log4cplus/config/windowsh-inc.h>
+#include <log4cplus/windowsh-inc.h>
 #include <log4cplus/logger.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/helpers/internal.h>
 #include <log4cplus/thread/tls.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/spi/factory.h>
+#include <log4cplus/factory.h>
 #include <log4cplus/hierarchy.h>
 #include <cstdio>
 #include <iostream>

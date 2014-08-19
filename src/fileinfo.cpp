@@ -9,7 +9,7 @@
 
 #if defined(_MSC_VER)
 #include <tchar.h>
-#include <log4cplus/config/windowsh-inc.h>
+#include <log4cplus/windowsh-inc.h>
 #endif
 
 

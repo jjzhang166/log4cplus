@@ -6,7 +6,7 @@
 #include <log4cplus/appender.h>
 #include <log4cplus/helpers/appenderattachableimpl.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/spi/loggingevent.h>
+#include <log4cplus/loggingevent.h>
 
 #include <algorithm>
 

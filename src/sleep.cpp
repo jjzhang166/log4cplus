@@ -2,7 +2,7 @@
 // File:    sleep.cpp
 
 
-#include <log4cplus/config/windowsh-inc.h>
+#include <log4cplus/windowsh-inc.h>
 #include <log4cplus/helpers/sleep.h>
 #include <log4cplus/helpers/timehelper.h>
 

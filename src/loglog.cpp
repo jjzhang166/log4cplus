@@ -4,7 +4,7 @@
 
 
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/internal/env.h>
+#include <log4cplus/helpers/environment.h>
 #include <log4cplus/consoleappender.h>
 #include <ostream>
 #include <stdexcept>

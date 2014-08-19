@@ -8,17 +8,11 @@
     <Filter Include="Appenders">
       <UniqueIdentifier>{ecdc0d54-5ea7-4dd7-b49e-cd18945336fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="internal">
-      <UniqueIdentifier>{4079be8a-ab66-450b-ad55-c0f17e9dfe1a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="config">
       <UniqueIdentifier>{53582570-1892-48ae-b0e0-6a9084643bf6}</UniqueIdentifier>
     </Filter>
     <Filter Include="helpers">
       <UniqueIdentifier>{89ab7ed5-db29-4e54-a530-d518934447bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="spi">
-      <UniqueIdentifier>{075baef2-7a40-487c-b53f-25341a8947ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="thread">
       <UniqueIdentifier>{bc4c1ba9-f566-48e3-bf90-077b96967b96}</UniqueIdentifier>
@@ -70,9 +64,6 @@
     <ClCompile Include="..\src\nullappender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\env.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\appenderattachableimpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -118,6 +109,9 @@
     <ClCompile Include="..\src\Mutex.cpp">
       <Filter>thread</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\environment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\log4cplus\appender.h">
@@ -159,12 +153,6 @@
     <ClInclude Include="..\include\log4cplus\fileappender.h">
       <Filter>Appenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal\env.h">
-      <Filter>internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal\internal.h">
-      <Filter>internal</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\config\windowsh-inc.h">
       <Filter>config</Filter>
     </ClInclude>
@@ -192,30 +180,6 @@
     <ClInclude Include="..\include\log4cplus\helpers\timehelper.h">
       <Filter>helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\appenderattachable.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\factory.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\filter.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\loggerfactory.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\loggerimpl.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\loglevel.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\objectregistry.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\rootlogger.h">
-      <Filter>spi</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\helpers\fileinfo.h">
       <Filter>helpers</Filter>
     </ClInclude>
@@ -229,6 +193,36 @@
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\thread\ScopedLock.h">
       <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\rootlogger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\appenderattachable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\factory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\filter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\loggerfactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\loggerimpl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\loglevel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\objectregistry.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\internal\internal.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\helpers\environment.h">
+      <Filter>helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

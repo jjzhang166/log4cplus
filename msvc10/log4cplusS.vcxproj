@@ -341,6 +341,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\src\environment.cpp" />
     <ClCompile Include="..\src\fileinfo.cpp" />
     <ClCompile Include="..\src\global-init.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -525,7 +526,6 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="..\src\env.cpp" />
     <ClCompile Include="..\src\appenderattachableimpl.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -765,6 +765,7 @@
   <ItemGroup>
     <ClInclude Include="..\include\log4cplus\appender.h" />
     <ClInclude Include="..\include\log4cplus\configurator.h" />
+    <ClInclude Include="..\include\log4cplus\helpers\environment.h" />
     <ClInclude Include="..\include\log4cplus\helpers\fileinfo.h" />
     <ClInclude Include="..\include\log4cplus\hierarchy.h" />
     <ClInclude Include="..\include\log4cplus\layout.h" />
@@ -782,7 +783,6 @@
     <ClInclude Include="..\include\log4cplus\consoleappender.h" />
     <ClInclude Include="..\include\log4cplus\fileappender.h" />
     <CustomBuildStep Include="..\include\log4cplus\syslogappender.h" />
-    <ClInclude Include="..\include\log4cplus\internal\env.h" />
     <ClInclude Include="..\include\log4cplus\internal\internal.h" />
     <CustomBuildStep Include="..\include\log4cplus\config\macosx.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug_Unicode|Win32'">true</ExcludedFromBuild>

@@ -6,7 +6,7 @@
 #include <log4cplus/appender.h>
 #include <log4cplus/hierarchy.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/spi/loggerimpl.h>
+#include <log4cplus/loggerimpl.h>
 #include <utility>
 
 

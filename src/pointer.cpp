@@ -4,7 +4,7 @@
 
 
 #include <log4cplus/helpers/pointer.h>
-#include <log4cplus/config/windowsh-inc.h>
+#include <log4cplus/windowsh-inc.h>
 #include <cassert>
 
 

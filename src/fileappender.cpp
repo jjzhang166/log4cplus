@@ -10,10 +10,10 @@
 #include <log4cplus/helpers/timehelper.h>
 #include <log4cplus/helpers/property.h>
 #include <log4cplus/helpers/fileinfo.h>
-#include <log4cplus/spi/loggingevent.h>
-#include <log4cplus/spi/factory.h>
-#include <log4cplus/internal/internal.h>
-#include <log4cplus/internal/env.h>
+#include <log4cplus/loggingevent.h>
+#include <log4cplus/factory.h>
+#include <log4cplus/helpers/internal.h>
+#include <log4cplus/helpers/environment.h>
 #include <algorithm>
 #include <sstream>
 #include <cstdio>

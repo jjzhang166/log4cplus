@@ -1,7 +1,7 @@
 // Module:  Log4CPLUS
 // File:    rootlogger.cpp
 
-#include <log4cplus/spi/rootlogger.h>
+#include <log4cplus/rootlogger.h>
 #include <log4cplus/helpers/loglog.h>
 
 

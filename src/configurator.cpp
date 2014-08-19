@@ -10,9 +10,9 @@
 #include <log4cplus/helpers/property.h>
 #include <log4cplus/helpers/timehelper.h>
 #include <log4cplus/helpers/fileinfo.h>
-#include <log4cplus/spi/factory.h>
-#include <log4cplus/spi/loggerimpl.h>
-#include <log4cplus/internal/env.h>
+#include <log4cplus/factory.h>
+#include <log4cplus/loggerimpl.h>
+#include <log4cplus/helpers/environment.h>
 
 #if defined (_MSC_VER)
 #include <tchar.h>

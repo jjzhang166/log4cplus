@@ -6,7 +6,7 @@
 #include <log4cplus/helpers/loglog.h>
 
 #include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/internal/internal.h>
+#include <log4cplus/helpers/internal.h>
 
 #include <algorithm>
 #include <vector>
@@ -20,7 +20,7 @@
 #include <sys/time.h>
 #endif
 
-#include <log4cplus/config/windowsh-inc.h>
+#include <log4cplus/windowsh-inc.h>
 
 
 namespace log4cplus { namespace helpers {

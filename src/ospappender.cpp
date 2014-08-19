@@ -7,7 +7,7 @@
 #include <log4cplus/ospappender.h>
 #include <log4cplus/helpers/loglog.h>
 #include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/spi/loggingevent.h>
+#include <log4cplus/loggingevent.h>
 #include "osp/osp.h"
 #include <strstream>
 

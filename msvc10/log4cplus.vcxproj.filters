@@ -8,14 +8,8 @@
     <Filter Include="Appenders">
       <UniqueIdentifier>{618ac5bc-5556-4e59-a3c1-285c2d9e80a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="internal">
-      <UniqueIdentifier>{b8a69ba5-bcc8-4b80-8b60-891bbd52f3b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="config">
       <UniqueIdentifier>{8bacc780-31ab-4337-bd72-9f2322c6030b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="spi">
-      <UniqueIdentifier>{eafab4fe-e4a7-4a1e-8fc3-eae7997ed650}</UniqueIdentifier>
     </Filter>
     <Filter Include="thread">
       <UniqueIdentifier>{32a083ed-1e70-4c26-8357-4e4eeff37d56}</UniqueIdentifier>
@@ -65,9 +59,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\nullappender.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\env.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\factory.cpp">
@@ -121,6 +112,9 @@
     <ClCompile Include="..\src\ospappender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\environment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\log4cplus\appender.h">
@@ -159,38 +153,8 @@
     <ClInclude Include="..\include\log4cplus\nullappender.h">
       <Filter>Appenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal\env.h">
-      <Filter>internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal\internal.h">
-      <Filter>internal</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\config\windowsh-inc.h">
       <Filter>config</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\appenderattachable.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\factory.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\filter.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\loggerfactory.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\loggerimpl.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\loglevel.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\objectregistry.h">
-      <Filter>spi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\rootlogger.h">
-      <Filter>spi</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\helpers\appenderattachableimpl.h">
       <Filter>helpers</Filter>
@@ -236,6 +200,36 @@
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\ospappender.h">
       <Filter>Appenders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\rootlogger.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\appenderattachable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\factory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\filter.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\loggerfactory.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\loggerimpl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\loglevel.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\spi\objectregistry.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\internal\environment.h">
+      <Filter>helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\log4cplus\internal\internal.h">
+      <Filter>helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,11 +2,11 @@
 // File:    filter.cpp
 
 
-#include <log4cplus/spi/filter.h>
+#include <log4cplus/filter.h>
 #include <log4cplus/helpers/loglog.h>
 #include <log4cplus/helpers/stringhelper.h>
 #include <log4cplus/helpers/property.h>
-#include <log4cplus/spi/loggingevent.h>
+#include <log4cplus/loggingevent.h>
 
 
 namespace log4cplus { 

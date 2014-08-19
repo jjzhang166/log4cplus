@@ -20,8 +20,8 @@
 
 #include <log4cplus/hierarchy.h>
 #include <log4cplus/helpers/loglog.h>
-#include <log4cplus/spi/loggerimpl.h>
-#include <log4cplus/spi/rootlogger.h>
+#include <log4cplus/loggerimpl.h>
+#include <log4cplus/rootlogger.h>
 #include <utility>
 #include <limits>
 
