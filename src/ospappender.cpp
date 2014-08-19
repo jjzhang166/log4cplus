@@ -46,7 +46,7 @@ void OspAppender::append(const InternalLoggingEvent& loggingEvent)
     ostrstream output;
     _layout->formatAndAppend(output, loggingEvent);
 
-	std::string outstring = output.str();
+	string outstring = output.str();
 
 	OspPrintf(TRUE, FALSE, const_cast<char*>(outstring.c_str()));
 }

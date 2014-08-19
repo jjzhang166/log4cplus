@@ -22,9 +22,9 @@ struct LOG4CPLUS_EXPORT FileInfo
 
 
 //!OS independent abstraction of <code>stat()</code> function.
-LOG4CPLUS_EXPORT int getFileInfo (FileInfo * fi, std::string const& name);
+LOG4CPLUS_EXPORT int getFileInfo (FileInfo * fi, string const& name);
 
 
-} } // namespace log4cplus { namespace helpers {
+} } // namespace log4cplus namespace helpers {
 
 #endif // LOG4CPLUS_HELPERS_FILEINFO_H

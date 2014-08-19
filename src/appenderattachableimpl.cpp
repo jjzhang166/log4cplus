@@ -70,7 +70,7 @@ AppenderAttachableImpl::ListType AppenderAttachableImpl::getAllAppenders()
 
 
 
-SharedAppenderPtr AppenderAttachableImpl::getAppender(const std::string& name)
+SharedAppenderPtr AppenderAttachableImpl::getAppender(const string& name)
 {
     Mutex::ScopedLock lock(appender_list_mutex);
 
@@ -114,7 +114,7 @@ void AppenderAttachableImpl::removeAppender(SharedAppenderPtr appender)
 
 
 
-void AppenderAttachableImpl::removeAppender(const std::string& name)
+void AppenderAttachableImpl::removeAppender(const string& name)
 {
     removeAppender(getAppender(name));
 }

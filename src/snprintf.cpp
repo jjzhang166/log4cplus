@@ -88,7 +88,7 @@ int snprintf_buf::print_va_list(char const * & str, char const * fmt, std::va_li
     if(output_estimate > buf_size)
         buf.resize(buf_size = output_estimate);
 
-    std::FILE * & fnull = internal::get_ptd()->_fnull;
+    std::FILE * & fnull = helpers::get_ptd()->_fnull;
     if(!fnull)
     {
         fnull = std::fopen(NULL_FILE, "wb");

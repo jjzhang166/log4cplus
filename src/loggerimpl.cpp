@@ -32,7 +32,7 @@ namespace log4cplus {
 //////////////////////////////////////////////////////////////////////////////
 // Logger Constructors and Destructor
 //////////////////////////////////////////////////////////////////////////////
-LoggerImpl::LoggerImpl(const std::string& name_, Hierarchy& h)
+LoggerImpl::LoggerImpl(const string& name_, Hierarchy& h)
   : _name(name_),
     _ll(NOT_SET_LOG_LEVEL),
     _parent(NULL),
@@ -90,7 +90,7 @@ bool LoggerImpl::isEnabledFor(LogLevel loglevel) const
 }
 
 
-void LoggerImpl::log(LogLevel loglevel, const std::string& message,
+void LoggerImpl::log(LogLevel loglevel, const string& message,
                 const char* file, int line, const char* _function)
 {
     if(isEnabledFor(loglevel))
@@ -127,10 +127,10 @@ Hierarchy& LoggerImpl::getHierarchy() const
 }
 
 
-void LoggerImpl::forcedLog(LogLevel loglevel, const std::string& message,
+void LoggerImpl::forcedLog(LogLevel loglevel, const string& message,
                       const char* file, int line, const char* _function)
 {
-    InternalLoggingEvent & loggingEvent = internal::get_ptd()->_forcedLoggingEvent;
+    InternalLoggingEvent & loggingEvent = helpers::get_ptd()->_forcedLoggingEvent;
     assert (_function);
     loggingEvent.setLoggingEvent (this->getName(), loglevel, message, file, line,
         _function);

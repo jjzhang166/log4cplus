@@ -9,14 +9,13 @@
 
 #if defined(_MSC_VER)
 #include <tchar.h>
-#include <log4cplus/windowsh-inc.h>
 #endif
 
 
 namespace log4cplus { namespace helpers {
 
 
-int getFileInfo(FileInfo * fi, std::string const& name)
+int getFileInfo(FileInfo * fi, string const& name)
 {
 #if defined(_MSC_VER)
     struct _stat fileStatus;

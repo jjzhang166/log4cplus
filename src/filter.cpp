@@ -90,7 +90,7 @@ LogLevelMatchFilter::LogLevelMatchFilter(const helpers::Properties& properties)
 {
     init();
 
-    std::string const& log_level_to_match = properties.getProperty("LogLevelToMatch");
+    string const& log_level_to_match = properties.getProperty("LogLevelToMatch");
     _logLevelToMatch = getLogLevelManager().fromString(log_level_to_match);
 }
 
@@ -137,10 +137,10 @@ LogLevelRangeFilter::LogLevelRangeFilter(const helpers::Properties& properties)
 {
     init();
 
-    std::string const& log_level_min = properties.getProperty("LogLevelMin");
+    string const& log_level_min = properties.getProperty("LogLevelMin");
     _logLevelMin = getLogLevelManager().fromString(log_level_min);
 
-    std::string const& log_level_max = properties.getProperty("LogLevelMax");
+    string const& log_level_max = properties.getProperty("LogLevelMax");
     _logLevelMax = getLogLevelManager().fromString(log_level_max);
 }
 

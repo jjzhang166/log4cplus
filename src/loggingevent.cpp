@@ -17,42 +17,34 @@ static const int LOG4CPLUS_DEFAULT_TYPE = 1;
 // InternalLoggingEvent ctors and dtor
 ///////////////////////////////////////////////////////////////////////////////
 
-InternalLoggingEvent::InternalLoggingEvent(const std::string& logger,
-    LogLevel loglevel, const std::string& message_, const char* filename,
+InternalLoggingEvent::InternalLoggingEvent(const string& logger,
+    LogLevel loglevel, const string& message_, const char* filename,
     int line_, const char * function_)
     : _message(message_)
     , _loggerName(logger)
     , _ll(loglevel)
     , _timestamp(helpers::TimeHelper::gettimeofday())
-    , _file(filename ? std::string(filename) : std::string())
-    , _function(function_ ? std::string(function_) : std::string())
+    , _file(filename ? string(filename) : string())
+    , _function(function_ ? string(function_) : string())
     , _line(line_)
 {
 }
 
-InternalLoggingEvent::InternalLoggingEvent(const std::string& logger,
-    LogLevel loglevel, const std::string& ndc_,
-    const std::string& message_, helpers::TimeHelper time,
-    const std::string& file_, int line_,
-    const std::string& function_)
-    : _message(message_)
-    , _loggerName(logger)
-    , _ll(loglevel)
-    , _timestamp(time)
-    , _file(file_)
-    , _function(function_)
+InternalLoggingEvent::InternalLoggingEvent(const string& logger,
+    LogLevel loglevel, const string& message_, helpers::TimeHelper time,
+    const string& file_, int line_, const string& function_)
+    : _message(message_), _loggerName(logger)
+    , _ll(loglevel), _timestamp(time)
+    , _file(file_), _function(function_)
     , _line(line_)
 {
 }
 
 InternalLoggingEvent::InternalLoggingEvent()
-    : _ll(NOT_SET_LOG_LEVEL)
-    , _function()
-    , _line(0)
+    : _ll(NOT_SET_LOG_LEVEL), _function(), _line(0)
 { }
 
-InternalLoggingEvent::InternalLoggingEvent(
-    const InternalLoggingEvent& rhs)
+InternalLoggingEvent::InternalLoggingEvent(const InternalLoggingEvent& rhs)
     : _message(rhs.getMessage())
     , _loggerName(rhs.getLoggerName())
     , _ll(rhs.getLogLevel())
@@ -82,7 +74,7 @@ unsigned int InternalLoggingEvent::getDefaultType()
 // InternalLoggingEvent implementation
 ///////////////////////////////////////////////////////////////////////////////
 
-void InternalLoggingEvent::setLoggingEvent(const std::string& logger, LogLevel loglevel, const std::string& msg, 
+void InternalLoggingEvent::setLoggingEvent(const string& logger, LogLevel loglevel, const string& msg, 
 	const char * filename, int fline, const char * function_)
 {
     // This could be imlemented using the swap idiom:
@@ -98,19 +90,19 @@ void InternalLoggingEvent::setLoggingEvent(const std::string& logger, LogLevel l
     _timestamp = helpers::TimeHelper::gettimeofday();
 
     if(filename)
-        _file = std::string(filename);
+        _file = string(filename);
     else
         _file.clear();
 
     if(function_)
-        _function = std::string(function_);
+        _function = string(function_);
     else
         _function.clear();
 
     _line = fline;
 }
 
-const std::string& InternalLoggingEvent::getMessage() const
+const string& InternalLoggingEvent::getMessage() const
 {
     return _message;
 }

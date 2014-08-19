@@ -85,7 +85,7 @@ inline Logger const& macros_get_logger(Logger & logger)
     return logger;
 }
 
-inline Logger macros_get_logger(std::string const& logger)
+inline Logger macros_get_logger(string const& logger)
 {
     return Logger::getInstance(logger);
 }
@@ -102,7 +102,7 @@ LOG4CPLUS_EXPORT void clear_tostringstream(ostringstream &);
 
 LOG4CPLUS_EXPORT helpers::snprintf_buf & get_macro_body_snprintf_buf();
 LOG4CPLUS_EXPORT void macro_forced_log(Logger const&,
-    LogLevel, std::string const&, char const *, int, char const *);
+    LogLevel, string const&, char const *, int, char const *);
 LOG4CPLUS_EXPORT void macro_forced_log(Logger const&,
     LogLevel, char const *, char const *, int, char const *);
 

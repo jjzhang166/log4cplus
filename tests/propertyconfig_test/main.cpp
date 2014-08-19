@@ -1,10 +1,9 @@
-#include <log4cplus/loggingmacros.h>
+
 #include <log4cplus/configurator.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/stringhelper.h>
 #include <log4cplus/loggingmacros.h>
 #include <log4cplus/helpers/sleep.h>
 #include "osp/osp.h"
+// #include "vld.h"
 
 
 using namespace std;

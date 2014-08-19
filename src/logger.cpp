@@ -14,7 +14,7 @@ namespace log4cplus
 {
 
 
-Logger DefaultLoggerFactory::makeNewLoggerInstance(const std::string& name, Hierarchy& h)
+Logger DefaultLoggerFactory::makeNewLoggerInstance(const string& name, Hierarchy& h)
 { 
     return Logger(new LoggerImpl(name, h));
 }
@@ -30,7 +30,7 @@ Hierarchy & Logger::getDefaultHierarchy()
 }
 
 
-bool Logger::exists(const std::string& name) 
+bool Logger::exists(const string& name) 
 {
     return getDefaultHierarchy().exists(name); 
 }
@@ -42,13 +42,13 @@ LoggerList Logger::getCurrentLoggers()
 }
 
 
-Logger Logger::getInstance(const std::string& name) 
+Logger Logger::getInstance(const string& name) 
 { 
     return getDefaultHierarchy().getInstance(name); 
 }
 
 
-Logger Logger::getInstance(const std::string& name, LoggerFactory& factory)
+Logger Logger::getInstance(const string& name, LoggerFactory& factory)
 { 
     return getDefaultHierarchy().getInstance(name, factory); 
 }
@@ -130,7 +130,7 @@ SharedAppenderPtrList Logger::getAllAppenders()
 }
 
 
-SharedAppenderPtr Logger::getAppender(const std::string& name)
+SharedAppenderPtr Logger::getAppender(const string& name)
 {
     return _pLoggerImpl->getAppender(name);
 }
@@ -148,16 +148,9 @@ void Logger::removeAppender(SharedAppenderPtr appender)
 }
 
 
-void Logger::removeAppender(const std::string& name)
+void Logger::removeAppender(const string& name)
 {
     _pLoggerImpl->removeAppender(name);
-}
-
-
-void Logger::assertion(bool assertionVal, const std::string& msg) const
-{
-    if(!assertionVal)
-        log(FATAL_LOG_LEVEL, msg, 0, -1);
 }
 
 
@@ -173,20 +166,13 @@ bool Logger::isEnabledFor(LogLevel ll) const
 }
 
 
-void Logger::log(LogLevel ll, const std::string& message, const char* file,
-    int line, const char* _function) const
-{
-    //_pLoggerImpl->log(ll, message, file, line, _function ? _function : "");
-}
-
-
 void Logger::log(InternalLoggingEvent const& ev) const
 {
     _pLoggerImpl->log(ev);
 }
 
 
-void Logger::forcedLog(LogLevel ll, const std::string& message,
+void Logger::forcedLog(LogLevel ll, const string& message,
     const char* file, int line, const char* _function) const
 {
     _pLoggerImpl->forcedLog(ll, message, file, line, _function ? _function : "");
@@ -229,7 +215,7 @@ Hierarchy & Logger::getHierarchy() const
 }
 
 
-std::string const& Logger::getName() const
+string const& Logger::getName() const
 {
     return _pLoggerImpl->getName();
 }

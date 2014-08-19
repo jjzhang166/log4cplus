@@ -8,9 +8,6 @@
     <Filter Include="Appenders">
       <UniqueIdentifier>{ecdc0d54-5ea7-4dd7-b49e-cd18945336fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="config">
-      <UniqueIdentifier>{53582570-1892-48ae-b0e0-6a9084643bf6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="helpers">
       <UniqueIdentifier>{89ab7ed5-db29-4e54-a530-d518934447bd}</UniqueIdentifier>
     </Filter>
@@ -153,9 +150,6 @@
     <ClInclude Include="..\include\log4cplus\fileappender.h">
       <Filter>Appenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\config\windowsh-inc.h">
-      <Filter>config</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\helpers\appenderattachableimpl.h">
       <Filter>helpers</Filter>
     </ClInclude>
@@ -183,8 +177,6 @@
     <ClInclude Include="..\include\log4cplus\helpers\fileinfo.h">
       <Filter>helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\thread\syncprims.h" />
-    <ClInclude Include="..\include\log4cplus\config\win32.h" />
     <ClInclude Include="..\include\log4cplus\thread\tls.h">
       <Filter>thread</Filter>
     </ClInclude>
@@ -224,10 +216,5 @@
     <ClInclude Include="..\include\log4cplus\helpers\environment.h">
       <Filter>helpers</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="log4cplus.props" />
-    <None Include="log4cplus_debug.props" />
-    <None Include="log4cplus_release.props" />
   </ItemGroup>
 </Project>

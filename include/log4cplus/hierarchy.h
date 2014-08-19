@@ -70,13 +70,13 @@ namespace log4cplus {
          *                
          * @param name The name of the logger to search for.
          */
-        virtual bool exists(const std::string& name);
+        virtual bool exists(const string& name);
 
         /**
          * Similar to {@link #disable(LogLevel)} except that the LogLevel
-         * argument is given as a std::string.  
+         * argument is given as a string.  
          */
-        virtual void disable(const std::string& loglevelStr);
+        virtual void disable(const string& loglevelStr);
 
         /**
          * Disable all logging requests of LogLevel <em>equal to or
@@ -137,7 +137,7 @@ namespace log4cplus {
          *                                    
          * @param name The name of the logger to retrieve.
          */
-        virtual Logger getInstance(const std::string& name);
+        virtual Logger getInstance(const string& name);
 
         /**
          * Return a new logger instance named as the first parameter using
@@ -151,7 +151,7 @@ namespace log4cplus {
          * @param name The name of the logger to retrieve.
          * @param factory The factory that will make the new logger instance.
          */
-        virtual Logger getInstance(const std::string& name, LoggerFactory& factory);
+        virtual Logger getInstance(const string& name, LoggerFactory& factory);
 
         /**
          * Returns all the currently defined loggers in this hierarchy.
@@ -197,9 +197,9 @@ namespace log4cplus {
 
     private:
       // Types
-        typedef std::vector<Logger> ProvisionNode;
-        typedef std::map<std::string, ProvisionNode> ProvisionNodeMap;
-        typedef std::map<std::string, Logger> LoggerMap;
+        typedef vector<Logger> ProvisionNode;
+        typedef std::map<string, ProvisionNode> ProvisionNodeMap;
+        typedef std::map<string, Logger> LoggerMap;
 
       // Methods
         /**
@@ -207,7 +207,7 @@ namespace log4cplus {
          * NOTE: This method does not lock the <code>hashtable_mutex</code>.
          */
         
-        virtual Logger getInstanceImpl(const std::string& name, 
+        virtual Logger getInstanceImpl(const string& name, 
             LoggerFactory& factory);
         
         /**

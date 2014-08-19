@@ -17,7 +17,7 @@
 #include <pthread.h>
 
 #elif defined(_MSC_VER)
-#include <log4cplus/windowsh-inc.h>
+
 
 #endif
 

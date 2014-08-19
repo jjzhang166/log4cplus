@@ -20,80 +20,78 @@
 #include <vector>
 
 
-namespace log4cplus {
-    namespace helpers {
- 
-        /**
-         * This Interface is for attaching Appenders to objects.
-         */
-        class LOG4CPLUS_EXPORT AppenderAttachableImpl : public log4cplus::AppenderAttachable
-        {
-        public:
-          // Data
-            Mutex appender_list_mutex;
+namespace log4cplus { namespace helpers {
 
-          // Ctors
-            AppenderAttachableImpl();
+	/**
+	* This Interface is for attaching Appenders to objects.
+	*/
+	class LOG4CPLUS_EXPORT AppenderAttachableImpl : public log4cplus::AppenderAttachable
+	{
+	public:
+		// Data
+		Mutex appender_list_mutex;
 
-          // Dtor
-            virtual ~AppenderAttachableImpl();
+		// Ctors
+		AppenderAttachableImpl();
 
-          // Methods
-            /**
-             * Add an appender.  If the appender is already in the list in
-             * won't be added again.
-             */
-            virtual void addAppender(SharedAppenderPtr newAppender);
+		// Dtor
+		virtual ~AppenderAttachableImpl();
 
-            /**
-             * Get all previously added appenders as an vectory.
-             */
-            virtual SharedAppenderPtrList getAllAppenders();
+		// Methods
+		/**
+		* Add an appender.  If the appender is already in the list in
+		* won't be added again.
+		*/
+		virtual void addAppender(SharedAppenderPtr newAppender);
 
-            /**
-             * Look for an attached appender named as <code>name</code>.
-             *
-             * Return the appender with that name if in the list. Return null
-             * otherwise.  
-             */
-            virtual SharedAppenderPtr getAppender(const std::string& name);
+		/**
+		* Get all previously added appenders as an vectory.
+		*/
+		virtual SharedAppenderPtrList getAllAppenders();
 
-            /**
-             * Remove all previously added appenders.
-             */
-            virtual void removeAllAppenders();
+		/**
+		* Look for an attached appender named as <code>name</code>.
+		*
+		* Return the appender with that name if in the list. Return null
+		* otherwise.  
+		*/
+		virtual SharedAppenderPtr getAppender(const string& name);
 
-            /**
-             * Remove the appender passed as parameter from the list of appenders.
-             */
-            virtual void removeAppender(SharedAppenderPtr appender);
+		/**
+		* Remove all previously added appenders.
+		*/
+		virtual void removeAllAppenders();
 
-            /**
-             * Remove the appender with the name passed as parameter from the
-             * list of appenders.  
-             */
-            virtual void removeAppender(const std::string& name);
+		/**
+		* Remove the appender passed as parameter from the list of appenders.
+		*/
+		virtual void removeAppender(SharedAppenderPtr appender);
 
-            /**
-             * Call the <code>doAppend</code> method on all attached appenders.  
-             */
-            int appendLoopOnAppenders(const InternalLoggingEvent& loggingEvent) const;
+		/**
+		* Remove the appender with the name passed as parameter from the
+		* list of appenders.  
+		*/
+		virtual void removeAppender(const string& name);
 
-        protected:
-          // Types
-            typedef std::vector<SharedAppenderPtr> ListType;
+		/**
+		* Call the <code>doAppend</code> method on all attached appenders.  
+		*/
+		int appendLoopOnAppenders(const InternalLoggingEvent& loggingEvent) const;
 
-          // Data
-            /** Array of appenders. */
-            ListType appenderList;
+	protected:
+		// Types
+		typedef vector<SharedAppenderPtr> ListType;
 
-        private:
-            AppenderAttachableImpl(AppenderAttachableImpl const&);
-            AppenderAttachableImpl & operator = (AppenderAttachableImpl const&);
-        };  // end class AppenderAttachableImpl
+		// Data
+		/** Array of appenders. */
+		ListType appenderList;
 
-    } // end namespace helpers
-} // end namespace log4cplus
+	private:
+		AppenderAttachableImpl(AppenderAttachableImpl const&);
+		AppenderAttachableImpl & operator = (AppenderAttachableImpl const&);
+	};  // end class AppenderAttachableImpl
+
+} } // end namespace log4cplus end namespace helpers
 
 #endif // LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 

@@ -56,13 +56,13 @@ namespace log4cplus {
 		*                 the <code>filename</code> parameter.
 		* @param function Name of function that is logging this loggingEvent.
 		*/
-		InternalLoggingEvent(const std::string& logger, LogLevel loglevel, 
-				const std::string& message, const char* filename, int line, const char * _function = NULL);
+		InternalLoggingEvent(const string& logger, LogLevel loglevel, 
+				const string& message, const char* filename, int line, const char * _function = NULL);
 
-		InternalLoggingEvent(const std::string& logger, LogLevel loglevel, const std::string& ndc,
-			const std::string& message, 
-			helpers::TimeHelper time, const std::string& file,
-			int line, const std::string& _function = std::string ());
+		InternalLoggingEvent(const string& logger, LogLevel loglevel,
+			const string& message, 
+			helpers::TimeHelper time, const string& file,
+			int line, const string& _function = string ());
 
 		InternalLoggingEvent ();
 
@@ -70,12 +70,12 @@ namespace log4cplus {
 
 		virtual ~InternalLoggingEvent();
 
-		void setLoggingEvent (const std::string& logger, LogLevel ll, const std::string& message,
+		void setLoggingEvent (const string& logger, LogLevel ll, const string& message,
 				const char * filename, int line, const char * _function = NULL);
 
 		// public virtual methods
 		/** The application supplied message of logging loggingEvent. */
-		virtual const std::string& getMessage() const;
+		virtual const string& getMessage() const;
 
 		/** Returns the 'type' of InternalLoggingEvent.  Derived classes
 		*  should override this method.  (NOTE: Values <= 1000 are
@@ -94,7 +94,7 @@ namespace log4cplus {
 		/** The logger of the logging loggingEvent. It is set by
 		*  the LoggingEvent constructor.
 		*/
-		const std::string& getLoggerName() const
+		const string& getLoggerName() const
 		{
 			return _loggerName;
 		}
@@ -113,7 +113,7 @@ namespace log4cplus {
 		}
 
 		/** The is the file where this log statement was written */
-		const std::string& getFile() const
+		const string& getFile() const
 		{
 			return _file;
 		}
@@ -121,7 +121,7 @@ namespace log4cplus {
 		/** The is the line where this log statement was written */
 		int getLine() const { return _line; }
 
-		std::string const& getFunction () const
+		string const& getFunction () const
 		{
 			return _function;
 		}
@@ -137,12 +137,12 @@ namespace log4cplus {
 
 	protected:
 		// Data
-		std::string _message;
-		std::string _loggerName;
+		string _message;
+		string _loggerName;
 		LogLevel _ll;
 		helpers::TimeHelper _timestamp;
-		std::string _file;
-		std::string _function;
+		string _file;
+		string _function;
 		int _line;
 	};
 

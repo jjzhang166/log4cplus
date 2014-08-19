@@ -3,7 +3,7 @@
 
 
 #include <log4cplus/config.h>
-#include <log4cplus/windowsh-inc.h>
+
 #include <log4cplus/logger.h>
 #include <log4cplus/helpers/loglog.h>
 #include <log4cplus/helpers/internal.h>
@@ -141,7 +141,7 @@ namespace log4cplus
 
 
 
-	namespace internal
+	namespace helpers
 	{
 		gft_scratch_pad::gft_scratch_pad()
 			: _uc_q_str_valid(false)
@@ -179,7 +179,7 @@ namespace log4cplus
 
 
 
-	} // namespace internal
+	} // namespace helpers
 
 
 	void initializeFactoryRegistry();
@@ -188,8 +188,8 @@ namespace log4cplus
 	//!Thread local storage clean up function for POSIX threads.
 	static void ptd_cleanup_func(void * arg)
 	{
-		internal::per_thread_data * const arg_ptd = static_cast<internal::per_thread_data *>(arg);
-		internal::per_thread_data * const ptd = internal::get_ptd(false);
+		helpers::per_thread_data * const arg_ptd = static_cast<helpers::per_thread_data *>(arg);
+		helpers::per_thread_data * const ptd = helpers::get_ptd(false);
 		(void) ptd;
 
 		// Either it is a dummy value or it should be the per thread data
@@ -202,7 +202,7 @@ namespace log4cplus
 			// similar constructs with POSIX threads.  Otherwise POSIX
 			// calls this cleanup routine more than once if the value
 			// stays non-NULL after it returns.
-			Thread::tls_set_value(internal::tls_storage_key, 0);
+			Thread::tls_set_value(helpers::tls_storage_key, 0);
 		else if(arg)
 		{
 			// Instead of using internal::get_ptd(false) here we are using
@@ -214,7 +214,7 @@ namespace log4cplus
 			// unless the value is changed(after the destructor starts)
 			// by a call to pthread_setspecific().
 			delete arg_ptd;
-			Thread::tls_set_value(internal::tls_storage_key, 0);
+			Thread::tls_set_value(helpers::tls_storage_key, 0);
 		}
 		else
 		{
@@ -229,7 +229,7 @@ namespace log4cplus
 
 	static void threadSetup()
 	{
-		internal::get_ptd(true);
+		helpers::get_ptd(true);
 	}
 
 
@@ -239,7 +239,7 @@ namespace log4cplus
 		if(initialized)
 			return;
 
-		internal::tls_storage_key = Thread::tls_init(ptd_cleanup_func);
+		helpers::tls_storage_key = Thread::tls_init(ptd_cleanup_func);
 		threadSetup();
 
 		DefaultContext * dc = get_dc(true);
@@ -253,9 +253,9 @@ namespace log4cplus
 	void threadCleanup()
 	{
 		// Do thread-specific cleanup.
-		internal::per_thread_data * ptd = internal::get_ptd(false);
+		helpers::per_thread_data * ptd = helpers::get_ptd(false);
 		delete ptd;
-		internal::set_ptd(0);
+		helpers::set_ptd(0);
 	}
 
 
@@ -312,7 +312,7 @@ namespace log4cplus
 				// Do thread-specific cleanup.
 				threadCleanup();
 
-				Thread::tls_cleanup(internal::tls_storage_key);
+				Thread::tls_cleanup(helpers::tls_storage_key);
 				break;
 			}
 
@@ -348,7 +348,7 @@ struct _static_log4cplus_initializer
 		// Last thread cleanup.
 		log4cplus::threadCleanup();
 
-		log4cplus::Thread::tls_cleanup(log4cplus::internal::tls_storage_key);
+		log4cplus::Thread::tls_cleanup(log4cplus::helpers::tls_storage_key);
 
 	}
 } static initializer;
@@ -369,7 +369,7 @@ struct _static_log4cplus_initializer
 		// Last thread cleanup.
 		log4cplus::threadCleanup();
 
-		log4cplus::Thread::tls_cleanup(log4cplus::internal::tls_storage_key);
+		log4cplus::Thread::tls_cleanup(log4cplus::helpers::tls_storage_key);
 	}
 } static initializer;
 

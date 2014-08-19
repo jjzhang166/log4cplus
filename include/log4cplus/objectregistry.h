@@ -31,12 +31,12 @@ namespace log4cplus {
              * Tests to see whether or not an object is bound in the
              * registry as <code>name</code>.
              */
-            bool exists(const std::string& name) const;
+            bool exists(const string& name) const;
 
             /**
              * Returns the names of all registered objects.
              */
-            std::vector<std::string> getAllNames() const;
+            vector<string> getAllNames() const;
 
         protected:
           // Ctor and Dtor
@@ -48,13 +48,13 @@ namespace log4cplus {
              * Used to enter an object into the registry.  (The registry now
              * owns <code>object</code>.)
              */
-            bool putVal(const std::string& name, void* object);
+            bool putVal(const string& name, void* object);
 
             /**
              * Used to retrieve an object from the registry.  (The registry
              * owns the returned pointer.)
              */
-            void* getVal(const std::string& name) const;
+            void* getVal(const string& name) const;
 
             /**
              * Deletes <code>object</code>.
@@ -67,7 +67,7 @@ namespace log4cplus {
             virtual void clear();
 
           // Types
-            typedef std::map<std::string, void*> ObjectMap;
+            typedef std::map<string, void*> ObjectMap;
 
           // Data
             Mutex _mutex;

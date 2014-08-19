@@ -16,16 +16,16 @@
 #include <stdexcept>
 
 
-namespace log4cplus { namespace internal {
+namespace log4cplus { namespace helpers {
 
 #if defined(_MSC_VER)
-std::string const dir_sep("\\");
+string const dir_sep("\\");
 #else
-std::string const dir_sep("/");
+string const dir_sep("/");
 #endif
 
 
-bool get_env_var(std::string& envString, std::string const& name)
+bool get_env_var(string& envString, string const& name)
 {
     char const * val = std::getenv(name.c_str());
     if(val)
@@ -35,10 +35,10 @@ bool get_env_var(std::string& envString, std::string const& name)
 }
 
 
-bool parse_bool(bool & val, std::string const& str)
+bool parse_bool(bool & val, string const& str)
 {
     istringstream iss(str);
-    std::string word;
+    string word;
 
     // Read a single "word".
 
@@ -96,7 +96,7 @@ static bool is_sep(char ch)
 #endif
 }
 
-static bool isStringEmpty(std::string const& str)
+static bool isStringEmpty(string const& str)
 {
 	return str.empty();
 }
@@ -118,9 +118,9 @@ static bool is_drive_letter(char ch)
 
 #if defined(_MSC_VER)
 
-static std::string get_drive_cwd(char drive)
+static string get_drive_cwd(char drive)
 {
-    std::string path;
+    string path;
 
     drive = helpers::toUpper(drive);
     
@@ -148,10 +148,10 @@ static std::string get_drive_cwd(char drive)
 #endif
 
 
-static std::string get_current_dir()
+static string get_current_dir()
 {
 #if defined(_MSC_VER)
-    std::string result(0x8000, '\0');
+    string result(0x8000, '\0');
 
     DWORD len = GetCurrentDirectory(static_cast<DWORD>(result.size()), &result[0]);
     if(len == 0 || len >= result.size())
@@ -161,8 +161,8 @@ static std::string get_current_dir()
     return result;
 
 #else
-    std::string buf;
-    std::string::size_type buf_size = 1024;
+    string buf;
+    string::size_type buf_size = 1024;
     char * ret;
     do
     {
@@ -189,7 +189,7 @@ static std::string get_current_dir()
 #if defined(_MSC_VER)
 static char get_current_drive()
 {
-    std::string const cwd = get_current_dir();
+    string const cwd = get_current_dir();
     if(cwd.size() >= 2 && cwd[1] == ':')
         return cwd[0];
     else
@@ -197,35 +197,35 @@ static char get_current_drive()
 }
 #endif
 
-static void split_into_components(std::vector<std::string>& components, std::string const& path)
+static void split_into_components(vector<string>& components, string const& path)
 {
-    std::string::const_iterator const end = path.end();
-    std::string::const_iterator it = path.begin();
+    string::const_iterator const end = path.end();
+    string::const_iterator it = path.begin();
     while(it != end)
     {
-        std::string::const_iterator sep = std::find_if(it, end, is_sep); components.push_back(std::string(it, sep));
+        string::const_iterator sep = std::find_if(it, end, is_sep); components.push_back(string(it, sep));
         it = sep;
         if(it != end)
             ++it;
     }
 }
 
-static void expand_drive_relative_path(std::vector<std::string>& components, std::size_t rel_path_index)
+static void expand_drive_relative_path(vector<string>& components, std::size_t rel_path_index)
 {
     // Save relative path attached to drive,
     // e.g., relpath in "C:relpath\foo\bar".
 
-    std::string relative_path_first_component(components[rel_path_index], 2);
+    string relative_path_first_component(components[rel_path_index], 2);
 
     // Get current working directory of a drive.
 #ifdef _MSC_VER
-	 std::string const drive_path = get_drive_cwd(components[rel_path_index][0]);
+	 string const drive_path = get_drive_cwd(components[rel_path_index][0]);
 #else		// __linux__
-	 std::string const drive_path = "";
+	 string const drive_path = "";
 #endif
 
     // Split returned path.
-    std::vector<std::string> drive_cwd_components;
+    vector<string> drive_cwd_components;
     split_into_components(drive_cwd_components, drive_path);
 
     // Move the saved relative path into place.
@@ -236,18 +236,18 @@ static void expand_drive_relative_path(std::vector<std::string>& components, std
 }
 
 
-static void expand_relative_path(std::vector<std::string>& components)
+static void expand_relative_path(vector<string>& components)
 {
     // Get the current working director.
 
-    std::string const cwd = get_current_dir();
+    string const cwd = get_current_dir();
 
     // Split the CWD.
 
-    std::vector<std::string> cwd_components;
+    vector<string> cwd_components;
 
     // Use qualified call to appease IBM xlC.
-    internal::split_into_components(cwd_components, cwd);
+    helpers::split_into_components(cwd_components, cwd);
 
     // Insert the CWD components at the beginning of components.
 
@@ -255,9 +255,9 @@ static void expand_relative_path(std::vector<std::string>& components)
 }
 
 
-bool split_path(std::vector<std::string>& components, std::size_t& special, std::string const& path)
+bool split_path(vector<string>& components, std::size_t& special, string const& path)
 {
-    typedef std::string::const_iterator const_iterator;
+    typedef string::const_iterator const_iterator;
 
     components.reserve(10);
     special = 0;
@@ -388,7 +388,7 @@ retry_recognition:;
 }
 
 
-static long make_directory(std::string const& dir)
+static long make_directory(string const& dir)
 {
 #if defined(_MSC_VER)
     if(_mkdir(dir.c_str()) == 0)
@@ -403,7 +403,7 @@ static long make_directory(std::string const& dir)
 }
 
 
-static void loglog_make_directory_result(helpers::LogLog & loglog, std::string const& path, long ret)
+static void loglog_make_directory_result(helpers::LogLog & loglog, string const& path, long ret)
 {
     if(ret == 0)
     {
@@ -419,15 +419,15 @@ static void loglog_make_directory_result(helpers::LogLog & loglog, std::string c
 
 
 //!Creates missing directories in file path.
-void make_dirs(std::string const& file_path)
+void make_dirs(string const& file_path)
 {
-    std::vector<std::string> components;
+    vector<string> components;
     std::size_t special = 0;
     helpers::LogLog & loglog = helpers::getLogLog();
 
     // Split file path into components.
 
-    if(!internal::split_path(components, special, file_path))
+    if(!helpers::split_path(components, special, file_path))
         return;
 
     // Remove file name from path components list.
@@ -436,7 +436,7 @@ void make_dirs(std::string const& file_path)
 
     // Loop over path components, starting first non-special path component.
 
-    std::string path;
+    string path;
     helpers::join(path, components.begin(), components.begin() + special, dir_sep);
 
     for(std::size_t i = special, components_size = components.size(); i != components_size; ++i)

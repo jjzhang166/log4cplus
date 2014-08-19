@@ -25,7 +25,7 @@ ObjectRegistryBase::~ObjectRegistryBase()
 // ObjectRegistryBase public methods
 ///////////////////////////////////////////////////////////////////////////////
 
-bool ObjectRegistryBase::exists(const std::string& name) const
+bool ObjectRegistryBase::exists(const string& name) const
 {
      Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
 
@@ -33,9 +33,9 @@ bool ObjectRegistryBase::exists(const std::string& name) const
 }
 
 
-std::vector<std::string> ObjectRegistryBase::getAllNames() const
+vector<string> ObjectRegistryBase::getAllNames() const
 {
-    std::vector<std::string> tmp;
+    vector<string> tmp;
 
     {
          Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
@@ -52,7 +52,7 @@ std::vector<std::string> ObjectRegistryBase::getAllNames() const
 // ObjectRegistryBase protected methods
 ///////////////////////////////////////////////////////////////////////////////
 
-bool ObjectRegistryBase::putVal(const std::string& name, void* object)
+bool ObjectRegistryBase::putVal(const string& name, void* object)
 {
     ObjectMap::value_type v(name, object);
     std::pair<ObjectMap::iterator, bool> ret;
@@ -69,7 +69,7 @@ bool ObjectRegistryBase::putVal(const std::string& name, void* object)
 }
 
 
-void* ObjectRegistryBase::getVal(const std::string& name) const
+void* ObjectRegistryBase::getVal(const string& name) const
 {
      Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
 

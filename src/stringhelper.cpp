@@ -24,13 +24,13 @@ namespace helpers
 
 char toUpper(char ch)
 {
-    return std::toupper(ch);
+    return (char)std::toupper(ch);
 }
 
 
-std::string toUpper(const std::string& s)
+string toUpper(const string& s)
 {
-    std::string ret;
+    string ret;
     std::transform(s.begin(), s.end(), std::back_inserter(ret), (int(*)(int))std::toupper);
     return ret;
 }
@@ -38,13 +38,13 @@ std::string toUpper(const std::string& s)
 
 char toLower(char ch)
 {
-    return std::tolower(ch);
+    return (char)std::tolower(ch);
 }
 
 
-std::string toLower(const std::string& s)
+string toLower(const string& s)
 {
-    std::string ret;
+    string ret;
     std::transform(s.begin(), s.end(), std::back_inserter(ret), (int(*)(int))std::tolower);
     return ret;
 }

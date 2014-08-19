@@ -153,9 +153,6 @@
     <ClInclude Include="..\include\log4cplus\nullappender.h">
       <Filter>Appenders</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\config\windowsh-inc.h">
-      <Filter>config</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\helpers\appenderattachableimpl.h">
       <Filter>helpers</Filter>
     </ClInclude>
@@ -210,9 +207,6 @@
     <ClInclude Include="..\include\log4cplus\spi\factory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\spi\filter.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\spi\loggerfactory.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -225,16 +219,11 @@
     <ClInclude Include="..\include\log4cplus\spi\objectregistry.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal\environment.h">
+    <ClInclude Include="..\include\log4cplus\helpers\internal.h">
       <Filter>helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal\internal.h">
+    <ClInclude Include="..\include\log4cplus\helpers\environment.h">
       <Filter>helpers</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="log4cplus.props" />
-    <None Include="log4cplus_debug.props" />
-    <None Include="log4cplus_release.props" />
   </ItemGroup>
 </Project>

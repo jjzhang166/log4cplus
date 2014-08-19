@@ -25,7 +25,7 @@ public:
 
 
 private:
-    std::vector<char> buf;
+    vector<char> buf;
 };
   
 

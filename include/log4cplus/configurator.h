@@ -48,7 +48,7 @@ namespace log4cplus
     public:
         
         // ctor and dtor
-        PropertyConfigurator(const std::string& propertyFile, Hierarchy& h = Logger::getDefaultHierarchy());
+        PropertyConfigurator(const string& propertyFile, Hierarchy& h = Logger::getDefaultHierarchy());
         PropertyConfigurator(const helpers::Properties& props, Hierarchy& h = Logger::getDefaultHierarchy());
         PropertyConfigurator(istream& propertyStream, Hierarchy& h = Logger::getDefaultHierarchy());
         virtual ~PropertyConfigurator();
@@ -62,7 +62,7 @@ namespace log4cplus
          * config.configure();
          * </code>
          */
-        static void doConfigure(const std::string& configFilename, Hierarchy& h = Logger::getDefaultHierarchy());
+        static void doConfigure(const string& configFilename, Hierarchy& h = Logger::getDefaultHierarchy());
 
         /**
          * Read configuration from a file. <b>The existing configuration is
@@ -221,30 +221,30 @@ namespace log4cplus
         helpers::Properties const& getProperties() const;
 
         /**
-         * \return The return value is a reference to std::string
+         * \return The return value is a reference to string
          * containing filename of properties source file. It will be
          * string "UNAVAILABLE" if the PropertyConfigurator instance has been
          * constructed using one of the other constructors that do not take
          * filename as parameter.
          */
-        std::string const& getPropertyFilename() const;
+        string const& getPropertyFilename() const;
 
     protected:
       // Methods
         void init();  // called by the ctor
         void configureLoggers();
-        void configureLogger(Logger logger, const std::string& config);
+        void configureLogger(Logger logger, const string& config);
         void configureAppenders();
         
-        virtual Logger getLogger(const std::string& name);
+        virtual Logger getLogger(const string& name);
         virtual void addAppender(Logger &logger, SharedAppenderPtr& appender);
 
       // Types
-        typedef std::map<std::string, SharedAppenderPtr> AppenderMap;
+        typedef std::map<string, SharedAppenderPtr> AppenderMap;
 
       // Data
         Hierarchy& _hierarchy;
-        std::string _propertyFilename;
+        string _propertyFilename;
         helpers::Properties _properties; 
         AppenderMap _appenders;
         

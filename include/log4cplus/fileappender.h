@@ -87,7 +87,7 @@ namespace log4cplus
     class LOG4CPLUS_EXPORT FileAppender : public Appender {
     public:
       // Ctors
-        FileAppender(const std::string& filename, 
+        FileAppender(const string& filename, 
                      std::ios_base::openmode mode = std::ios_base::trunc,
                      bool immediateFlush = true, bool createDirs = false);
         FileAppender(const helpers::Properties& properties,
@@ -143,12 +143,12 @@ namespace log4cplus
         unsigned long _ofstreamBufferSize;
         char * _ofstreamBuffer;
         std::ofstream _out;
-        std::string _filename;
+        string _filename;
 
         helpers::TimeHelper _reopen_time;
 
     private:
-        void init(const std::string& filename,
+        void init(const string& filename,
             std::ios_base::openmode mode);
 
       // Disallow copying of instances of this class
@@ -184,7 +184,7 @@ namespace log4cplus
     class LOG4CPLUS_EXPORT RollingFileAppender : public FileAppender {
     public:
       // Ctors
-        RollingFileAppender(const std::string& filename,
+        RollingFileAppender(const string& filename,
                             long maxFileSize = 10*1024*1024, // 10 MB
                             int maxBackupIndex = 1,
                             bool immediateFlush = true,
@@ -236,7 +236,7 @@ namespace log4cplus
     class LOG4CPLUS_EXPORT DailyRollingFileAppender : public FileAppender {
     public:
       // Ctors
-        DailyRollingFileAppender(const std::string& filename,
+        DailyRollingFileAppender(const string& filename,
                                  DailyRollingFileSchedule schedule = DAILY,
                                  bool immediateFlush = true,
                                  int maxBackupIndex = 10,
@@ -253,11 +253,11 @@ namespace log4cplus
         virtual void append(const InternalLoggingEvent& loggingEvent);
         void rollover();
         helpers::TimeHelper calculateNextRolloverTime(const helpers::TimeHelper& t) const;
-        std::string getFilename(const helpers::TimeHelper& t) const;
+        string getFilename(const helpers::TimeHelper& t) const;
 
       // Data
         DailyRollingFileSchedule _schedule;
-        std::string _scheduledFilename;
+        string _scheduledFilename;
         helpers::TimeHelper _nextRolloverTime;
         int _maxBackupIndex;
 

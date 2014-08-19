@@ -35,9 +35,9 @@ namespace log4cplus
 
 
 
-    /** \typedef std::vector<Logger> LoggerList
+    /** \typedef vector<Logger> LoggerList
      * This is a list of {@link Logger Loggers}. */
-    typedef std::vector<Logger> LoggerList;
+    typedef vector<Logger> LoggerList;
 
 
     /**
@@ -58,7 +58,7 @@ namespace log4cplus
          *                
          * @param name The name of the logger to search for.
          */
-        static bool exists(const std::string& name);
+        static bool exists(const string& name);
 
         /*
          * Returns all the currently defined loggers in the default
@@ -85,7 +85,7 @@ namespace log4cplus
          * 
          * @param name The name of the logger to retrieve.  
          */
-        static Logger getInstance(const std::string& name);
+        static Logger getInstance(const string& name);
 
         /**
          * Like getInstance() except that the type of logger
@@ -99,7 +99,7 @@ namespace log4cplus
          * @param factory A {@link LoggerFactory} implementation that will
          * actually create a new Instance.
          */
-        static Logger getInstance(const std::string& name, LoggerFactory& factory);
+        static Logger getInstance(const string& name, LoggerFactory& factory);
 
         /**
          * Return the root of the default logger hierrachy.
@@ -113,16 +113,6 @@ namespace log4cplus
          */
         static Logger getRoot();
 
-      // Non-Static Methods
-        /**
-         * If <code>assertionVal</code> parameter is <code>false</code>, then
-         * logs <code>msg</code> with FATAL_LOG_LEVEL log level.
-         *
-         * @param assertionVal Truth value of assertion condition.
-         * @param msg The message to print if <code>assertion</code> is
-         * false.
-         */
-        void assertion(bool assertionVal, const std::string& msg) const;
 
         /**
          * Close all attached appenders implementing the AppenderAttachable
@@ -138,19 +128,13 @@ namespace log4cplus
          */
         bool isEnabledFor(LogLevel ll) const;
 
-        /**
-         * This generic form is intended to be used by wrappers. 
-         */
-        void log(LogLevel ll, const std::string& message,
-            const char* file = NULL, int line = -1, const char* _function = NULL) const;
-
         void log(InternalLoggingEvent const&) const;
 
         /**
          * This method creates a new logging loggingEvent and logs the loggingEvent
          * without further checks.  
          */
-        void forcedLog(LogLevel ll, const std::string& message,
+        void forcedLog(LogLevel ll, const string& message,
             const char* file = NULL, int line = -1, const char* _function = NULL) const;
 
         void forcedLog(InternalLoggingEvent const&) const;
@@ -199,20 +183,20 @@ namespace log4cplus
         /**
          * Return the logger name.  
          */
-        std::string const& getName() const;
+        string const& getName() const;
 
       // AppenderAttachable Methods
         virtual void addAppender(SharedAppenderPtr newAppender);
 
         virtual SharedAppenderPtrList getAllAppenders();
 
-        virtual SharedAppenderPtr getAppender(const std::string& name);
+        virtual SharedAppenderPtr getAppender(const string& name);
 
         virtual void removeAllAppenders();
 
         virtual void removeAppender(SharedAppenderPtr appender);
 
-        virtual void removeAppender(const std::string& name);
+        virtual void removeAppender(const string& name);
 
         Logger ();
         Logger(const Logger& rhs);
@@ -259,7 +243,7 @@ namespace log4cplus
      */
     class LOG4CPLUS_EXPORT DefaultLoggerFactory : public LoggerFactory {
     public:
-        Logger makeNewLoggerInstance(const std::string& name, Hierarchy& h);
+        Logger makeNewLoggerInstance(const string& name, Hierarchy& h);
     };
 
 

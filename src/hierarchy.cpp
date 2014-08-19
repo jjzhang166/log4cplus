@@ -38,10 +38,10 @@ namespace
 {
 
 static
-bool startsWith(std::string const& teststr, std::string const& substr)
+bool startsWith(string const& teststr, string const& substr)
 {
     bool val = false;
-    std::string::size_type const len = substr.length();
+    string::size_type const len = substr.length();
     if (teststr.length() > len)
         val = teststr.compare (0, len, substr) == 0;
 
@@ -74,8 +74,7 @@ Hierarchy::~Hierarchy()
 // Hierarchy public methods
 //////////////////////////////////////////////////////////////////////////////
 
-void 
-Hierarchy::clear() 
+void Hierarchy::clear() 
 {
     Mutex::ScopedLock lock(_hashtable_mutex);
 
@@ -84,8 +83,7 @@ Hierarchy::clear()
 }
 
 
-bool
-Hierarchy::exists(const std::string& name)
+bool Hierarchy::exists(const string& name)
 {
     // Root logger always does exist.
     if (name.empty ())
@@ -98,8 +96,7 @@ Hierarchy::exists(const std::string& name)
 }
 
 
-void 
-Hierarchy::disable(const std::string& loglevelStr)
+void Hierarchy::disable(const string& loglevelStr)
 {
     if(disableValue != DISABLE_LOG_OVERRIDE) {
         disableValue = getLogLevelManager().fromString(loglevelStr);
@@ -107,8 +104,7 @@ Hierarchy::disable(const std::string& loglevelStr)
 }
 
 
-void 
-Hierarchy::disable(LogLevel ll) 
+void Hierarchy::disable(LogLevel ll) 
 {
     if(disableValue != DISABLE_LOG_OVERRIDE) {
         disableValue = ll;
@@ -116,43 +112,37 @@ Hierarchy::disable(LogLevel ll)
 }
 
 
-void 
-Hierarchy::disableAll() 
+void Hierarchy::disableAll() 
 { 
     disable((std::numeric_limits<LogLevel>::max) ());
 }
 
 
-void 
-Hierarchy::disableDebug() 
+void Hierarchy::disableDebug() 
 { 
     disable(DEBUG_LOG_LEVEL);
 }
 
 
-void 
-Hierarchy::disableInfo() 
+void Hierarchy::disableInfo() 
 { 
     disable(INFO_LOG_LEVEL);
 }
 
 
-void 
-Hierarchy::enableAll() 
+void Hierarchy::enableAll() 
 { 
     disableValue = NOT_SET_LOG_LEVEL; 
 }
 
 
-Logger 
-Hierarchy::getInstance(const std::string& name) 
+Logger Hierarchy::getInstance(const string& name) 
 { 
     return getInstance(name, *defaultFactory); 
 }
 
 
-Logger 
-Hierarchy::getInstance(const std::string& name, LoggerFactory& factory)
+Logger Hierarchy::getInstance(const string& name, LoggerFactory& factory)
 {
     Mutex::ScopedLock lock(_hashtable_mutex);
 
@@ -160,8 +150,7 @@ Hierarchy::getInstance(const std::string& name, LoggerFactory& factory)
 }
 
 
-LoggerList 
-Hierarchy::getCurrentLoggers()
+LoggerList Hierarchy::getCurrentLoggers()
 {
     LoggerList ret;
     
@@ -225,7 +214,7 @@ Hierarchy::getLoggerFactory()
 // Hierarchy private methods
 //////////////////////////////////////////////////////////////////////////////
 
-Logger Hierarchy::getInstanceImpl(const std::string& name, LoggerFactory& factory)
+Logger Hierarchy::getInstanceImpl(const string& name, LoggerFactory& factory)
 {
     Logger logger;
     LoggerMap::iterator lm_it;
@@ -273,14 +262,14 @@ void Hierarchy::initializeLoggerList(LoggerList& list) const
 void 
 Hierarchy::updateParents(Logger const& logger)
 {
-    std::string const& name = logger.getName();
+    string const& name = logger.getName();
     std::size_t const length = name.length();
     bool parentFound = false;
-    std::string substr;
+    string substr;
 
     // if name = "w.x.y.z", loop thourgh "w.x.y", "w.x" and "w", but not "w.x.y.z"
     for(std::size_t i=name.find_last_of('.', length-1);
-        i != std::string::npos && i > 0; 
+        i != string::npos && i > 0; 
         i = name.find_last_of('.', i-1)) 
     {
         substr.assign (name, 0, i);

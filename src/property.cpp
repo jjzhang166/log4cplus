@@ -27,9 +27,9 @@ const char Properties::PROPERTIES_COMMENT_CHAR = '#';
 namespace
 {
 
-static void trim_leading_ws(std::string& str)
+static void trim_leading_ws(string& str)
 {
-    std::string::iterator it = str.begin();
+    string::iterator it = str.begin();
     for(; it != str.end(); ++it)
     {
         if(!std::isspace(*it))
@@ -39,9 +39,9 @@ static void trim_leading_ws(std::string& str)
 }
 
 
-static void trim_trailing_ws(std::string& str)
+static void trim_trailing_ws(string& str)
 {
-    std::string::reverse_iterator rit = str.rbegin();
+    string::reverse_iterator rit = str.rbegin();
     for(; rit != str.rend(); ++rit)
     {
         if(!std::isspace(*rit))
@@ -51,7 +51,7 @@ static void trim_trailing_ws(std::string& str)
 }
 
 
-static void trim_ws(std::string& str)
+static void trim_ws(string& str)
 {
     trim_trailing_ws(str);
     trim_leading_ws(str);
@@ -78,7 +78,7 @@ Properties::Properties(istream& input)
 
 
 
-Properties::Properties(const std::string& inputFile)
+Properties::Properties(const string& inputFile)
 {
     if(inputFile.empty())
         return;
@@ -99,12 +99,12 @@ void Properties::init(istream& input)
     if(!input)
         return;
 
-    std::string buffer;
+    string buffer;
     while(std::getline(input, buffer))
     {
         trim_leading_ws(buffer);
 
-        std::string::size_type const buffLen = buffer.size();
+        string::size_type const buffLen = buffer.size();
         if(buffLen == 0 || buffer[0] == PROPERTIES_COMMENT_CHAR)
             continue;
         
@@ -114,18 +114,18 @@ void Properties::init(istream& input)
             // Remove trailing 'Windows' \r.
             buffer.resize(buffLen - 1);
 
-        std::string::size_type const idx = buffer.find('=');
-        if(idx != std::string::npos)
+        string::size_type const idx = buffer.find('=');
+        if(idx != string::npos)
         {
-            std::string key = buffer.substr(0, idx);
-            std::string value = buffer.substr(idx + 1);
+            string key = buffer.substr(0, idx);
+            string value = buffer.substr(idx + 1);
             trim_trailing_ws(key);
             trim_ws(value);
             setProperty(key, value);
         }
         else if(buffer.compare(0, 7, "include") == 0 && buffer.size() >= 7 + 1 + 1 && std::isspace(buffer[7]))
         {
-            std::string included(buffer, 8) ;
+            string included(buffer, 8) ;
             trim_ws(included);
 
 			std::ifstream file;
@@ -152,7 +152,7 @@ Properties::~Properties()
 ///////////////////////////////////////////////////////////////////////////////
 
 
-bool Properties::exists(const std::string& key) const
+bool Properties::exists(const string& key) const
 {
     return _stringMap.find(key) != _stringMap.end();
 }
@@ -164,19 +164,19 @@ bool Properties::exists(char const * key) const
 }
 
 
-std::string const& Properties::getProperty(const std::string& key) const 
+string const& Properties::getProperty(const string& key) const 
 {
     return get_property_worker(key);
 }
 
 
-std::string const& Properties::getProperty(char const * key) const
+string const& Properties::getProperty(char const * key) const
 {
     return get_property_worker(key);
 }
 
 
-std::string Properties::getProperty(const std::string& key, const std::string& defaultVal) const
+string Properties::getProperty(const string& key, const string& defaultVal) const
 {
     StringMap::const_iterator it(_stringMap.find(key));
     if(it == _stringMap.end())
@@ -186,9 +186,9 @@ std::string Properties::getProperty(const std::string& key, const std::string& d
 }
 
 
-std::vector<std::string> Properties::propertyNames() const 
+vector<string> Properties::propertyNames() const 
 {
-    std::vector<std::string> tmp;
+    vector<string> tmp;
     for(StringMap::const_iterator it=_stringMap.begin(); it!=_stringMap.end(); ++it)
         tmp.push_back(it->first);
 
@@ -197,24 +197,24 @@ std::vector<std::string> Properties::propertyNames() const
 
 
 
-void Properties::setProperty(const std::string& key, const std::string& stringvalue)
+void Properties::setProperty(const string& key, const string& stringvalue)
 {
     _stringMap[key] = stringvalue;
 }
 
 
-bool Properties::removeProperty(const std::string& key)
+bool Properties::removeProperty(const string& key)
 {
     return _stringMap.erase(key) > 0;
 }
 
 
-Properties Properties::getPropertySubset(const std::string& prefix) const
+Properties Properties::getPropertySubset(const string& prefix) const
 {
     Properties ret;
     std::size_t const prefix_len = prefix.size();
-    std::vector<std::string> keys = propertyNames();
-    for(std::vector<std::string>::iterator it=keys.begin(); it!=keys.end(); ++it)
+    vector<string> keys = propertyNames();
+    for(vector<string>::iterator it=keys.begin(); it!=keys.end(); ++it)
     {
         int result = it->compare(0, prefix_len, prefix);
         if(result == 0)
@@ -225,42 +225,42 @@ Properties Properties::getPropertySubset(const std::string& prefix) const
 }
 
 
-bool Properties::getInt(int & val, std::string const& key) const
+bool Properties::getInt(int & val, string const& key) const
 {
     return get_type_val_worker(val, key);
 }
 
 
-bool Properties::getUInt(unsigned & val, std::string const& key) const
+bool Properties::getUInt(unsigned & val, string const& key) const
 {
     return get_type_val_worker(val, key);
 }
 
 
-bool Properties::getLong(long & val, std::string const& key) const
+bool Properties::getLong(long & val, string const& key) const
 {
 	return get_type_val_worker(val, key);
 }
 
 
-bool Properties::getULong(unsigned long & val, std::string const& key) const
+bool Properties::getULong(unsigned long & val, string const& key) const
 {
     return get_type_val_worker(val, key);
 }
 
 
-bool Properties::getBool(bool & val, std::string const& key) const
+bool Properties::getBool(bool & val, string const& key) const
 {
     if(!exists(key))
         return false;
 
-    std::string const& prop_val = getProperty(key);
-    return internal::parse_bool(val, prop_val);
+    string const& prop_val = getProperty(key);
+    return helpers::parse_bool(val, prop_val);
 }
 
-const std::string emptystring = "";
-template <typename StringType>
-std::string const& Properties::get_property_worker(StringType const& key) const
+const string emptystring = "";
+
+string const& Properties::get_property_worker(string const& key) const
 {
     StringMap::const_iterator it(_stringMap.find(key));
     if(it == _stringMap.end())
@@ -271,12 +271,12 @@ std::string const& Properties::get_property_worker(StringType const& key) const
 
 
 template <typename ValType>
-bool Properties::get_type_val_worker(ValType & val, std::string const& key) const
+bool Properties::get_type_val_worker(ValType & val, string const& key) const
 {
     if(!exists(key))
         return false;
 
-    std::string const& prop_val = getProperty(key);
+    string const& prop_val = getProperty(key);
     istringstream iss(prop_val);
     ValType tmp_val;
     char ch;

@@ -21,11 +21,7 @@
 
 namespace log4cplus {
 
-    namespace helpers
-    {
-        class Properties;
-    }
-
+    class Properties;
 
     /**
      * This class is used to "handle" errors encountered in an {@link
@@ -36,7 +32,7 @@ namespace log4cplus {
     public:
         ErrorHandler ();
         virtual ~ErrorHandler() = 0;
-        virtual void error(const std::string& err) = 0;
+        virtual void error(const string& err) = 0;
         virtual void reset() = 0;
     };
 
@@ -47,7 +43,7 @@ namespace log4cplus {
       // Ctor
         OnlyOnceErrorHandler();
         virtual ~OnlyOnceErrorHandler ();
-        virtual void error(const std::string& err);
+        virtual void error(const string& err);
         virtual void reset();
 
     private:
@@ -146,13 +142,13 @@ namespace log4cplus {
          * Get the name of this appender. The name uniquely identifies the
          * appender.
          */
-        virtual std::string getName();
+        virtual string getName();
 
         /**
          * Set the name of this appender. The name is used by other
          * components to identify this appender.
          */
-        virtual void setName(const std::string& name);
+        virtual void setName(const string& name);
 
         /**
          * Set the {@link ErrorHandler} for this Appender.
@@ -231,7 +227,7 @@ namespace log4cplus {
         std::auto_ptr<Layout> _layout;
 
         /** Appenders are named. */
-        std::string _name;
+        string _name;
 
         /** There is no LogLevel threshold filtering by default.  */
         LogLevel _threshold;

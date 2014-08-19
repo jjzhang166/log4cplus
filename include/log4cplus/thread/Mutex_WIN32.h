@@ -9,7 +9,7 @@
 
 
 #include <log4cplus/config.h>
-#include <log4cplus/windowsh-inc.h>
+
 
 
 namespace log4cplus { 
@@ -43,8 +43,8 @@ inline void MutexImpl::lockImpl()
 	}
 	catch (...)
 	{
-		throw std::runtime_error("cannot lock mutex");
 	}
+		throw std::runtime_error("cannot lock mutex");
 }
 
 

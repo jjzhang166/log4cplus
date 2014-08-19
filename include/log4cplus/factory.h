@@ -33,7 +33,7 @@ namespace log4cplus {
             /**
              * Returns the typename of the objects this factory creates.
              */
-            virtual std::string const& getTypeName() const = 0;
+            virtual string const& getTypeName() const = 0;
         };
 
 
@@ -133,7 +133,7 @@ namespace log4cplus {
              * Used to retrieve an object from the registry.  (The registry
              * owns the returned pointer.)
              */
-            T* get(const std::string& name) const 
+            T* get(const string& name) const 
 			{
                 return static_cast<T*>(getVal(name));
             }
@@ -170,16 +170,15 @@ namespace log4cplus {
         class LocalFactoryBase : public ProductFactoryBase
         {
         public:
-            LocalFactoryBase (char const * n) : _name (n)
-            { }
+            LocalFactoryBase (char const * n) : _name (n){ }
 
-            virtual std::string const& getTypeName() const
+            virtual string const& getTypeName() const
             {
                 return _name;
             }
 
         private:
-            std::string _name;
+            string _name;
         };
 
 
@@ -189,8 +188,7 @@ namespace log4cplus {
         public:
             typedef typename ProductFactoryBase::ProductPtr ProductPtr;
 
-            FactoryTempl (char const * n)
-                : LocalFactoryBase<ProductFactoryBase> (n)
+            FactoryTempl (char const * n) : LocalFactoryBase<ProductFactoryBase> (n)
             { }
 
             virtual ProductPtr createObject(helpers::Properties const& props)

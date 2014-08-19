@@ -52,7 +52,7 @@ void LogLog::setQuietMode(bool quietModeVal)
 }
 
 
-void LogLog::debug(const std::string& msg) const
+void LogLog::debug(const string& msg) const
 {
     logging_worker(&LogLog::get_debug_mode, PREFIX, msg);
 }
@@ -64,7 +64,7 @@ void LogLog::debug(char const * msg) const
 }
 
 
-void LogLog::warn(const std::string& msg) const
+void LogLog::warn(const string& msg) const
 {
     logging_worker(&LogLog::get_not_quiet_mode, WARN_PREFIX, msg);
 }
@@ -76,7 +76,7 @@ void LogLog::warn(char const * msg) const
 }
 
 
-void LogLog::error(const std::string& msg, bool throw_flag) const
+void LogLog::error(const string& msg, bool throw_flag) const
 {
     logging_worker(&LogLog::get_not_quiet_mode, ERR_PREFIX, msg, throw_flag);
 }
@@ -114,10 +114,10 @@ bool LogLog::get_debug_mode() const
 
 void LogLog::set_tristate_from_env(TriState * result, char const * envvar_name)
 {
-    std::string envvar_value;
-    bool exists = internal::get_env_var(envvar_value, envvar_name);
+    string envvar_value;
+    bool exists = helpers::get_env_var(envvar_value, envvar_name);
     bool value = false;
-    if(exists && internal::parse_bool(value, envvar_value) && value)
+    if(exists && helpers::parse_bool(value, envvar_value) && value)
         *result = TriTrue;
     else
         *result = TriFalse;
@@ -125,21 +125,21 @@ void LogLog::set_tristate_from_env(TriState * result, char const * envvar_name)
 
 
 template <typename StringType>
-void LogLog::logging_worker( bool(LogLog:: * cond)() const,
-    char const * prefix, StringType const& msg, bool throw_flag) const
+void LogLog::logging_worker( bool(LogLog:: * cond)() const, 
+	char const * prefix, StringType const& msg, bool throw_flag) const
 {
     bool output;
     {
-         Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
-        output =(this->*cond)();
+		Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
+		output =(this->*cond)();
     }
 
     if(output)
     {
         // XXX This is potential recursive lock of
         // ConsoleAppender::outputMutex.
-		  Mutex::ScopedLock lock(const_cast<Mutex&>(ConsoleAppender::getOutputMutex()));
-        std::cout << prefix << msg << std::endl;
+		Mutex::ScopedLock lock(const_cast<Mutex&>(ConsoleAppender::getOutputMutex()));
+		std::cout << prefix << msg << std::endl;
     }
 
     if(throw_flag)

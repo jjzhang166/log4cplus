@@ -32,8 +32,20 @@ using namespace std;
 		#define LOG4CPLUS_EXPORT	/* empty */
 	#endif
 
+
+	#undef WIN32_LEAN_AND_MEAN
+	#define WIN32_LEAN_AND_MEAN
+	#include <winsock2.h>
+	#include <windows.h>
+	#include <intrin.h>
+
+	#include "vld.h"
+
 	  // Warning about: <type1> needs to have dll-interface to be used by clients of class <type2>
-	#pragma warning( disable : 4251 )
+	#pragma warning(disable : 4251)
+	#pragma warning(disable : 4702)
+	#pragma warning(disable : 4722)
+	#pragma warning(disable : 4996)
 
 #else	//linux
 
