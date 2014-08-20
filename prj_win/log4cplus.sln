@@ -6,11 +6,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{92DEA81D
 		..\src\filter.cpp = ..\src\filter.cpp
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "appender_test", "tests\appender_test.vcxproj", "{63AF3784-3FFB-46AC-B341-76B55AEE3148}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "appender_test", "Tests\appender_test.vcxproj", "{63AF3784-3FFB-46AC-B341-76B55AEE3148}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log4cplus", "log4cplus.vcxproj", "{917836A4-0DDC-47BE-B930-1B3BFDF6C940}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "propertyconfig_test", "tests\propertyconfig_test.vcxproj", "{44D4D0A3-FAFA-4134-9806-BCB830594E28}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "propertyconfig_test", "Tests\propertyconfig_test.vcxproj", "{44D4D0A3-FAFA-4134-9806-BCB830594E28}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "log4cplusS", "log4cplusS.vcxproj", "{BEC0CD2F-60CD-40E2-A89B-AB10E902F1D5}"
 EndProject
