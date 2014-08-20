@@ -53,7 +53,7 @@ namespace log4cplus {
             /**
              * Create an "Appender" object.
              */
-            virtual SharedAppenderPtr createObject(const log4cplus::helpers::Properties& props) = 0;
+            virtual SharedAppenderPtr createObject(const log4cplus::Properties& props) = 0;
         };
 
 
@@ -73,7 +73,7 @@ namespace log4cplus {
             /**
              * Create a "Layout" object.
              */
-            virtual std::auto_ptr<Layout> createObject(const log4cplus::helpers::Properties& props) = 0;
+            virtual std::auto_ptr<Layout> createObject(const log4cplus::Properties& props) = 0;
         };
 
 
@@ -94,7 +94,7 @@ namespace log4cplus {
             /**
              * Create a "Filter" object.
              */
-            virtual FilterPtr createObject(const log4cplus::helpers::Properties& props) = 0;
+            virtual FilterPtr createObject(const log4cplus::Properties& props) = 0;
         };
 
         /**
@@ -191,7 +191,7 @@ namespace log4cplus {
             FactoryTempl (char const * n) : LocalFactoryBase<ProductFactoryBase> (n)
             { }
 
-            virtual ProductPtr createObject(helpers::Properties const& props)
+            virtual ProductPtr createObject(Properties const& props)
             {
                 return ProductPtr (new LocalProduct (props));
             }

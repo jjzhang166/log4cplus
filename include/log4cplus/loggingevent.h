@@ -1,23 +1,6 @@
 // -*- C++ -*-
 // Module:  Log4CPLUS
 // File:    loggingevent.h
-// Created: 6/2001
-// Author:  Tad E. Smith
-//
-//
-// Copyright 2001-2013 Tad E. Smith
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 /** @file */
 
@@ -29,9 +12,10 @@
 #include <memory>
 #include <log4cplus/loglevel.h>
 
-#include <log4cplus/helpers/timehelper.h>
+#include <log4cplus/timehelper.h>
 
 namespace log4cplus { 
+	class TimeHelper;
 	/**
 	* The internal representation of logging events. When an affirmative
 	* decision is made to log then a <code>InternalLoggingEvent</code>
@@ -48,7 +32,7 @@ namespace log4cplus {
 		* Instantiate a LoggingEvent from the supplied parameters.
 		*
 		* @param logger   The logger of this loggingEvent.
-		* @param loglevel The LogLevel of this loggingEvent.
+		* @param loglevel The LogLevel of this loggingEvent.TimeHelper
 		* @param message  The message of this loggingEvent.
 		* @param filename Name of file where this loggingEvent has occurred,
 		* can be NULL.
@@ -61,7 +45,7 @@ namespace log4cplus {
 
 		InternalLoggingEvent(const string& logger, LogLevel loglevel,
 			const string& message, 
-			helpers::TimeHelper time, const string& file,
+			TimeHelper time, const string& file,
 			int line, const string& _function = string ());
 
 		InternalLoggingEvent ();
@@ -107,7 +91,7 @@ namespace log4cplus {
 
 		/** The number of milliseconds elapsed from 1/1/1970 until
 		*  logging loggingEvent was created. */
-		const helpers::TimeHelper& getTimestamp() const
+		const TimeHelper& getTimestamp() const
 		{
 			return _timestamp;
 		}
@@ -140,7 +124,7 @@ namespace log4cplus {
 		string _message;
 		string _loggerName;
 		LogLevel _ll;
-		helpers::TimeHelper _timestamp;
+		TimeHelper _timestamp;
 		string _file;
 		string _function;
 		int _line;

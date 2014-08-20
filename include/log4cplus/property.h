@@ -13,7 +13,7 @@
 #include <vector>
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 	//!\sa log4cplus::PropertyConfigurator
 	class LOG4CPLUS_EXPORT Properties {
@@ -86,7 +86,7 @@ namespace log4cplus { namespace helpers {
 		bool getUInt(unsigned & val, string const& key) const;
 		bool getLong(long & val, string const& key) const;
 		bool getULong(unsigned long & val, string const& key) const;
-		bool getBool(bool & val, string const& key) const;
+		bool getBool(bool& val, string const& key) const;
 
 	protected:
 		// Types
@@ -104,9 +104,7 @@ namespace log4cplus { namespace helpers {
 		template <typename ValType>
 		bool get_type_val_worker(ValType & val, string const& key) const;
 	};
-
-
-} } // end namespace helpers
+} 
 
 
 #endif // LOG4CPLUS_HELPERS_PROPERTY_HEADER_

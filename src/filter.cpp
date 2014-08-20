@@ -3,33 +3,33 @@
 
 
 #include <log4cplus/filter.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/helpers/property.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/stringhelper.h>
+#include <log4cplus/property.h>
 #include <log4cplus/loggingevent.h>
 
 
-namespace log4cplus { 
+using namespace log4cplus;
 
 ///////////////////////////////////////////////////////////////////////////////
 // global methods
 ///////////////////////////////////////////////////////////////////////////////
 
-FilterResult checkFilter(const Filter* filter, const InternalLoggingEvent& loggingEvent)
+FilterResult log4cplus::checkFilter(const Filter* filter, const InternalLoggingEvent& loggingEvent)
 {
-    const Filter* currentFilter = filter;
-    while(currentFilter) 
+	const Filter* currentFilter = filter;
+	while(currentFilter) 
 	{
-        FilterResult result = currentFilter->decide(loggingEvent);
-        if(result != NEUTRAL) 
+		FilterResult result = currentFilter->decide(loggingEvent);
+		if(result != NEUTRAL) 
 		{
-            return result;
-        }
+			return result;
+		}
 
-        currentFilter = currentFilter->_nextFilter.get();
-    }
+		currentFilter = currentFilter->_nextFilter.get();
+	}
 
-    return ACCEPT;
+	return ACCEPT;
 }
 
 
@@ -50,10 +50,10 @@ Filter::~Filter()
 
 void Filter::appendFilter(FilterPtr filter)
 {
-    if(!_nextFilter)
-        _nextFilter = filter;
-    else
-        _nextFilter->appendFilter(filter);
+	if(!_nextFilter)
+		_nextFilter = filter;
+	else
+		_nextFilter->appendFilter(filter);
 }
 
 
@@ -66,13 +66,13 @@ DenyAllFilter::DenyAllFilter()
 { }
 
 
-DenyAllFilter::DenyAllFilter(const helpers::Properties&)
+DenyAllFilter::DenyAllFilter(const Properties&)
 { }
 
 
 FilterResult DenyAllFilter::decide(const InternalLoggingEvent&) const
 {
-    return DENY;
+	return DENY;
 }
 
 
@@ -83,41 +83,41 @@ FilterResult DenyAllFilter::decide(const InternalLoggingEvent&) const
 
 LogLevelMatchFilter::LogLevelMatchFilter()
 {
-    init();
+	init();
 }
 
-LogLevelMatchFilter::LogLevelMatchFilter(const helpers::Properties& properties)
+LogLevelMatchFilter::LogLevelMatchFilter(const Properties& properties)
 {
-    init();
+	init();
 
-    string const& log_level_to_match = properties.getProperty("LogLevelToMatch");
-    _logLevelToMatch = getLogLevelManager().fromString(log_level_to_match);
+	string const& log_level_to_match = properties.getProperty("LogLevelToMatch");
+	_logLevelToMatch = getLogLevelManager().fromString(log_level_to_match);
 }
 
 
 void LogLevelMatchFilter::init()
 {
-    _logLevelToMatch = NOT_SET_LOG_LEVEL;
+	_logLevelToMatch = NOT_SET_LOG_LEVEL;
 }
 
 
 FilterResult LogLevelMatchFilter::decide(const InternalLoggingEvent& loggingEvent) const
 {
-    if(_logLevelToMatch == NOT_SET_LOG_LEVEL) 
+	if(_logLevelToMatch == NOT_SET_LOG_LEVEL) 
 	{
-        return NEUTRAL;
-    }
+		return NEUTRAL;
+	}
 
-    bool matchOccured = (_logLevelToMatch == loggingEvent.getLogLevel());
-       
-    if(matchOccured)
+	bool matchOccured = (_logLevelToMatch == loggingEvent.getLogLevel());
+
+	if(matchOccured)
 	{
-        return ACCEPT;
-    }
-    else
+		return ACCEPT;
+	}
+	else
 	{
-        return NEUTRAL;
-    }
+		return NEUTRAL;
+	}
 }
 
 
@@ -128,45 +128,44 @@ FilterResult LogLevelMatchFilter::decide(const InternalLoggingEvent& loggingEven
 
 LogLevelRangeFilter::LogLevelRangeFilter()
 {
-    init();
+	init();
 }
 
 
 
-LogLevelRangeFilter::LogLevelRangeFilter(const helpers::Properties& properties)
+LogLevelRangeFilter::LogLevelRangeFilter(const Properties& properties)
 {
-    init();
+	init();
 
-    string const& log_level_min = properties.getProperty("LogLevelMin");
-    _logLevelMin = getLogLevelManager().fromString(log_level_min);
+	string const& log_level_min = properties.getProperty("LogLevelMin");
+	_logLevelMin = getLogLevelManager().fromString(log_level_min);
 
-    string const& log_level_max = properties.getProperty("LogLevelMax");
-    _logLevelMax = getLogLevelManager().fromString(log_level_max);
+	string const& log_level_max = properties.getProperty("LogLevelMax");
+	_logLevelMax = getLogLevelManager().fromString(log_level_max);
 }
 
 
 void LogLevelRangeFilter::init()
 {
-    _logLevelMin = NOT_SET_LOG_LEVEL;
-    _logLevelMax = NOT_SET_LOG_LEVEL;
+	_logLevelMin = NOT_SET_LOG_LEVEL;
+	_logLevelMax = NOT_SET_LOG_LEVEL;
 }
 
 
 FilterResult LogLevelRangeFilter::decide(const InternalLoggingEvent& loggingEvent) const
 {
-    if((_logLevelMin != NOT_SET_LOG_LEVEL) &&(loggingEvent.getLogLevel() < _logLevelMin)) 
+	if((_logLevelMin != NOT_SET_LOG_LEVEL) &&(loggingEvent.getLogLevel() < _logLevelMin)) 
 	{
-        // priority of loggingEvent is less than minimum
-        return DENY;
-    }
+		// priority of loggingEvent is less than minimum
+		return DENY;
+	}
 
-    if((_logLevelMax != NOT_SET_LOG_LEVEL) &&(loggingEvent.getLogLevel() > _logLevelMax)) 
+	if((_logLevelMax != NOT_SET_LOG_LEVEL) &&(loggingEvent.getLogLevel() > _logLevelMax)) 
 	{
-        // priority of loggingEvent is greater than maximum
-        return DENY;
-    }
+		// priority of loggingEvent is greater than maximum
+		return DENY;
+	}
 
-     return ACCEPT;
+	return ACCEPT;
 }
 
-} // namespace log4cplus { 

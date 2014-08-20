@@ -4,23 +4,19 @@
 
 #include <log4cplus/configurator.h>
 #include <log4cplus/hierarchy.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/sleep.h>
-#include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/helpers/property.h>
-#include <log4cplus/helpers/timehelper.h>
-#include <log4cplus/helpers/fileinfo.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/sleep.h>
+#include <log4cplus/stringhelper.h>
+#include <log4cplus/property.h>
+#include <log4cplus/timehelper.h>
+#include <log4cplus/fileinfo.h>
 #include <log4cplus/factory.h>
 #include <log4cplus/loggerimpl.h>
-#include <log4cplus/helpers/environment.h>
+#include <log4cplus/environment.h>
 
 #include <iterator>
 
-
-
-namespace log4cplus
-{
-
+using namespace log4cplus;
 
 void initializeLog4cplus();
 
@@ -30,29 +26,29 @@ void initializeLog4cplus();
 //////////////////////////////////////////////////////////////////////////////
 
 PropertyConfigurator::PropertyConfigurator(const string& propertyFile, Hierarchy& hier)
-    : _hierarchy(hier), _propertyFilename(propertyFile), _properties(propertyFile)
+	: _hierarchy(hier), _propertyFilename(propertyFile), _properties(propertyFile)
 {
-    init();
+	init();
 }
 
 
-PropertyConfigurator::PropertyConfigurator(const helpers::Properties& props, Hierarchy& hier)
-    : _hierarchy(hier), _propertyFilename("UNAVAILABLE"), _properties( props )
+PropertyConfigurator::PropertyConfigurator(const Properties& props, Hierarchy& hier)
+	: _hierarchy(hier), _propertyFilename("UNAVAILABLE"), _properties( props )
 {
-    init();
+	init();
 }
 
 
 PropertyConfigurator::PropertyConfigurator(istream& propertyStream, Hierarchy& hier)
-    : _hierarchy(hier), _propertyFilename("UNAVAILABLE"), _properties(propertyStream)
+	: _hierarchy(hier), _propertyFilename("UNAVAILABLE"), _properties(propertyStream)
 {
-    init();
+	init();
 }
 
 
 void PropertyConfigurator::init()
 {
-    _properties = _properties.getPropertySubset("log4cplus.");
+	_properties = _properties.getPropertySubset("log4cplus.");
 }
 
 
@@ -66,8 +62,8 @@ PropertyConfigurator::~PropertyConfigurator()
 
 void PropertyConfigurator::doConfigure(const string& file, Hierarchy& h)
 {
-    PropertyConfigurator tmp(file, h);
-    tmp.configure();
+	PropertyConfigurator tmp(file, h);
+	tmp.configure();
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -75,38 +71,38 @@ void PropertyConfigurator::doConfigure(const string& file, Hierarchy& h)
 //////////////////////////////////////////////////////////////////////////////
 void PropertyConfigurator::configure()
 {
-    // Configure log4cplus internals.
-    bool isInternalDebugging = false;
-    if(_properties.getBool(isInternalDebugging, "configDebug"))
-        helpers::getLogLog().setInternalDebugging(isInternalDebugging);
+	// Configure log4cplus internals.
+	bool isInternalDebugging = false;
+	if(_properties.getBool(isInternalDebugging, "configDebug"))
+		getLogLog().setInternalDebugging(isInternalDebugging);
 
-    bool quiet_mode = false;
-    if(_properties.getBool(quiet_mode, "quietMode"))
-        helpers::getLogLog().setQuietMode(quiet_mode);
+	bool quiet_mode = false;
+	if(_properties.getBool(quiet_mode, "quietMode"))
+		getLogLog().setQuietMode(quiet_mode);
 
-    bool disable_override = false;
-    _properties.getBool(disable_override, "disableOverride");
+	bool disable_override = false;
+	_properties.getBool(disable_override, "disableOverride");
 
-    initializeLog4cplus();
-    configureAppenders();
-    configureLoggers();
+	initializeLog4cplus();
+	configureAppenders();
+	configureLoggers();
 
-    if(disable_override)
-        _hierarchy.disable(DISABLE_LOG_OVERRIDE);
+	if(disable_override)
+		_hierarchy.disable(DISABLE_LOG_OVERRIDE);
 
-    // Erase the appenders so that we are not artificially keeping them "alive".
-    _appenders.clear();
+	// Erase the appenders so that we are not artificially keeping them "alive".
+	_appenders.clear();
 }
 
 
-helpers::Properties const& PropertyConfigurator::getProperties() const
+Properties const& PropertyConfigurator::getProperties() const
 {
-    return _properties;
+	return _properties;
 }
 
 string const& PropertyConfigurator::getPropertyFilename() const
 {
-    return _propertyFilename;
+	return _propertyFilename;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -115,118 +111,118 @@ string const& PropertyConfigurator::getPropertyFilename() const
 
 void PropertyConfigurator::configureLoggers()
 {
-    if(_properties.exists("rootLogger"))
-    {
-        Logger root = _hierarchy.getRoot();
-        configureLogger(root, _properties.getProperty("rootLogger"));
-    }
+	if(_properties.exists("rootLogger"))
+	{
+		Logger root = _hierarchy.getRoot();
+		configureLogger(root, _properties.getProperty("rootLogger"));
+	}
 
-    helpers::Properties loggerProperties = _properties.getPropertySubset("logger.");
-    vector<string> loggers = loggerProperties.propertyNames();
+	Properties loggerProperties = _properties.getPropertySubset("logger.");
+	vector<string> loggers = loggerProperties.propertyNames();
 
-    for(vector<string>::iterator it=loggers.begin(); it!=loggers.end(); ++it)
-    {
-        Logger log = getLogger(*it);
-        configureLogger(log, loggerProperties.getProperty(*it));
-    }
+	for(vector<string>::iterator it=loggers.begin(); it!=loggers.end(); ++it)
+	{
+		Logger log = getLogger(*it);
+		configureLogger(log, loggerProperties.getProperty(*it));
+	}
 }
 
 void PropertyConfigurator::configureLogger(Logger logger, const string& config)
 {
-    // Remove all spaces from config
-    string configString;
-    std::remove_copy_if(config.begin(), config.end(), 
+	// Remove all spaces from config
+	string configString;
+	std::remove_copy_if(config.begin(), config.end(), 
 		std::back_inserter(configString), std::bind1st(std::equal_to<char>(), ' '));
 
-    // "Tokenize" configString
-    vector<string> tokens;
-    helpers::tokenize(configString, ',', std::back_insert_iterator<vector<string> >(tokens));
+	// "Tokenize" configString
+	vector<string> tokens;
+	tokenize(configString, ',', std::back_insert_iterator<vector<string> >(tokens));
 
-    if(tokens.empty())
-    {
-        helpers::getLogLog().error(
-            "PropertyConfigurator::configureLogger()- Invalid config string Logger = " + logger.getName());
-        return;
-    }
+	if(tokens.empty())
+	{
+		getLogLog().error(
+			"PropertyConfigurator::configureLogger()- Invalid config string Logger = " + logger.getName());
+		return;
+	}
 
-    // Set the loglevel
-    string const& loglevel = tokens[0];
-    if(loglevel != "INHERITED")
-        logger.setLogLevel( getLogLevelManager().fromString(loglevel));
-    else
-        logger.setLogLevel(NOT_SET_LOG_LEVEL);
+	// Set the loglevel
+	string const& loglevel = tokens[0];
+	if(loglevel != "INHERITED")
+		logger.setLogLevel( getLogLevelManager().fromString(loglevel));
+	else
+		logger.setLogLevel(NOT_SET_LOG_LEVEL);
 
-    // Remove all existing appenders first so that we do not duplicate output.
-    logger.removeAllAppenders();
+	// Remove all existing appenders first so that we do not duplicate output.
+	logger.removeAllAppenders();
 
-    // Set the Appenders
-    for(vector<string>::size_type j=1; j < tokens.size(); ++j)
-    {
-        AppenderMap::iterator appenderIt = _appenders.find(tokens[j]);
-        if(appenderIt == _appenders.end())
-        {
-            helpers::getLogLog().error(
-                "PropertyConfigurator::configureLogger()- Invalid appender: " + tokens[j]);
-            continue;
-        }
-        addAppender(logger, appenderIt->second);
-    }
+	// Set the Appenders
+	for(vector<string>::size_type j=1; j < tokens.size(); ++j)
+	{
+		AppenderMap::iterator appenderIt = _appenders.find(tokens[j]);
+		if(appenderIt == _appenders.end())
+		{
+			getLogLog().error(
+				"PropertyConfigurator::configureLogger()- Invalid appender: " + tokens[j]);
+			continue;
+		}
+		addAppender(logger, appenderIt->second);
+	}
 }
 
 
 void PropertyConfigurator::configureAppenders()
 {
-    helpers::Properties appenderProperties = _properties.getPropertySubset("appender.");
-    vector<string> appendersProps = appenderProperties.propertyNames();
-    string factoryName;
+	Properties appenderProperties = _properties.getPropertySubset("appender.");
+	vector<string> appendersProps = appenderProperties.propertyNames();
+	string factoryName;
 
-    for(vector<string>::iterator it=appendersProps.begin(); it != appendersProps.end(); ++it)
-    {
-        if( it->find('.') == string::npos )
-        {
-            factoryName = appenderProperties.getProperty(*it);
-            AppenderFactory* factory = getAppenderFactoryRegistry().get(factoryName);
-            if(!factory)
-            {
-                string err = "PropertyConfigurator::configureAppenders()- Cannot find AppenderFactory: ";
-                helpers::getLogLog().error(err + factoryName);
-                continue;
-            }
+	for(vector<string>::iterator it=appendersProps.begin(); it != appendersProps.end(); ++it)
+	{
+		if( it->find('.') == string::npos )
+		{
+			factoryName = appenderProperties.getProperty(*it);
+			AppenderFactory* factory = getAppenderFactoryRegistry().get(factoryName);
+			if(!factory)
+			{
+				string err = "PropertyConfigurator::configureAppenders()- Cannot find AppenderFactory: ";
+				getLogLog().error(err + factoryName);
+				continue;
+			}
 
-            helpers::Properties props_subset = appenderProperties.getPropertySubset((*it) + ".");
-            try
-            {
-                SharedAppenderPtr appender = factory->createObject(props_subset);
-                if(!appender)
-                {
-                    string err =
-                        "PropertyConfigurator::configureAppenders() - Failed to create appender: ";
-                    helpers::getLogLog().error(err + *it);
-                }
-                else
-                {
-                    appender->setName(*it);
-                    _appenders[*it] = appender;
-                }
-            }
-            catch(std::exception const& e)
-            {
-                string err =
-                    "PropertyConfigurator::configureAppenders() - Error while creating Appender: ";
-                helpers::getLogLog().error(err + string(e.what()));
-            }
-        }
-    } // end for loop
+			Properties props_subset = appenderProperties.getPropertySubset((*it) + ".");
+			try
+			{
+				SharedAppenderPtr appender = factory->createObject(props_subset);
+				if(!appender)
+				{
+					string err =
+						"PropertyConfigurator::configureAppenders() - Failed to create appender: ";
+					getLogLog().error(err + *it);
+				}
+				else
+				{
+					appender->setName(*it);
+					_appenders[*it] = appender;
+				}
+			}
+			catch(std::exception const& e)
+			{
+				string err =
+					"PropertyConfigurator::configureAppenders() - Error while creating Appender: ";
+				getLogLog().error(err + string(e.what()));
+			}
+		}
+	} // end for loop
 }
 
 Logger PropertyConfigurator::getLogger(const string& name)
 {
-    return _hierarchy.getInstance(name);
+	return _hierarchy.getInstance(name);
 }
 
 void PropertyConfigurator::addAppender(Logger &logger, SharedAppenderPtr& appender)
 {
-    logger.addAppender(appender);
+	logger.addAppender(appender);
 }
 
 
@@ -236,11 +232,11 @@ void PropertyConfigurator::addAppender(Logger &logger, SharedAppenderPtr& append
 
 
 BasicConfigurator::BasicConfigurator(Hierarchy& hier, bool logToStdErr)
-    : PropertyConfigurator("", hier )
+	: PropertyConfigurator("", hier )
 {
-    _properties.setProperty("rootLogger", "DEBUG, STDOUT");
-    _properties.setProperty("appender.STDOUT", "log4cplus::ConsoleAppender");
-    _properties.setProperty("appender.STDOUT.logToStdErr", logToStdErr ? "1" : "0");
+	_properties.setProperty("rootLogger", "DEBUG, STDOUT");
+	_properties.setProperty("appender.STDOUT", "log4cplus::ConsoleAppender");
+	_properties.setProperty("appender.STDOUT.logToStdErr", logToStdErr ? "1" : "0");
 }
 
 BasicConfigurator::~BasicConfigurator()
@@ -253,8 +249,8 @@ BasicConfigurator::~BasicConfigurator()
 
 void BasicConfigurator::doConfigure(Hierarchy& h, bool logToStdErr)
 {
-    BasicConfigurator tmp(h, logToStdErr);
-    tmp.configure();
+	BasicConfigurator tmp(h, logToStdErr);
+	tmp.configure();
 }
 
-} // namespace log4cplus
+

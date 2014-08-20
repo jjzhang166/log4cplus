@@ -64,6 +64,14 @@
 
 #endif	// _MSC_VER
 
+#ifdef __linux__
+
+typedef int 				 BOOL;
+#define TRUE				 1
+#define FALSE				 0
+
+#endif	// __linux__
+
 API void OspPrintf(BOOL bScreen, BOOL bFile, char * szFormat,...);
 
 API BOOL OspInit(BOOL TelNetEnable=FALSE, unsigned short TelNetPort=0, char* pchModuleName = NULL );

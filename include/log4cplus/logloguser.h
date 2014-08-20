@@ -9,7 +9,7 @@
 
 #include <log4cplus/config.h>
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 	// forward declarations
 	class LogLog;
 
@@ -33,7 +33,7 @@ namespace log4cplus { namespace helpers {
 		LogLogUser& operator= (const LogLogUser& rhs);
 	};
 
-} }// end namespace log4cplus end namespace helpers
+} // end namespace log4cplus 
 
 
 #endif // LOG4CPLUS_HELPERS_LOGLOG_USER

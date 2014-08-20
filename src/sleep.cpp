@@ -3,16 +3,13 @@
 
 
 
-#include <log4cplus/helpers/sleep.h>
-#include <log4cplus/helpers/timehelper.h>
+#include <log4cplus/sleep.h>
+#include <log4cplus/timehelper.h>
 
 #include <cerrno>
-#include <errno.h>
-
 #include <time.h>
 
-
-namespace log4cplus { namespace helpers {
+using namespace log4cplus;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,7 +19,7 @@ namespace log4cplus { namespace helpers {
 int const MILLIS_TO_NANOS = 1000000;
 int const SEC_TO_MILLIS = 1000;
 
-void sleep(unsigned long secs, unsigned long nanosecs)
+void log4cplus::sleep(unsigned long secs, unsigned long nanosecs)
 {
 #if defined(_MSC_VER)
 	DWORD const MAX_SLEEP_SECONDS = 4294966;        // (2**32-2)/1000
@@ -65,11 +62,10 @@ void sleep(unsigned long secs, unsigned long nanosecs)
 }
 
 
-void sleepmillis(unsigned long millis)
+void log4cplus::sleepmillis(unsigned long millis)
 {
 	unsigned long secs = millis / SEC_TO_MILLIS;
 	unsigned long nanosecs = (millis % SEC_TO_MILLIS) * MILLIS_TO_NANOS;
-	sleep(secs, nanosecs);
+	log4cplus::sleep(secs, nanosecs);
 }
 
-} } // namespace log4cplus { namespace helpers {

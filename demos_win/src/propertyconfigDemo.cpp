@@ -1,14 +1,14 @@
 
 #include <log4cplus/configurator.h>
 #include <log4cplus/loggingmacros.h>
-#include <log4cplus/helpers/sleep.h>
+#include <log4cplus/sleep.h>
 #include "osp/osp.h"
-// #include "vld.h"
+
+#include "log4cplus/loglog.h"
 
 
 using namespace std;
 using namespace log4cplus;
-using namespace log4cplus::helpers;
 
 
 static Logger logFile1 = Logger::getInstance("logFile1");
@@ -20,6 +20,7 @@ int main()
 	OspInit(TRUE, 2501);
 
 	log4cplus::PropertyConfigurator::doConfigure("urconfig.properties");
+	LogLog::getLogLog()->setInternalDebugging(true);
 
 	for (int i = 0; i < 3; i++)
 	{

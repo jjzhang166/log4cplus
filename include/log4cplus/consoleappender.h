@@ -34,7 +34,7 @@ namespace log4cplus {
     public:
       // Ctors
         ConsoleAppender(bool immediateFlush = false);
-        ConsoleAppender(const helpers::Properties & properties);
+        ConsoleAppender(const Properties & properties);
 
       // Dtor
         ~ConsoleAppender();
@@ -42,7 +42,7 @@ namespace log4cplus {
       // Methods
         virtual void close();
 
-        //!This mutex is used by ConsoleAppender and helpers::LogLog
+        //!This mutex is used by ConsoleAppender and LogLog
         //!classes to synchronize output to console.
         static Mutex const& getOutputMutex();
 

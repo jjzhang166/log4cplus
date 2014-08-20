@@ -19,7 +19,7 @@
 #include <cassert>
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 	class LOG4CPLUS_EXPORT SharedObject
 	{
@@ -125,7 +125,7 @@ namespace log4cplus { namespace helpers {
 		// Data
 		T* _pointee;
 	};
-}  } // end namespace log4cplus end namespace helpers
+}  // end namespace log4cplus 
 
 
 #endif // LOG4CPLUS_HELPERS_POINTERS_HEADER_

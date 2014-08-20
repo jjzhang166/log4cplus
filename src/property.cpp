@@ -11,14 +11,14 @@
 #include <fstream>
 #include <sstream>
 
-#include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/helpers/property.h>
-#include <log4cplus/helpers/internal.h>
-#include <log4cplus/helpers/environment.h>
-#include <log4cplus/helpers/loglog.h>
+#include <log4cplus/stringhelper.h>
+#include <log4cplus/property.h>
+#include <log4cplus/internal.h>
+#include <log4cplus/environment.h>
+#include <log4cplus/loglog.h>
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 
 const char Properties::PROPERTIES_COMMENT_CHAR = '#';
@@ -87,7 +87,7 @@ Properties::Properties(const string& inputFile)
 
     file.open(inputFile.c_str(), std::ios::binary);
     if(!file.good())
-        helpers::getLogLog().error("could not open file " + inputFile);
+        getLogLog().error("could not open file " + inputFile);
 
     init(file);
 }
@@ -132,7 +132,7 @@ void Properties::init(istream& input)
 
             file.open(included.c_str(), std::ios::binary);
             if(!file.good())
-                helpers::getLogLog().error("could not open file " + included);
+                getLogLog().error("could not open file " + included);
 
             init(file);
         }
@@ -148,7 +148,7 @@ Properties::~Properties()
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// helpers::Properties public methods
+// Properties public methods
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -249,13 +249,13 @@ bool Properties::getULong(unsigned long & val, string const& key) const
 }
 
 
-bool Properties::getBool(bool & val, string const& key) const
+bool Properties::getBool(bool& val, string const& key) const
 {
     if(!exists(key))
         return false;
 
     string const& prop_val = getProperty(key);
-    return helpers::parse_bool(val, prop_val);
+    return parse_bool(val, prop_val);
 }
 
 const string emptystring = "";
@@ -293,4 +293,4 @@ bool Properties::get_type_val_worker(ValType & val, string const& key) const
 }
 
 
-} } // namespace log4cplus { namespace helpers {
+}  // namespace log4cplus { 

@@ -5,9 +5,7 @@
 #include <log4cplus/nullappender.h>
 
 
-namespace log4cplus
-{
-
+using namespace log4cplus;
 
 ///////////////////////////////////////////////////////////////////////////////
 // NullAppender ctors and dtor
@@ -18,7 +16,7 @@ NullAppender::NullAppender()
 }
 
 
-NullAppender::NullAppender(const helpers::Properties& properties)
+NullAppender::NullAppender(const Properties& properties)
 : Appender(properties)
 {
 }
@@ -54,5 +52,3 @@ NullAppender::append(const InternalLoggingEvent&)
 {
 }
 
-
-} // namespace log4cplus

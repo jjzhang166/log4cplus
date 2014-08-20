@@ -23,7 +23,7 @@ namespace log4cplus {
     public:
       // Ctors
         NullAppender();
-        NullAppender(const log4cplus::helpers::Properties&);
+        NullAppender(const log4cplus::Properties&);
 
       // Dtor
         virtual ~NullAppender();

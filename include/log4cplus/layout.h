@@ -8,28 +8,17 @@
 #define LOG4CPLUS_LAYOUT_HEADER_
 
 #include <log4cplus/config.h>
-
 #include <log4cplus/loglevel.h>
+#include <log4cplus/property.h>
 
 #include <vector>
 
 
 namespace log4cplus {
-
+	
 	class PatternConverter;
-	namespace helpers
-	{
-
-		class Properties;
-		class TimeHelper;
-
-	}
-
-
+	class TimeHelper;
 	class InternalLoggingEvent;
-
-
-
 
 	/**
 	* This class is used to layout strings sent to an {@link
@@ -39,7 +28,7 @@ namespace log4cplus {
 	{
 	public:
 		Layout();
-		Layout(const helpers::Properties& properties);
+		Layout(const Properties& properties);
 		virtual ~Layout() = 0;
 
 		virtual void formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent) = 0;
@@ -69,7 +58,7 @@ namespace log4cplus {
 	{
 	public:
 		SimpleLayout();
-		SimpleLayout(const helpers::Properties& properties);
+		SimpleLayout(const Properties& properties);
 		virtual ~SimpleLayout();
 
 		virtual void formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent);
@@ -81,7 +70,7 @@ namespace log4cplus {
 	};
 
 
-	LOG4CPLUS_EXPORT helpers::TimeHelper const& getLayoutTimeBase ();
+	LOG4CPLUS_EXPORT TimeHelper const& getLayoutTimeBase ();
 
 
 	/**
@@ -497,7 +486,7 @@ namespace log4cplus {
 	public:
 		// Ctors and dtor
 		PatternLayout(const string& pattern);
-		PatternLayout(const helpers::Properties& properties);
+		PatternLayout(const Properties& properties);
 		virtual ~PatternLayout();
 
 		virtual void formatAndAppend(ostream& output, 

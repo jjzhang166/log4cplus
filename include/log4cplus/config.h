@@ -39,7 +39,7 @@ using namespace std;
 	#include <windows.h>
 	#include <intrin.h>
 
-	#include "vld.h"
+	/*#include "vld.h"*/
 
 	  // Warning about: <type1> needs to have dll-interface to be used by clients of class <type2>
 	#pragma warning(disable : 4251)

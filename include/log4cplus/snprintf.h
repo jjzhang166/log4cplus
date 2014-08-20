@@ -10,7 +10,7 @@
 #include <vector>
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 
 class LOG4CPLUS_EXPORT snprintf_buf
@@ -28,8 +28,7 @@ private:
     vector<char> buf;
 };
   
-
-} } // namespace log4cplus { namespace helpers
+}  // namespace log4cplus 
 
 
 

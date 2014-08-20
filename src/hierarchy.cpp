@@ -19,37 +19,28 @@
 // limitations under the License.
 
 #include <log4cplus/hierarchy.h>
-#include <log4cplus/helpers/loglog.h>
+#include <log4cplus/loglog.h>
 #include <log4cplus/loggerimpl.h>
 #include <log4cplus/rootlogger.h>
 #include <utility>
 #include <limits>
 
-
-namespace log4cplus
-{
+using namespace log4cplus;
 
 
 //////////////////////////////////////////////////////////////////////////////
 // File "Local" methods
 //////////////////////////////////////////////////////////////////////////////
 
-namespace
+static bool startsWith(string const& teststr, string const& substr)
 {
+	bool val = false;
+	string::size_type const len = substr.length();
+	if (teststr.length() > len)
+		val = teststr.compare (0, len, substr) == 0;
 
-static
-bool startsWith(string const& teststr, string const& substr)
-{
-    bool val = false;
-    string::size_type const len = substr.length();
-    if (teststr.length() > len)
-        val = teststr.compare (0, len, substr) == 0;
-
-    return val;
+	return val;
 }
-
-}
-
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -57,12 +48,11 @@ bool startsWith(string const& teststr, string const& substr)
 //////////////////////////////////////////////////////////////////////////////
 
 Hierarchy::Hierarchy() : defaultFactory(new DefaultLoggerFactory()), root(NULL)
-  // Don't disable any LogLevel level by default.
-  , disableValue(NOT_SET_LOG_LEVEL), emittedNoAppenderWarning(false)
+	// Don't disable any LogLevel level by default.
+	, disableValue(NOT_SET_LOG_LEVEL), emittedNoAppenderWarning(false)
 {
-    root = Logger( new RootLogger(*this, DEBUG_LOG_LEVEL));
+	root = Logger( new RootLogger(*this, DEBUG_LOG_LEVEL));
 }
-
 
 Hierarchy::~Hierarchy()
 {
@@ -76,135 +66,130 @@ Hierarchy::~Hierarchy()
 
 void Hierarchy::clear() 
 {
-    Mutex::ScopedLock lock(_hashtable_mutex);
+	Mutex::ScopedLock lock(_hashtable_mutex);
 
-    provisionNodes.erase(provisionNodes.begin(), provisionNodes.end());
-    loggerPtrs.erase(loggerPtrs.begin(), loggerPtrs.end());
+	provisionNodes.erase(provisionNodes.begin(), provisionNodes.end());
+	loggerPtrs.erase(loggerPtrs.begin(), loggerPtrs.end());
 }
 
 
 bool Hierarchy::exists(const string& name)
 {
-    // Root logger always does exist.
-    if (name.empty ())
-        return true;
+	// Root logger always does exist.
+	if (name.empty ())
+		return true;
 
-    Mutex::ScopedLock lock(_hashtable_mutex);
+	Mutex::ScopedLock lock(_hashtable_mutex);
 
-    LoggerMap::iterator it = loggerPtrs.find(name);
-    return it != loggerPtrs.end();
+	LoggerMap::iterator it = loggerPtrs.find(name);
+	return it != loggerPtrs.end();
 }
 
 
 void Hierarchy::disable(const string& loglevelStr)
 {
-    if(disableValue != DISABLE_LOG_OVERRIDE) {
-        disableValue = getLogLevelManager().fromString(loglevelStr);
-    }
+	if(disableValue != DISABLE_LOG_OVERRIDE) {
+		disableValue = getLogLevelManager().fromString(loglevelStr);
+	}
 }
 
 
 void Hierarchy::disable(LogLevel ll) 
 {
-    if(disableValue != DISABLE_LOG_OVERRIDE) {
-        disableValue = ll;
-    }
+	if(disableValue != DISABLE_LOG_OVERRIDE) {
+		disableValue = ll;
+	}
 }
 
 
 void Hierarchy::disableAll() 
 { 
-    disable((std::numeric_limits<LogLevel>::max) ());
+	disable((std::numeric_limits<LogLevel>::max) ());
 }
 
 
 void Hierarchy::disableDebug() 
 { 
-    disable(DEBUG_LOG_LEVEL);
+	disable(DEBUG_LOG_LEVEL);
 }
 
 
 void Hierarchy::disableInfo() 
 { 
-    disable(INFO_LOG_LEVEL);
+	disable(INFO_LOG_LEVEL);
 }
 
 
 void Hierarchy::enableAll() 
 { 
-    disableValue = NOT_SET_LOG_LEVEL; 
+	disableValue = NOT_SET_LOG_LEVEL; 
 }
 
 
 Logger Hierarchy::getInstance(const string& name) 
 { 
-    return getInstance(name, *defaultFactory); 
+	return getInstance(name, *defaultFactory); 
 }
 
 
 Logger Hierarchy::getInstance(const string& name, LoggerFactory& factory)
 {
-    Mutex::ScopedLock lock(_hashtable_mutex);
+	Mutex::ScopedLock lock(_hashtable_mutex);
 
-    return getInstanceImpl(name, factory);
+	return getInstanceImpl(name, factory);
 }
 
 
 LoggerList Hierarchy::getCurrentLoggers()
 {
-    LoggerList ret;
-    
-    {
-        Mutex::ScopedLock lock(_hashtable_mutex);
-        initializeLoggerList(ret);
-    }
+	LoggerList ret;
 
-    return ret;
+	{
+		Mutex::ScopedLock lock(_hashtable_mutex);
+		initializeLoggerList(ret);
+	}
+
+	return ret;
 }
 
 
-bool 
-Hierarchy::isDisabled(LogLevel level) 
+bool Hierarchy::isDisabled(LogLevel level) 
 { 
-    return disableValue >= level; 
+	return disableValue >= level; 
 }
 
 
-Logger 
-Hierarchy::getRoot() const
+Logger Hierarchy::getRoot() const
 { 
-    return root; 
+	return root; 
 }
 
 
-void 
-Hierarchy::resetConfiguration()
+void Hierarchy::resetConfiguration()
 {
-    getRoot().setLogLevel(DEBUG_LOG_LEVEL);
-    disableValue = NOT_SET_LOG_LEVEL;
+	getRoot().setLogLevel(DEBUG_LOG_LEVEL);
+	disableValue = NOT_SET_LOG_LEVEL;
 
 
-    LoggerList loggers = getCurrentLoggers();
-    for (LoggerList::iterator it = loggers.begin (); it != loggers.end(); ++it)
-    {
-        Logger & logger = *it;
-        logger.setLogLevel(NOT_SET_LOG_LEVEL);
-    }
+	LoggerList loggers = getCurrentLoggers();
+	for (LoggerList::iterator it = loggers.begin (); it != loggers.end(); ++it)
+	{
+		Logger & logger = *it;
+		logger.setLogLevel(NOT_SET_LOG_LEVEL);
+	}
 
 }
 
 
-void 
-Hierarchy::setLoggerFactory(std::auto_ptr<LoggerFactory> factory) 
+void Hierarchy::setLoggerFactory(std::auto_ptr<LoggerFactory> factory) 
 { 
-    defaultFactory = factory; 
+	defaultFactory = factory; 
 }
 
 
-LoggerFactory *
-Hierarchy::getLoggerFactory()
+LoggerFactory * Hierarchy::getLoggerFactory()
 {
-    return defaultFactory.get();
+	return defaultFactory.get();
 }
 
 
@@ -216,110 +201,106 @@ Hierarchy::getLoggerFactory()
 
 Logger Hierarchy::getInstanceImpl(const string& name, LoggerFactory& factory)
 {
-    Logger logger;
-    LoggerMap::iterator lm_it;
+	Logger logger;
+	LoggerMap::iterator lm_it;
 
-    if (name.empty ())
-        logger = root;
-    else if ((lm_it = loggerPtrs.find(name)) != loggerPtrs.end())
-        logger = lm_it->second;
-    else
-    {
-        // Need to create a new logger
-        logger = factory.makeNewLoggerInstance(name, *this);
-        bool inserted = loggerPtrs.insert(std::make_pair(name, logger)).second;
-        if (!inserted)
-        {
-            helpers::getLogLog().error("Hierarchy::getInstanceImpl()- Insert failed", true);
-        }
+	if (name.empty ())
+		logger = root;
+	else if ((lm_it = loggerPtrs.find(name)) != loggerPtrs.end())
+		logger = lm_it->second;
+	else
+	{
+		// Need to create a new logger
+		logger = factory.makeNewLoggerInstance(name, *this);
+		bool inserted = loggerPtrs.insert(std::make_pair(name, logger)).second;
+		if (!inserted)
+		{
+			getLogLog().error("Hierarchy::getInstanceImpl()- Insert failed", true);
+		}
 
-        ProvisionNodeMap::iterator pnm_it = provisionNodes.find(name);
-        if (pnm_it != provisionNodes.end())
-        {
-            updateChildren(pnm_it->second, logger);
-            bool deleted = (provisionNodes.erase(name) > 0);
-            if (!deleted)
-            {
-                helpers::getLogLog().error("Hierarchy::getInstanceImpl()- Delete failed", true);
-            }
-        }
-        updateParents(logger);
-    }
+		ProvisionNodeMap::iterator pnm_it = provisionNodes.find(name);
+		if (pnm_it != provisionNodes.end())
+		{
+			updateChildren(pnm_it->second, logger);
+			bool deleted = (provisionNodes.erase(name) > 0);
+			if (!deleted)
+			{
+				getLogLog().error("Hierarchy::getInstanceImpl()- Delete failed", true);
+			}
+		}
+		updateParents(logger);
+	}
 
-    return logger;
+	return logger;
 }
 
 
 void Hierarchy::initializeLoggerList(LoggerList& list) const
 {
-    for(LoggerMap::const_iterator it=loggerPtrs.begin(); it!= loggerPtrs.end(); ++it) 
-    {
-        list.push_back((*it).second);
-    }
+	for(LoggerMap::const_iterator it=loggerPtrs.begin(); it!= loggerPtrs.end(); ++it) 
+	{
+		list.push_back((*it).second);
+	}
 }
 
-
-void 
-Hierarchy::updateParents(Logger const& logger)
+void Hierarchy::updateParents(Logger const& logger)
 {
-    string const& name = logger.getName();
-    std::size_t const length = name.length();
-    bool parentFound = false;
-    string substr;
+	string const& name = logger.getName();
+	std::size_t const length = name.length();
+	bool parentFound = false;
+	string substr;
 
-    // if name = "w.x.y.z", loop thourgh "w.x.y", "w.x" and "w", but not "w.x.y.z"
-    for(std::size_t i=name.find_last_of('.', length-1);
-        i != string::npos && i > 0; 
-        i = name.find_last_of('.', i-1)) 
-    {
-        substr.assign (name, 0, i);
+	// if name = "w.x.y.z", loop thourgh "w.x.y", "w.x" and "w", but not "w.x.y.z"
+	for(std::size_t i=name.find_last_of('.', length-1);
+		i != string::npos && i > 0; 
+		i = name.find_last_of('.', i-1)) 
+	{
+		substr.assign (name, 0, i);
 
-        LoggerMap::iterator it = loggerPtrs.find(substr);
-        if(it != loggerPtrs.end()) {
-            parentFound = true;
-            logger._pLoggerImpl->_parent = it->second._pLoggerImpl;
-            break;  // no need to update the ancestors of the closest ancestor
-        }
-        else {
-            ProvisionNodeMap::iterator it2 = provisionNodes.find(substr);
-            if(it2 != provisionNodes.end()) {
-                it2->second.push_back(logger);
-            }
-            else {
-                ProvisionNode node;
-                node.push_back(logger);
-                std::pair<ProvisionNodeMap::iterator, bool> tmp = 
-                    provisionNodes.insert(std::make_pair(substr, node));
-                //bool inserted = provisionNodes.insert(std::make_pair(substr, node)).second;
-                if(!tmp.second) {
-                    helpers::getLogLog().error(
-                        "Hierarchy::updateParents()- Insert failed",
-                        true);
-                }
-            }
-        } // end if Logger found
-    } // end for loop
+		LoggerMap::iterator it = loggerPtrs.find(substr);
+		if(it != loggerPtrs.end()) {
+			parentFound = true;
+			logger._pLoggerImpl->_parent = it->second._pLoggerImpl;
+			break;  // no need to update the ancestors of the closest ancestor
+		}
+		else {
+			ProvisionNodeMap::iterator it2 = provisionNodes.find(substr);
+			if(it2 != provisionNodes.end()) {
+				it2->second.push_back(logger);
+			}
+			else {
+				ProvisionNode node;
+				node.push_back(logger);
+				std::pair<ProvisionNodeMap::iterator, bool> tmp = 
+					provisionNodes.insert(std::make_pair(substr, node));
+				//bool inserted = provisionNodes.insert(std::make_pair(substr, node)).second;
+				if(!tmp.second) {
+					getLogLog().error(
+						"Hierarchy::updateParents()- Insert failed",
+						true);
+				}
+			}
+		} // end if Logger found
+	} // end for loop
 
-    if(!parentFound) {
-        logger._pLoggerImpl->_parent = root._pLoggerImpl;
-    }
+	if(!parentFound) {
+		logger._pLoggerImpl->_parent = root._pLoggerImpl;
+	}
 }
 
 
-void 
-Hierarchy::updateChildren(ProvisionNode& pn, Logger const& logger)
+void Hierarchy::updateChildren(ProvisionNode& pn, Logger const& logger)
 {
 
-    for(ProvisionNode::iterator it=pn.begin(); it!=pn.end(); ++it) {
-        Logger& c = *it;
-        // Unless this child already points to a correct (lower) parent,
-        // make logger.parent point to c.parent and c.parent to logger.
-        if( !startsWith(c._pLoggerImpl->_parent->getName(), logger.getName())) {
-            logger._pLoggerImpl->_parent = c._pLoggerImpl->_parent;
-            c._pLoggerImpl->_parent = logger._pLoggerImpl;
-        }
-    }
+	for(ProvisionNode::iterator it=pn.begin(); it!=pn.end(); ++it) {
+		Logger& c = *it;
+		// Unless this child already points to a correct (lower) parent,
+		// make logger.parent point to c.parent and c.parent to logger.
+		if( !startsWith(c._pLoggerImpl->_parent->getName(), logger.getName())) {
+			logger._pLoggerImpl->_parent = c._pLoggerImpl->_parent;
+			c._pLoggerImpl->_parent = logger._pLoggerImpl;
+		}
+	}
 }
 
 
-} // namespace log4cplus

@@ -22,7 +22,7 @@ namespace log4cplus {
     public:
       // Ctors
         OspAppender();
-        OspAppender(const helpers::Properties& properties);
+        OspAppender(const Properties& properties);
 
       // Dtor
         virtual ~OspAppender();

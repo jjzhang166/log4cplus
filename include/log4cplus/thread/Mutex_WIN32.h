@@ -43,8 +43,9 @@ inline void MutexImpl::lockImpl()
 	}
 	catch (...)
 	{
-	}
 		throw std::runtime_error("cannot lock mutex");
+	}
+		
 }
 
 
@@ -56,8 +57,8 @@ inline bool MutexImpl::tryLockImpl()
 	}
 	catch (...)
 	{
+		throw std::runtime_error("cannot lock mutex");
 	}
-	throw std::runtime_error("cannot lock mutex");
 }
 
 

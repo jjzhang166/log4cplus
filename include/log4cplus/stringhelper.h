@@ -9,15 +9,11 @@
 #define LOG4CPLUS_HELPERS_STRINGHELPER_HEADER_
 
 #include <log4cplus/config.h>
-
-
-
 #include <algorithm>
 
 
 
-namespace log4cplus { namespace helpers {
-
+namespace log4cplus { 
 	/**
 	* Returns <code>s</code> in upper case.
 	*/
@@ -45,11 +41,11 @@ namespace log4cplus { namespace helpers {
 	*   tokenize(s, '.', back_insert_iterator<list<string> >(tokens));
 	* </pre>
 	*/
-	template <class StringType, class OutputIter>
-	inline void tokenize(const StringType& s, 
-		typename StringType::value_type c, OutputIter result, bool collapseTokens = true)
+	template <class string, class OutputIter>
+	inline void tokenize(const string& s, 
+		typename string::value_type c, OutputIter result, bool collapseTokens = true)
 	{
-		typedef typename StringType::size_type size_type;
+		typedef typename string::size_type size_type;
 		size_type const slen = s.length();
 		size_type first = 0;
 		size_type i = 0;
@@ -57,7 +53,7 @@ namespace log4cplus { namespace helpers {
 		{
 			if(s[i] == c)
 			{
-				*result = StringType(s, first, i - first);
+				*result = string(s, first, i - first);
 				++result;
 				if(collapseTokens)
 					while(i+1 < slen && s[i+1] == c)
@@ -66,7 +62,7 @@ namespace log4cplus { namespace helpers {
 			}
 		}
 		if(first != i)
-			*result = StringType(s, first, i - first);
+			*result = string(s, first, i - first);
 	}
 
 	template <class stringType, class intType>
@@ -134,6 +130,6 @@ namespace log4cplus { namespace helpers {
 		}
 	}
 
-} } // namespace log4cplus namespace helpers
+} // namespace log4cplus 
 
 #endif // LOG4CPLUS_HELPERS_STRINGHELPER_HEADER_

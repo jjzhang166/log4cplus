@@ -29,7 +29,7 @@
 
 
 #include <log4cplus/logger.h>
-#include <log4cplus/helpers/snprintf.h>
+#include <log4cplus/snprintf.h>
 #include <sstream>
 #include <utility>
 
@@ -72,7 +72,8 @@
 
 namespace log4cplus
 {
-
+	
+	
 
 inline Logger macros_get_logger(Logger const& logger)
 {
@@ -100,11 +101,9 @@ inline Logger macros_get_logger(char const * logger)
 LOG4CPLUS_EXPORT void clear_tostringstream(ostringstream &);
 
 
-LOG4CPLUS_EXPORT helpers::snprintf_buf & get_macro_body_snprintf_buf();
-LOG4CPLUS_EXPORT void macro_forced_log(Logger const&,
-    LogLevel, string const&, char const *, int, char const *);
-LOG4CPLUS_EXPORT void macro_forced_log(Logger const&,
-    LogLevel, char const *, char const *, int, char const *);
+LOG4CPLUS_EXPORT snprintf_buf & get_macro_body_snprintf_buf();
+LOG4CPLUS_EXPORT void macro_forced_log(Logger const&, LogLevel, string const&, char const *, int, char const *);
+LOG4CPLUS_EXPORT void macro_forced_log(Logger const&, LogLevel, char const *, char const *, int, char const *);
 
 } // namespace log4cplus
 
@@ -132,7 +131,7 @@ LOG4CPLUS_EXPORT void macro_forced_log(Logger const&,
     LOG4CPLUS_MACRO_ ##logLevel(pred)
 
 #define LOG4CPLUS_MACRO_INSTANTIATE_SNPRINTF_BUF(var)     \
-	helpers::snprintf_buf & var                  \
+	snprintf_buf & var                  \
 	= get_macro_body_snprintf_buf()
 
 #define LOG4CPLUS_MACRO_BODY(logger, logEvent, logLevel)                \

@@ -4,10 +4,10 @@
 #include <sstream>
 #include "log4cplus/logger.h"
 #include "log4cplus/consoleappender.h"
-#include "log4cplus/helpers/appenderattachableimpl.h"
-#include "log4cplus/helpers/loglog.h"
-#include "log4cplus/helpers/pointer.h"
-#include "log4cplus/helpers/property.h"
+#include "log4cplus/appenderattachableimpl.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/pointer.h"
+#include "log4cplus/property.h"
 #include "log4cplus/loggingevent.h"
 
 using namespace std;
@@ -117,7 +117,7 @@ main()
             {
                 istringstream propsStream (
                     "layout=log4cplus::WrongLayout");
-                helpers::Properties props (propsStream);
+                Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Third");
@@ -128,7 +128,7 @@ main()
             {
                 istringstream propsStream (
                     "Threshold=ERROR");
-                helpers::Properties props (propsStream);
+                Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Fourth");
@@ -139,7 +139,7 @@ main()
             {
                 istringstream propsStream (
                     "Threshold=WRONG");
-                helpers::Properties props (propsStream);
+                Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Fifth");
@@ -150,7 +150,7 @@ main()
             {
                 istringstream propsStream (
                     "filters.1=log4cplus::WrongFilter");
-                helpers::Properties props (propsStream);
+                Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Sixth");

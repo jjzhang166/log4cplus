@@ -2,10 +2,9 @@
 // File:    rootlogger.cpp
 
 #include <log4cplus/rootlogger.h>
-#include <log4cplus/helpers/loglog.h>
+#include <log4cplus/loglog.h>
 
-
-namespace log4cplus { 
+using namespace log4cplus;
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -14,7 +13,7 @@ namespace log4cplus {
 
 RootLogger::RootLogger(Hierarchy& h, LogLevel loglevel) : LoggerImpl("root", h)
 {
-    setLogLevel(loglevel);
+	setLogLevel(loglevel);
 }
 
 
@@ -25,21 +24,19 @@ RootLogger::RootLogger(Hierarchy& h, LogLevel loglevel) : LoggerImpl("root", h)
 
 LogLevel RootLogger::getAssignedLogLevel() const
 {
-    return _ll;
+	return _ll;
 }
 
 
 void RootLogger::setLogLevel(LogLevel loglevel)
 {
-    if(loglevel == NOT_SET_LOG_LEVEL) 
+	if(loglevel == NOT_SET_LOG_LEVEL) 
 	{
-        helpers::getLogLog().error("You have tried to set NOT_SET_LOG_LEVEL to root.");
-    }
-    else 
+		getLogLog().error("You have tried to set NOT_SET_LOG_LEVEL to root.");
+	}
+	else 
 	{
-        LoggerImpl::setLogLevel(loglevel);
-    }
+		LoggerImpl::setLogLevel(loglevel);
+	}
 }
 
-
-} // namespace log4cplus { 

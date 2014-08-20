@@ -5,16 +5,13 @@
 
 #include <log4cplus/layout.h>
 #include <log4cplus/ospappender.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/stringhelper.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/stringhelper.h>
 #include <log4cplus/loggingevent.h>
 #include "osp/osp.h"
 #include <strstream>
 
-
 using namespace log4cplus;
-using namespace log4cplus::helpers;
-
 
 
 OspAppender::OspAppender()
@@ -22,7 +19,7 @@ OspAppender::OspAppender()
 }
 
 
-OspAppender::OspAppender(const helpers::Properties& properties) : Appender(properties)
+OspAppender::OspAppender(const Properties& properties) : Appender(properties)
 {
 }
 

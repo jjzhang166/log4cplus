@@ -13,7 +13,7 @@
 #include <log4cplus/layout.h>
 #include <log4cplus/loglevel.h>
 
-#include <log4cplus/helpers/pointer.h>
+#include <log4cplus/pointer.h>
 #include <log4cplus/filter.h>
 
 #include <memory>
@@ -97,12 +97,12 @@ namespace log4cplus {
      * </dd>
      * </dl>
      */
-    class LOG4CPLUS_EXPORT Appender : public virtual helpers::SharedObject
+    class LOG4CPLUS_EXPORT Appender : public virtual SharedObject
     {
     public:
       // Ctor
         Appender();
-        Appender(const helpers::Properties & properties);
+        Appender(const Properties & properties);
 
       // Dtor
         virtual ~Appender();
@@ -244,7 +244,7 @@ namespace log4cplus {
     };
 
     /** This is a pointer to an Appender. */
-    typedef helpers::SharedObjectPtr<Appender> SharedAppenderPtr;
+    typedef SharedObjectPtr<Appender> SharedAppenderPtr;
 
 } // end namespace log4cplus
 

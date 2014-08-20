@@ -4,8 +4,8 @@
 
 #include <log4cplus/factory.h>
 #include <log4cplus/loggerfactory.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/property.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/property.h>
 #include <log4cplus/consoleappender.h>
 #include <log4cplus/fileappender.h>
 #include <log4cplus/nullappender.h>
@@ -17,7 +17,7 @@
 // LOCAL file class definitions
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace log4cplus {
+using namespace log4cplus;
     
 
 BaseFactory::~BaseFactory()
@@ -74,5 +74,3 @@ void initializeFactoryRegistry()
     LOG4CPLUS_REG_FILTER (reg3, LogLevelRangeFilter);
 }
 
-
-} // namespace log4cplus

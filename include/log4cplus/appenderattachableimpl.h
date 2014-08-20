@@ -11,7 +11,7 @@
 #include <log4cplus/config.h>
 
 
-#include <log4cplus/helpers/pointer.h>
+#include <log4cplus/pointer.h>
 #include <log4cplus/appenderattachable.h>
 #include <log4cplus/thread/Mutex.h>
 
@@ -20,7 +20,7 @@
 #include <vector>
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus {
 
 	/**
 	* This Interface is for attaching Appenders to objects.
@@ -91,7 +91,7 @@ namespace log4cplus { namespace helpers {
 		AppenderAttachableImpl & operator = (AppenderAttachableImpl const&);
 	};  // end class AppenderAttachableImpl
 
-} } // end namespace log4cplus end namespace helpers
+}  // end namespace log4cplus 
 
 #endif // LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 

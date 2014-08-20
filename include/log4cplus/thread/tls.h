@@ -9,10 +9,6 @@
 #include <new>
 #include <cassert>
 
-#if !defined(INSIDE_LOG4CPLUS)
-	#error "This header must not be be used outside log4cplus' implementation files."
-#endif
-
 #ifdef __linux__
 #include <pthread.h>
 

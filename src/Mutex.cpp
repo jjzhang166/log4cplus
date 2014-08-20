@@ -12,8 +12,7 @@
 #endif
 
 
-namespace log4cplus {
-
+using namespace log4cplus;
 
 Mutex::Mutex()
 {
@@ -23,4 +22,3 @@ Mutex::~Mutex()
 {
 }
 
-} // namespace log4cplus

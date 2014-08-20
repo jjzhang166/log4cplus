@@ -1,15 +1,14 @@
 #include <log4cplus/loggingmacros.h>
 #include <log4cplus/configurator.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/stringhelper.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/stringhelper.h>
 #include <log4cplus/loggingmacros.h>
-#include <log4cplus/helpers/sleep.h>
+#include <log4cplus/sleep.h>
 #include "osp/osp.h"
 
 
 using namespace std;
 using namespace log4cplus;
-using namespace log4cplus::helpers;
 
 
 static Logger logFile1 = Logger::getInstance("logFile1");

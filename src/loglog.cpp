@@ -3,138 +3,88 @@
 
 
 
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/environment.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/environment.h>
 #include <log4cplus/consoleappender.h>
 #include <ostream>
 #include <stdexcept>
 
-
-namespace log4cplus { namespace helpers {
-
-namespace
-{
+using namespace log4cplus;
 
 static char const PREFIX[] = "log4cplus: ";
 static char const WARN_PREFIX[] = "log4cplus:WARN ";
 static char const ERR_PREFIX[] = "log4cplus:ERROR ";
 
-} // namespace
 
-
-LogLog * LogLog::getLogLog()
+LogLog* LogLog::getLogLog()
 {
-    return &helpers::getLogLog();
+    return &log4cplus::getLogLog();
 }
 
 
-LogLog::LogLog() : _debugEnabled(TriUndef), _quietMode(TriUndef)
-{ }
+LogLog::LogLog() : _isDebugEnabled(false), _isQuietMode(false) { }
 
-
-LogLog::~LogLog()
-{ }
-
+LogLog::~LogLog(){ }
 
 void LogLog::setInternalDebugging(bool enabled)
 {
      Mutex::ScopedLock lock(_mutex);
 
-    _debugEnabled = enabled ? TriTrue : TriFalse;
+    _isDebugEnabled = enabled ;
 }
 
-
-void LogLog::setQuietMode(bool quietModeVal)
+void LogLog::setQuietMode(bool quietMode)
 {
      Mutex::ScopedLock lock(_mutex);
 
-    _quietMode = quietModeVal ? TriTrue : TriFalse;
+    _isQuietMode = quietMode;
 }
-
 
 void LogLog::debug(const string& msg) const
 {
-    logging_worker(&LogLog::get_debug_mode, PREFIX, msg);
+    loggingWorker(PREFIX, msg);
 }
 
 
 void LogLog::debug(char const * msg) const
 {
-    logging_worker(&LogLog::get_debug_mode, PREFIX, msg);
+    loggingWorker(PREFIX, msg);
 }
-
 
 void LogLog::warn(const string& msg) const
 {
-    logging_worker(&LogLog::get_not_quiet_mode, WARN_PREFIX, msg);
+    loggingWorker(WARN_PREFIX, msg);
 }
-
 
 void LogLog::warn(char const * msg) const
 {
-    logging_worker(&LogLog::get_not_quiet_mode, WARN_PREFIX, msg);
+    loggingWorker(WARN_PREFIX, msg);
 }
 
 
 void LogLog::error(const string& msg, bool throw_flag) const
 {
-    logging_worker(&LogLog::get_not_quiet_mode, ERR_PREFIX, msg, throw_flag);
+    loggingWorker(ERR_PREFIX, msg, throw_flag);
 }
-
 
 void LogLog::error(char const * msg, bool throw_flag) const
 {
-    logging_worker(&LogLog::get_not_quiet_mode, ERR_PREFIX, msg, throw_flag);
+    loggingWorker(ERR_PREFIX, msg, throw_flag);
 }
 
-
-bool LogLog::get_quiet_mode() const
+bool LogLog::getNotQuietMode() const
 {
-    if(_quietMode == TriUndef)
-        set_tristate_from_env(&_quietMode, "LOG4CPLUS_LOGLOG_QUIETMODE");
-
-    return _quietMode == TriTrue;
+    return !_isQuietMode;
 }
 
-
-bool LogLog::get_not_quiet_mode() const
+bool LogLog::getDebugMode() const
 {
-    return !get_quiet_mode();
+    return _isDebugEnabled && !_isQuietMode;
 }
 
-
-bool LogLog::get_debug_mode() const
+void LogLog::loggingWorker(char const * prefix, string const& msg, bool throw_flag) const
 {
-    if(_debugEnabled == TriUndef)
-        set_tristate_from_env(&_debugEnabled, "LOG4CPLUS_LOGLOG_DEBUGENABLED");
-
-    return _debugEnabled && !get_quiet_mode();
-}
-
-
-void LogLog::set_tristate_from_env(TriState * result, char const * envvar_name)
-{
-    string envvar_value;
-    bool exists = helpers::get_env_var(envvar_value, envvar_name);
-    bool value = false;
-    if(exists && helpers::parse_bool(value, envvar_value) && value)
-        *result = TriTrue;
-    else
-        *result = TriFalse;
-}
-
-
-template <typename StringType>
-void LogLog::logging_worker( bool(LogLog:: * cond)() const, 
-	char const * prefix, StringType const& msg, bool throw_flag) const
-{
-    bool output;
-    {
-		Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
-		output =(this->*cond)();
-    }
-
-    if(output)
+    if(!_isQuietMode)
     {
         // XXX This is potential recursive lock of
         // ConsoleAppender::outputMutex.
@@ -145,6 +95,4 @@ void LogLog::logging_worker( bool(LogLog:: * cond)() const,
     if(throw_flag)
         throw std::runtime_error(msg);
 }
-
-
-} } // namespace log4cplus { namespace helpers {
+ 

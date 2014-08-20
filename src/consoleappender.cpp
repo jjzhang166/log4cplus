@@ -5,54 +5,39 @@
 #include <log4cplus/layout.h>
 #include <log4cplus/consoleappender.h>
 
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/helpers/property.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/stringhelper.h>
+#include <log4cplus/property.h>
 #include <log4cplus/loggingevent.h>
 #include <ostream>
 
-
-namespace log4cplus
-{
-
-
-namespace helpers
-{
+using namespace log4cplus;
 
 extern log4cplus::Mutex const& getConsoleOutputMutex ();
 
-} // namespace helpers
-
-
 log4cplus::Mutex const& ConsoleAppender::getOutputMutex ()
 {
-	return helpers::getConsoleOutputMutex();
+	return getConsoleOutputMutex();
 }
-
 
 //////////////////////////////////////////////////////////////////////////////
 // ConsoleAppender ctors and dtor
 //////////////////////////////////////////////////////////////////////////////
 
-ConsoleAppender::ConsoleAppender(bool immediateFlush_) : _immediateFlush(immediateFlush_)
-{
-}
+ConsoleAppender::ConsoleAppender(bool immediateFlush_) : _immediateFlush(immediateFlush_) {}
 
 
-
-ConsoleAppender::ConsoleAppender(const helpers::Properties & properties)
+ConsoleAppender::ConsoleAppender(const Properties & properties)
 	: Appender(properties), _immediateFlush(false)
 {
-    properties.getBool (_immediateFlush, "ImmediateFlush");
+	properties.getBool (_immediateFlush, "ImmediateFlush");
 }
-
 
 
 ConsoleAppender::~ConsoleAppender()
 {
-    destructorImpl();
+	destructorImpl();
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -61,10 +46,8 @@ ConsoleAppender::~ConsoleAppender()
 
 void ConsoleAppender::close()
 {
-    helpers::getLogLog().debug("Entering ConsoleAppender::close()..");
-    _isClosed = true;
+	_isClosed = true;
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -73,14 +56,12 @@ void ConsoleAppender::close()
 
 void ConsoleAppender::append(const InternalLoggingEvent& loggingEvent)
 {
-   Mutex::ScopedLock lock(const_cast<Mutex&>(getOutputMutex()));
+	Mutex::ScopedLock lock(const_cast<Mutex&>(getOutputMutex()));
 
-    _layout->formatAndAppend(std::cout, loggingEvent);
-    if(_immediateFlush) 
+	_layout->formatAndAppend(std::cout, loggingEvent);
+	if(_immediateFlush) 
 	{
-        std::cout.flush();
-    }
+		std::cout.flush();
+	}
 }
 
-
-} // namespace log4cplus

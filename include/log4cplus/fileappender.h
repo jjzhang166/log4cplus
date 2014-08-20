@@ -11,7 +11,7 @@
 #include <log4cplus/config.h>
 
 #include <log4cplus/appender.h>
-#include <log4cplus/helpers/timehelper.h>
+#include <log4cplus/TimeHelper.h>
 #include <fstream>
 #include <locale>
 #include <memory>
@@ -19,7 +19,8 @@
 
 namespace log4cplus
 {
-
+	
+	
     /**
      * Appends log events to a file. 
      * 
@@ -90,7 +91,7 @@ namespace log4cplus
         FileAppender(const string& filename, 
                      std::ios_base::openmode mode = std::ios_base::trunc,
                      bool immediateFlush = true, bool createDirs = false);
-        FileAppender(const helpers::Properties& properties,
+        FileAppender(const Properties& properties,
                      std::ios_base::openmode mode = std::ios_base::trunc);
 
       // Dtor
@@ -145,7 +146,7 @@ namespace log4cplus
         std::ofstream _out;
         string _filename;
 
-        helpers::TimeHelper _reopen_time;
+        TimeHelper _reopen_time;
 
     private:
         void init(const string& filename,
@@ -157,7 +158,7 @@ namespace log4cplus
     };
 
 
-    typedef helpers::SharedObjectPtr<FileAppender> SharedFileAppenderPtr;
+    typedef SharedObjectPtr<FileAppender> SharedFileAppenderPtr;
 
 
 
@@ -189,7 +190,7 @@ namespace log4cplus
                             int maxBackupIndex = 1,
                             bool immediateFlush = true,
                             bool createDirs = false);
-        RollingFileAppender(const helpers::Properties& properties);
+        RollingFileAppender(const Properties& properties);
 
       // Dtor
         virtual ~RollingFileAppender();
@@ -207,7 +208,7 @@ namespace log4cplus
     };
 
 
-    typedef helpers::SharedObjectPtr<RollingFileAppender> SharedRollingFileAppenderPtr;
+    typedef SharedObjectPtr<RollingFileAppender> SharedRollingFileAppenderPtr;
 
 
     enum DailyRollingFileSchedule { MONTHLY, WEEKLY, DAILY, TWICE_DAILY, HOURLY, MINUTELY};
@@ -241,7 +242,7 @@ namespace log4cplus
                                  bool immediateFlush = true,
                                  int maxBackupIndex = 10,
                                  bool createDirs = false);
-        DailyRollingFileAppender(const helpers::Properties& properties);
+        DailyRollingFileAppender(const Properties& properties);
 
       // Dtor
         virtual ~DailyRollingFileAppender();
@@ -252,13 +253,13 @@ namespace log4cplus
     protected:
         virtual void append(const InternalLoggingEvent& loggingEvent);
         void rollover();
-        helpers::TimeHelper calculateNextRolloverTime(const helpers::TimeHelper& t) const;
-        string getFilename(const helpers::TimeHelper& t) const;
+        TimeHelper calculateNextRolloverTime(const TimeHelper& t) const;
+        string getFilename(const TimeHelper& t) const;
 
       // Data
         DailyRollingFileSchedule _schedule;
         string _scheduledFilename;
-        helpers::TimeHelper _nextRolloverTime;
+        TimeHelper _nextRolloverTime;
         int _maxBackupIndex;
 
     private:

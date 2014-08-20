@@ -12,12 +12,12 @@
 
 #include <log4cplus/appender.h>
 
-#include <log4cplus/helpers/pointer.h>
+#include <log4cplus/pointer.h>
 #include <vector>
 
 namespace log4cplus {
     // Forward Declarations
-    typedef helpers::SharedObjectPtr<Appender> SharedAppenderPtr;
+    typedef SharedObjectPtr<Appender> SharedAppenderPtr;
     typedef std::vector<log4cplus::SharedAppenderPtr> SharedAppenderPtrList;
 
 

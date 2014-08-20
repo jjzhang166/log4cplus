@@ -4,234 +4,233 @@
 
 #include <log4cplus/appender.h>
 #include <log4cplus/layout.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/pointer.h>
-#include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/helpers/property.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/pointer.h>
+#include <log4cplus/stringhelper.h>
+#include <log4cplus/property.h>
 #include <log4cplus/factory.h>
 #include <log4cplus/loggingevent.h>
-#include <log4cplus/helpers/internal.h>
+#include <log4cplus/internal.h>
 #include <stdexcept>
 
 
-namespace log4cplus
+using namespace log4cplus;
+
+
+///////////////////////////////////////////////////////////////////////////////
+// log4cplus::ErrorHandler dtor
+///////////////////////////////////////////////////////////////////////////////
+
+ErrorHandler::ErrorHandler() { }
+
+ErrorHandler::~ErrorHandler() { }
+
+///////////////////////////////////////////////////////////////////////////////
+// log4cplus::OnlyOnceErrorHandler 
+///////////////////////////////////////////////////////////////////////////////
+
+OnlyOnceErrorHandler::OnlyOnceErrorHandler() : firstTime(true) { }
+
+OnlyOnceErrorHandler::~OnlyOnceErrorHandler() { }
+
+void OnlyOnceErrorHandler::error(const string& err)
 {
-
-
-	///////////////////////////////////////////////////////////////////////////////
-	// log4cplus::ErrorHandler dtor
-	///////////////////////////////////////////////////////////////////////////////
-
-	ErrorHandler::ErrorHandler() { }
-
-	ErrorHandler::~ErrorHandler() { }
-
-	///////////////////////////////////////////////////////////////////////////////
-	// log4cplus::OnlyOnceErrorHandler 
-	///////////////////////////////////////////////////////////////////////////////
-
-	OnlyOnceErrorHandler::OnlyOnceErrorHandler() : firstTime(true) { }
-
-	OnlyOnceErrorHandler::~OnlyOnceErrorHandler() { }
-
-	void OnlyOnceErrorHandler::error(const string& err)
+	if(firstTime) 
 	{
-		if(firstTime) 
+		getLogLog().error(err);
+		firstTime = false;
+	}
+}
+
+void OnlyOnceErrorHandler::reset()
+{
+	firstTime = true;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// log4cplus::Appender ctors
+///////////////////////////////////////////////////////////////////////////////
+
+Appender::Appender()
+	: _layout(new SimpleLayout()),
+	_name(""),
+	_threshold(NOT_SET_LOG_LEVEL),
+	_errorHandler(new OnlyOnceErrorHandler),
+	_isClosed(false)
+{
+}
+
+Appender::Appender(const log4cplus::Properties & properties)
+	: _layout(new SimpleLayout())
+	, _name()
+	, _threshold(NOT_SET_LOG_LEVEL)
+	, _errorHandler(new OnlyOnceErrorHandler)
+	, _isClosed(false)
+{
+	if(properties.exists("layout"))
+	{
+		string const& factoryName = properties.getProperty("layout");
+		LayoutFactory* factory = getLayoutFactoryRegistry().get(factoryName);
+		if(factory == 0) 
 		{
-			helpers::getLogLog().error(err);
-			firstTime = false;
+			getLogLog().error("Cannot find LayoutFactory: " + factoryName );
+			return;
 		}
-	}
 
-	void OnlyOnceErrorHandler::reset()
-	{
-		firstTime = true;
-	}
-
-	///////////////////////////////////////////////////////////////////////////////
-	// log4cplus::Appender ctors
-	///////////////////////////////////////////////////////////////////////////////
-
-	Appender::Appender()
-		: _layout(new SimpleLayout()),
-		_name(""),
-		_threshold(NOT_SET_LOG_LEVEL),
-		_errorHandler(new OnlyOnceErrorHandler),
-		_isClosed(false)
-	{
-	}
-
-	Appender::Appender(const log4cplus::helpers::Properties & properties)
-		: _layout(new SimpleLayout())
-		, _name()
-		, _threshold(NOT_SET_LOG_LEVEL)
-		, _errorHandler(new OnlyOnceErrorHandler)
-		, _isClosed(false)
-	{
-		if(properties.exists("layout"))
+		Properties layoutProperties = properties.getPropertySubset("layout.");
+		try 
 		{
-			string const& factoryName = properties.getProperty("layout");
-			LayoutFactory* factory = getLayoutFactoryRegistry().get(factoryName);
-			if(factory == 0) {
-				helpers::getLogLog().error("Cannot find LayoutFactory: " + factoryName );
-				return;
-			}
-
-			helpers::Properties layoutProperties = properties.getPropertySubset("layout.");
-			try 
+			std::auto_ptr<Layout> newLayout(factory->createObject(layoutProperties));
+			if(newLayout.get() == 0)
 			{
-				std::auto_ptr<Layout> newLayout(factory->createObject(layoutProperties));
-				if(newLayout.get() == 0)
-				{
-					helpers::getLogLog().error("Failed to create appender: " + factoryName);
-				}
-				else 
-				{
-					_layout = newLayout;
-				}
+				getLogLog().error("Failed to create appender: " + factoryName);
 			}
-			catch(std::exception const& e) 
+			else 
 			{
-				helpers::getLogLog().error("Error while creating Layout: " + string(e.what()));
-				return;
+				_layout = newLayout;
 			}
-
 		}
-
-		// Support for appender.Threshold in properties configuration file
-		if(properties.exists("Threshold")) 
+		catch(std::exception const& e) 
 		{
-			string tmp = properties.getProperty("Threshold");
-			tmp = log4cplus::helpers::toUpper(tmp);
-			_threshold = log4cplus::getLogLevelManager().fromString(tmp);
+			getLogLog().error("Error while creating Layout: " + string(e.what()));
+			return;
 		}
 
-		// Configure the filters
-		helpers::Properties filterProps = properties.getPropertySubset("filters.");
-		unsigned filterCount = 0;
-		FilterPtr filterChain;
-		string filterName;
-		while(filterProps.exists(filterName = helpers::convertIntegerToString(++filterCount)))
+	}
+
+	// Support for appender.Threshold in properties configuration file
+	if(properties.exists("Threshold")) 
+	{
+		string tmp = properties.getProperty("Threshold");
+		tmp = log4cplus::toUpper(tmp);
+		_threshold = log4cplus::getLogLevelManager().fromString(tmp);
+	}
+
+	// Configure the filters
+	Properties filterProps = properties.getPropertySubset("filters.");
+	unsigned filterCount = 0;
+	FilterPtr filterChain;
+	string filterName;
+	while(filterProps.exists(filterName = convertIntegerToString(++filterCount)))
+	{
+		string const& factoryName = filterProps.getProperty(filterName);
+		FilterFactory* factory = getFilterFactoryRegistry().get(factoryName);
+
+		if(!factory)
 		{
-			string const& factoryName = filterProps.getProperty(filterName);
-			FilterFactory* factory = getFilterFactoryRegistry().get(factoryName);
-
-			if(!factory)
-			{
-				string err = "Appender::ctor()- Cannot find FilterFactory: ";
-				helpers::getLogLog().error(err + factoryName);
-				continue;
-			}
-			FilterPtr tmpFilter = factory->createObject(filterProps.getPropertySubset(filterName + "."));
-			if(!tmpFilter)
-			{
-				string err = "Appender::ctor()- Failed to create filter: ";
-				helpers::getLogLog().error(err + filterName);
-			}
-			if(!filterChain)
-				filterChain = tmpFilter;
-			else
-				filterChain->appendFilter(tmpFilter);
+			string err = "Appender::ctor()- Cannot find FilterFactory: ";
+			getLogLog().error(err + factoryName);
+			continue;
 		}
-		setFilter(filterChain);
-	}
-
-	Appender::~Appender()
-	{
-		helpers::LogLog & loglog = helpers::getLogLog();
-
-		loglog.debug("Destroying appender named [" + _name + "].");
-
-		if(!_isClosed)
-			loglog.error("Derived Appender did not call destructorImpl().");
-	}
-
-	///////////////////////////////////////////////////////////////////////////////
-	// log4cplus::Appender public methods
-	///////////////////////////////////////////////////////////////////////////////
-
-	void Appender::destructorImpl()
-	{
-		// An appender might be closed then destroyed. There is no point
-		// in closing twice. It can actually be a wrong thing to do, e.g.,
-		// files get rolled more than once.
-		if(_isClosed)
-			return;
-
-		close();
-		_isClosed = true;
-	}
-
-	bool Appender::isClosed() const
-	{
-		return _isClosed;
-	}
-
-
-	void Appender::doAppend(const log4cplus::InternalLoggingEvent& loggingEvent)
-	{
-		Mutex::ScopedLock lock(_access_mutex);
-
-		if(_isClosed) {
-			helpers::getLogLog().error("Attempted to append to closed appender named [" + _name + "].");
-			return;
-		}
-
-		// Check appender's threshold logging level.
-
-		if(!isAsSevereAsThreshold(loggingEvent.getLogLevel()))
-			return;
-
-		// Evaluate filters attached to this appender.
-
-		if(checkFilter(_filter.get(), loggingEvent) == DENY)
-			return;
-		// Finally append given loggingEvent.
-
-		append(loggingEvent);
-	}
-
-
-	string Appender::getName()
-	{
-		return _name;
-	}
-
-	void Appender::setName(const string& n)
-	{
-		this->_name = n;
-	}
-
-	ErrorHandler* Appender::getErrorHandler()
-	{
-		return _errorHandler.get();
-	}
-
-	void Appender::setErrorHandler(std::auto_ptr<ErrorHandler> eh)
-	{
-		if(!eh.get())
+		FilterPtr tmpFilter = factory->createObject(filterProps.getPropertySubset(filterName + "."));
+		if(!tmpFilter)
 		{
-			// We do not throw exception here since the cause is probably a
-			// bad config file.
-			helpers::getLogLog().warn("You have tried to set a null error-handler.");
-			return;
+			string err = "Appender::ctor()- Failed to create filter: ";
+			getLogLog().error(err + filterName);
 		}
+		if(!filterChain)
+			filterChain = tmpFilter;
+		else
+			filterChain->appendFilter(tmpFilter);
+	}
+	setFilter(filterChain);
+}
 
-		Mutex::ScopedLock lock(_access_mutex);
+Appender::~Appender()
+{
+	LogLog & loglog = getLogLog();
 
-		this->_errorHandler = eh;
+	loglog.debug("Destroying appender named [" + _name + "].");
+
+	if(!_isClosed)
+		loglog.error("Derived Appender did not call destructorImpl().");
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// log4cplus::Appender public methods
+///////////////////////////////////////////////////////////////////////////////
+
+void Appender::destructorImpl()
+{
+	// An appender might be closed then destroyed. There is no point
+	// in closing twice. It can actually be a wrong thing to do, e.g.,
+	// files get rolled more than once.
+	if(_isClosed)
+		return;
+
+	close();
+	_isClosed = true;
+}
+
+bool Appender::isClosed() const
+{
+	return _isClosed;
+}
+
+
+void Appender::doAppend(const log4cplus::InternalLoggingEvent& loggingEvent)
+{
+	Mutex::ScopedLock lock(_access_mutex);
+
+	if(_isClosed) {
+		getLogLog().error("Attempted to append to closed appender named [" + _name + "].");
+		return;
 	}
 
-	void Appender::setLayout(std::auto_ptr<Layout> lo)
+	// Check appender's threshold logging level.
+
+	if(!isAsSevereAsThreshold(loggingEvent.getLogLevel()))
+		return;
+
+	// Evaluate filters attached to this appender.
+
+	if(checkFilter(_filter.get(), loggingEvent) == DENY)
+		return;
+	// Finally append given loggingEvent.
+
+	append(loggingEvent);
+}
+
+
+string Appender::getName()
+{
+	return _name;
+}
+
+void Appender::setName(const string& n)
+{
+	this->_name = n;
+}
+
+ErrorHandler* Appender::getErrorHandler()
+{
+	return _errorHandler.get();
+}
+
+void Appender::setErrorHandler(std::auto_ptr<ErrorHandler> eh)
+{
+	if(!eh.get())
 	{
-		Mutex::ScopedLock lock(_access_mutex);
-
-		this->_layout = lo;
+		// We do not throw exception here since the cause is probably a
+		// bad config file.
+		getLogLog().warn("You have tried to set a null error-handler.");
+		return;
 	}
 
-	Layout* Appender::getLayout()
-	{
-		return _layout.get();
-	}
+	Mutex::ScopedLock lock(_access_mutex);
 
-} // namespace log4cplus
+	this->_errorHandler = eh;
+}
+
+void Appender::setLayout(std::auto_ptr<Layout> lo)
+{
+	Mutex::ScopedLock lock(_access_mutex);
+
+	this->_layout = lo;
+}
+
+Layout* Appender::getLayout()
+{
+	return _layout.get();
+}
+

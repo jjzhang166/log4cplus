@@ -1,9 +1,9 @@
 
 
-#include <log4cplus/helpers/environment.h>
-#include <log4cplus/helpers/stringhelper.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/fileinfo.h>
+#include <log4cplus/environment.h>
+#include <log4cplus/stringhelper.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/fileinfo.h>
 
 #ifdef _MSC_VER 
 #include <direct.h>
@@ -16,7 +16,7 @@
 #include <stdexcept>
 
 
-namespace log4cplus { namespace helpers {
+using namespace log4cplus;
 
 #if defined(_MSC_VER)
 string const dir_sep("\\");
@@ -35,7 +35,7 @@ bool get_env_var(string& envString, string const& name)
 }
 
 
-bool parse_bool(bool & val, string const& str)
+bool parse_bool(bool& val, string const& str)
 {
     istringstream iss(str);
     string word;
@@ -54,7 +54,7 @@ bool parse_bool(bool & val, string const& str)
 
     // Compare with "true" and "false".
 
-    word = helpers::toLower(word);
+    word = toLower(word);
     bool result = true;
     if(word == "true")
         val = true;
@@ -111,7 +111,7 @@ static void remove_empty(Cont & cont, std::size_t special)
 
 static bool is_drive_letter(char ch)
 {
-    char dl = helpers::toUpper(ch);
+    char dl = toUpper(ch);
     return 'A' <= dl && dl <= 'Z';
 }
 
@@ -122,13 +122,13 @@ static string get_drive_cwd(char drive)
 {
     string path;
 
-    drive = helpers::toUpper(drive);
+    drive = toUpper(drive);
     
     char * cstr = _getdcwd(drive - 'A' + 1, 0, 0x7FFF);
     if(!cstr)
     {
         int const eno = errno;
-        helpers::getLogLog().error("_getdcwd: " + helpers::convertIntegerToString(eno), true);
+        getLogLog().error("_getdcwd: " + convertIntegerToString(eno), true);
     }
 
     try
@@ -174,7 +174,7 @@ static string get_current_dir()
             if(eno == ERANGE)
                 buf_size *= 2;
             else
-                helpers::getLogLog().error("getcwd: " + helpers::convertIntegerToString(eno), true);
+                getLogLog().error("getcwd: " + convertIntegerToString(eno), true);
         }
     }
     while(!ret);
@@ -247,7 +247,7 @@ static void expand_relative_path(vector<string>& components)
     vector<string> cwd_components;
 
     // Use qualified call to appease IBM xlC.
-    helpers::split_into_components(cwd_components, cwd);
+    split_into_components(cwd_components, cwd);
 
     // Insert the CWD components at the beginning of components.
 
@@ -287,9 +287,9 @@ retry_recognition:;
     if(comp_count >= 7 
 		&& components[0].empty() && components[1].empty() 
 		&& components[2] == "?" &&(components[3].size() == 3
-		&& helpers::toUpper(components[3][0]) == 'U'
-		&& helpers::toUpper(components[3][1]) == 'N'
-		&& helpers::toUpper(components[3][2]) == 'C'))
+		&& toUpper(components[3][0]) == 'U'
+		&& toUpper(components[3][1]) == 'N'
+		&& toUpper(components[3][2]) == 'C'))
     {
         remove_empty(components, 2);
         special = 6;
@@ -403,7 +403,7 @@ static long make_directory(string const& dir)
 }
 
 
-static void loglog_make_directory_result(helpers::LogLog & loglog, string const& path, long ret)
+static void loglog_make_directory_result(LogLog & loglog, string const& path, long ret)
 {
     if(ret == 0)
     {
@@ -423,11 +423,11 @@ void make_dirs(string const& file_path)
 {
     vector<string> components;
     std::size_t special = 0;
-    helpers::LogLog & loglog = helpers::getLogLog();
+    LogLog & loglog = getLogLog();
 
     // Split file path into components.
 
-    if(!helpers::split_path(components, special, file_path))
+    if(!split_path(components, special, file_path))
         return;
 
     // Remove file name from path components list.
@@ -437,7 +437,7 @@ void make_dirs(string const& file_path)
     // Loop over path components, starting first non-special path component.
 
     string path;
-    helpers::join(path, components.begin(), components.begin() + special, dir_sep);
+    join(path, components.begin(), components.begin() + special, dir_sep);
 
     for(std::size_t i = special, components_size = components.size(); i != components_size; ++i)
     {
@@ -446,8 +446,8 @@ void make_dirs(string const& file_path)
 
         // Check whether path exists.
 
-        helpers::FileInfo fi;
-        if(helpers::getFileInfo(&fi, path) == 0)
+        FileInfo fi;
+        if(getFileInfo(&fi, path) == 0)
             // This directory exists. Move forward onto another path component.
             continue;
 
@@ -458,5 +458,3 @@ void make_dirs(string const& file_path)
     }
 }
 
-
-} } // namespace log4cplus { namespace internal {

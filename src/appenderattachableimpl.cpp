@@ -4,29 +4,21 @@
 
 
 #include <log4cplus/appender.h>
-#include <log4cplus/helpers/appenderattachableimpl.h>
-#include <log4cplus/helpers/loglog.h>
+#include <log4cplus/appenderattachableimpl.h>
+#include <log4cplus/loglog.h>
 #include <log4cplus/loggingevent.h>
 
 #include <algorithm>
 
-
-namespace log4cplus
-{
+using namespace log4cplus;
 
 
 AppenderAttachable::~AppenderAttachable()
 { }
 
 
-
-
-namespace helpers
-{
-
-
 //////////////////////////////////////////////////////////////////////////////
-// log4cplus::helpers::AppenderAttachableImpl ctor and dtor
+// log4cplus::AppenderAttachableImpl ctor and dtor
 //////////////////////////////////////////////////////////////////////////////
 
 AppenderAttachableImpl::AppenderAttachableImpl()
@@ -39,7 +31,7 @@ AppenderAttachableImpl::~AppenderAttachableImpl()
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// log4cplus::helpers::AppenderAttachableImpl public methods
+// log4cplus::AppenderAttachableImpl public methods
 ///////////////////////////////////////////////////////////////////////////////
 
 void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
@@ -136,8 +128,3 @@ int AppenderAttachableImpl::appendLoopOnAppenders(const InternalLoggingEvent& lo
     return count;
 }
 
-
-} // namespace helpers
-
-
-} // namespace log4cplus

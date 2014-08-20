@@ -10,11 +10,11 @@
 
 #include <log4cplus/config.h>
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 	LOG4CPLUS_EXPORT void sleep(unsigned long secs, unsigned long nanosecs = 0);
 	LOG4CPLUS_EXPORT void sleepmillis(unsigned long millis);
-} }// end namespace log4cplus namespace helpers
+} // end namespace log4cplus
 
 #endif // LOG4CPLUS_HELPERS_SLEEP_HEADER_
 

@@ -14,10 +14,6 @@
 
 #include <log4cplus/config.h>
 
-#if !defined(INSIDE_LOG4CPLUS)
-#error "This header must not be be used outside log4cplus' implementation files."
-#endif
-
 #include <memory>
 #include <vector>
 #include <sstream>
@@ -25,10 +21,10 @@
 
 #include <log4cplus/loggingevent.h>
 #include <log4cplus/thread/tls.h>
-#include <log4cplus/helpers/snprintf.h>
+#include <log4cplus/snprintf.h>
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 	struct gft_scratch_pad
 	{
@@ -66,7 +62,7 @@ namespace log4cplus { namespace helpers {
 		string _faa_str;
 		InternalLoggingEvent _forcedLoggingEvent;
 		std::FILE * _fnull;
-		helpers::snprintf_buf _snprintf_buf;
+		snprintf_buf _snprintf_buf;
 	};
 
 	per_thread_data * alloc_ptd();
@@ -95,7 +91,7 @@ namespace log4cplus { namespace helpers {
 		return get_ptd()->_gft_sp;
 	}
 
-} } // namespace log4cplus { namespace internal {
+}  // namespace log4cplus 
 
 
 #endif // LOG4CPLUS_INTERNAL_INTERNAL_HEADER_

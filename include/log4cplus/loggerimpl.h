@@ -11,8 +11,8 @@
 #include <log4cplus/config.h>
 
 
-#include <log4cplus/helpers/appenderattachableimpl.h>
-#include <log4cplus/helpers/pointer.h>
+#include <log4cplus/appenderattachableimpl.h>
+#include <log4cplus/pointer.h>
 #include <log4cplus/loggerfactory.h>
 #include <memory>
 #include <vector>
@@ -30,10 +30,10 @@ namespace log4cplus {
          * introduction on this class. 
          */
 		class LOG4CPLUS_EXPORT LoggerImpl
-			: public virtual helpers::SharedObject, public helpers::AppenderAttachableImpl
+			: public virtual SharedObject, public AppenderAttachableImpl
         {
         public:
-            typedef helpers::SharedObjectPtr<LoggerImpl> SharedLoggerImplPtr;
+            typedef SharedObjectPtr<LoggerImpl> SharedLoggerImplPtr;
 
           // Methods
 

@@ -18,11 +18,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <log4cplus/helpers/logloguser.h>
-#include <log4cplus/helpers/loglog.h>
+#include <log4cplus/logloguser.h>
+#include <log4cplus/loglog.h>
 
 
-namespace log4cplus { namespace helpers {
+using namespace log4cplus;
 
 
 LogLogUser::LogLogUser()
@@ -37,17 +37,15 @@ LogLogUser::~LogLogUser()
 { }
 
 
-LogLog&
-LogLogUser::getLogLog() const
+LogLog& LogLogUser::getLogLog() const
 {
     return *LogLog::getLogLog();
 }
 
 
-LogLogUser&
-LogLogUser::operator= (const LogLogUser&)
+LogLogUser& LogLogUser::operator= (const LogLogUser&)
 {
     return *this;
 }
 
-} } // namespace log4cplus { namespace helpers {
+

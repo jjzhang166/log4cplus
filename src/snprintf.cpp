@@ -1,16 +1,15 @@
 
 
-#include <log4cplus/helpers/snprintf.h>
-#include <log4cplus/helpers/loglog.h>
-#include <log4cplus/helpers/internal.h>
+#include <log4cplus/snprintf.h>
+#include <log4cplus/loglog.h>
+#include <log4cplus/internal.h>
 #include <cstdarg>
 #include <cstdio>
 #include <stdarg.h>
 #include <wchar.h>
 #include <stdio.h>
 
-
-namespace log4cplus { namespace helpers {
+using namespace log4cplus;
 
 
 std::size_t const START_BUF_SIZE = 512;
@@ -88,7 +87,7 @@ int snprintf_buf::print_va_list(char const * & str, char const * fmt, std::va_li
     if(output_estimate > buf_size)
         buf.resize(buf_size = output_estimate);
 
-    std::FILE * & fnull = helpers::get_ptd()->_fnull;
+    std::FILE * & fnull = get_ptd()->_fnull;
     if(!fnull)
     {
         fnull = std::fopen(NULL_FILE, "wb");
@@ -113,5 +112,3 @@ int snprintf_buf::print_va_list(char const * & str, char const * fmt, std::va_li
     return printed;
 }
 
-
-} } // namespace log4cplus { namespace helpers

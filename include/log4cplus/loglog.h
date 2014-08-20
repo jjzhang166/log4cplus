@@ -17,7 +17,7 @@
 
 
 
-namespace log4cplus { namespace helpers {
+namespace log4cplus { 
 
 	/**
 	* This class used to output log statements from within the log4cplus package.
@@ -36,12 +36,11 @@ namespace log4cplus { namespace helpers {
 	{
 	public:
 		//!Return type of getLogLog().
-		typedef LogLog * LogLogPtr;
 
 		/**
 		* Returns a reference to the <code>LogLog</code> singleton.
 		*/
-		static LogLogPtr getLogLog();
+		static LogLog* getLogLog();
 
 		/**
 		* Allows to enable/disable log4cplus internal logging.
@@ -86,35 +85,25 @@ namespace log4cplus { namespace helpers {
 		virtual ~LogLog();
 
 	private:
-		enum TriState
-		{
-			TriUndef = -1,
-			TriFalse,
-			TriTrue
-		};
 
-		template <typename StringType>
-		void logging_worker( bool(LogLog:: * cond)() const, char const *,
-			StringType const&, bool throw_flag = false) const;
+		void loggingWorker(char const *, string const&, bool throw_flag = false) const;
 
-		static void set_tristate_from_env(TriState *, char const * envvar);
-
-		bool get_quiet_mode() const;
-		bool get_not_quiet_mode() const;
-		bool get_debug_mode() const;
+		bool getNotQuietMode() const;
+		bool getDebugMode() const;
 
 		// Data
-		mutable TriState _debugEnabled;
-		mutable TriState _quietMode;
+		mutable bool _isDebugEnabled;
+		mutable bool _isQuietMode;
 		Mutex _mutex;
 
 		LogLog(const LogLog&);
 		LogLog & operator =(LogLog const&);
+
 	};
 
 	LOG4CPLUS_EXPORT LogLog & getLogLog();
 
-} } // end namespace log4cplus end namespace helpers
+}  // end namespace log4cplus 
 
 
 #endif // LOG4CPLUS_HELPERS_LOGLOG
