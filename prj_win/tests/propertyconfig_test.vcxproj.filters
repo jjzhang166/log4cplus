@@ -7,7 +7,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\propertyconfig_test\main.cpp">
+    <ClCompile Include="..\..\demos_win\propertyconfig_test\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

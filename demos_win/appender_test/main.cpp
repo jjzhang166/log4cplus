@@ -117,7 +117,7 @@ main()
             {
                 istringstream propsStream (
                     "layout=log4cplus::WrongLayout");
-                Properties props (propsStream);
+                helpers::Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Third");
@@ -128,7 +128,7 @@ main()
             {
                 istringstream propsStream (
                     "Threshold=ERROR");
-                Properties props (propsStream);
+                helpers::Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Fourth");
@@ -139,7 +139,7 @@ main()
             {
                 istringstream propsStream (
                     "Threshold=WRONG");
-                Properties props (propsStream);
+                helpers::Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Fifth");
@@ -150,7 +150,7 @@ main()
             {
                 istringstream propsStream (
                     "filters.1=log4cplus::WrongFilter");
-                Properties props (propsStream);
+                helpers::Properties props (propsStream);
                 SharedObjectPtr<Appender> append (
                     new ConsoleAppender (props));
                 append->setName ("Sixth");

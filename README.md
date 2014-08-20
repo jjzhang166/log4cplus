@@ -2,9 +2,12 @@
 
 基于log4cplus-1.2.0精简（下载地址：http://sourceforge.net/projects/log4cplus/files/log4cplus-stable/）
 
+
 说明：精简并重构这个log4cplus只是为了满足个人需要。
 
+
 精简目标：
+
 1) 只支持Windows和Linux平台，去掉其他平台的支持，同时去除相关的代码。
 
 2) 去除unicode的支持
