@@ -46,15 +46,15 @@ namespace log4cplus {
 		InternalLoggingEvent(const string& logger, LogLevel loglevel,
 			const string& message, 
 			TimeHelper time, const string& file,
-			int line, const string& _function = string ());
+			int line, const string& _function = string());
 
-		InternalLoggingEvent ();
+		InternalLoggingEvent();
 
 		InternalLoggingEvent(const InternalLoggingEvent& rhs);
 
 		virtual ~InternalLoggingEvent();
 
-		void setLoggingEvent (const string& logger, LogLevel ll, const string& message,
+		void setLoggingEvent(const string& logger, LogLevel ll, const string& message,
 				const char * filename, int line, const char * _function = NULL);
 
 		// public virtual methods
@@ -62,7 +62,7 @@ namespace log4cplus {
 		virtual const string& getMessage() const;
 
 		/** Returns the 'type' of InternalLoggingEvent.  Derived classes
-		*  should override this method.  (NOTE: Values <= 1000 are
+		*  should override this method. (NOTE: Values <= 1000 are
 		*  reserved for log4cplus and should not be used.)
 		*/
 		virtual unsigned int getType() const;
@@ -105,16 +105,16 @@ namespace log4cplus {
 		/** The is the line where this log statement was written */
 		int getLine() const { return _line; }
 
-		string const& getFunction () const
+		string const& getFunction() const
 		{
 			return _function;
 		}
 
-		void swap (InternalLoggingEvent &);
+		void swap(InternalLoggingEvent &);
 
 		// public operators
 		InternalLoggingEvent&
-			operator= (const InternalLoggingEvent& rhs);
+			operator=(const InternalLoggingEvent& rhs);
 
 		// static methods
 		static unsigned int getDefaultType();

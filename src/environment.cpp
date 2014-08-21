@@ -25,7 +25,7 @@ string const dir_sep("/");
 #endif
 
 
-bool get_env_var(string& envString, string const& name)
+bool getEnvString(string& envString, string const& name)
 {
     char const* val = std::getenv(name.c_str());
     if(val)
@@ -35,7 +35,7 @@ bool get_env_var(string& envString, string const& name)
 }
 
 
-bool parse_bool(bool& val, string const& str)
+bool parse2bool(bool& val, string const& str)
 {
     istringstream iss(str);
     string word;
@@ -101,9 +101,7 @@ static bool isStringEmpty(string const& str)
 	return str.empty();
 }
 
-
-template <typename Cont>
-static void remove_empty(Cont & cont, std::size_t special)
+static void remove_empty(vector<string>& cont, std::size_t special)
 {
     cont.erase(std::remove_if(cont.begin() + special, cont.end(), isStringEmpty), cont.end());
 }
@@ -210,7 +208,7 @@ static void split_into_components(vector<string>& components, string const& path
     }
 }
 
-static void expand_drive_relative_path(vector<string>& components, std::size_t rel_path_index)
+static void expandDriveRelativePath(vector<string>& components, std::size_t rel_path_index)
 {
     // Save relative path attached to drive,
     // e.g., relpath in "C:relpath\foo\bar".
@@ -255,7 +253,7 @@ static void expand_relative_path(vector<string>& components)
 }
 
 
-bool split_path(vector<string>& components, std::size_t& special, string const& path)
+bool splitFilePath(vector<string>& components, std::size_t& special, string const& path)
 {
     typedef string::const_iterator const_iterator;
 
@@ -306,7 +304,7 @@ retry_recognition:;
         if(comp_3_size >= 2 && is_drive_letter(components[3][0]) && components[3][1] == ':')
         {
             if(comp_3_size > 2)
-                expand_drive_relative_path(components, 3);
+                expandDriveRelativePath(components, 3);
 
             special = 4;
         }
@@ -362,7 +360,7 @@ retry_recognition:;
 
         // "C:relpath"
         if(comp_0_size > 2)
-            expand_drive_relative_path(components, 0);
+            expandDriveRelativePath(components, 0);
 
         special = 1;
         return components.size() >= special + 1;
@@ -388,7 +386,7 @@ retry_recognition:;
 }
 
 
-static long make_directory(string const& dir)
+static long makeDirectory(string const& dir)
 {
 #if defined(_MSC_VER)
     if(_mkdir(dir.c_str()) == 0)
@@ -403,7 +401,7 @@ static long make_directory(string const& dir)
 }
 
 
-static void loglog_make_directory_result(LogLog& loglog, string const& path, long ret)
+static void loglog_makeDirectoryResult(LogLog& loglog, string const& path, long ret)
 {
     if(ret == 0)
     {
@@ -443,7 +441,7 @@ void make_dirs(string const& file_path)
 
     // Split file path into components.
 
-    if(!split_path(components, special, file_path))
+    if(!splitFilePath(components, special, file_path))
         return;
 
     // Remove file name from path components list.
@@ -468,8 +466,8 @@ void make_dirs(string const& file_path)
 
         // Make new directory.
 
-        long const eno = make_directory(path);
-        loglog_make_directory_result(loglog, path, eno);
+        long const eno = makeDirectory(path);
+        loglog_makeDirectoryResult(loglog, path, eno);
     }
 }
 

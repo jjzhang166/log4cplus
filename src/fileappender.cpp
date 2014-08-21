@@ -108,11 +108,6 @@ static void rolloverFiles(const string& filename, unsigned int maxBackupIndex)
 } // end rolloverFiles()
 
 
-
-///////////////////////////////////////////////////////////////////////////////
-// FileAppender ctors and dtor
-///////////////////////////////////////////////////////////////////////////////
-
 FileAppender::FileAppender(const string& filename_, std::ios_base::openmode mode_, bool immediateFlush_, bool createDirs_)
 	: _immediateFlush(immediateFlush_), _isCreateDirs(createDirs_)
 	, _reopenDelay(1), _ofstreamBufferSize(0)
@@ -170,10 +165,6 @@ FileAppender::~FileAppender()
 	destructorImpl();
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// FileAppender public methods
-///////////////////////////////////////////////////////////////////////////////
 
 void FileAppender::close()
 {
@@ -253,9 +244,6 @@ bool FileAppender::reopen()
 	return false;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// RollingFileAppender ctors and dtor
-///////////////////////////////////////////////////////////////////////////////
 
 RollingFileAppender::RollingFileAppender(const string& filename_,
 	long maxFileSize_, int maxBackupIndex_, bool immediateFlush_, bool createDirs_)
@@ -311,10 +299,6 @@ RollingFileAppender::~RollingFileAppender()
 	destructorImpl();
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// RollingFileAppender protected methods
-///////////////////////////////////////////////////////////////////////////////
 
 // This method does not need to be locked since it is called by
 // doAppend() which performs the locking
@@ -372,10 +356,6 @@ void RollingFileAppender::rollover()
 	loglog_openingResult(loglog, _out, _filename);
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// DailyRollingFileAppender ctors and dtor
-///////////////////////////////////////////////////////////////////////////////
 
 DailyRollingFileAppender::DailyRollingFileAppender(
 	const string& filename_, DailyRollingFileSchedule schedule_,
@@ -482,11 +462,6 @@ DailyRollingFileAppender::~DailyRollingFileAppender()
 
 
 
-
-///////////////////////////////////////////////////////////////////////////////
-// DailyRollingFileAppender public methods
-///////////////////////////////////////////////////////////////////////////////
-
 void DailyRollingFileAppender::close()
 {
 	rollover();
@@ -494,10 +469,6 @@ void DailyRollingFileAppender::close()
 }
 
 
-
-///////////////////////////////////////////////////////////////////////////////
-// DailyRollingFileAppender protected methods
-///////////////////////////////////////////////////////////////////////////////
 
 // This method does not need to be locked since it is called by
 // doAppend() which performs the locking

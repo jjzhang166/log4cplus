@@ -22,10 +22,6 @@ AppenderAttachableImpl::AppenderAttachableImpl() { }
 AppenderAttachableImpl::~AppenderAttachableImpl() { }
 
 
-///////////////////////////////////////////////////////////////////////////////
-// log4cplus::AppenderAttachableImpl public methods
-///////////////////////////////////////////////////////////////////////////////
-
 void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
 {
 	if(newAppender == NULL) 

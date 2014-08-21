@@ -5,7 +5,7 @@
 
 //
 // Note: Some of this code uses ideas from "More Effective C++" by Scott
-// Myers, Addison Wesley Longmain, Inc., (c) 1996, Chapter 29, pp. 183-213
+// Myers, Addison Wesley Longmain, Inc.,(c) 1996, Chapter 29, pp. 183-213
 //
 
 /** @file */
@@ -37,7 +37,7 @@ namespace log4cplus {
 		virtual ~SharedObject();
 
 		// Operators
-		SharedObject& operator= (const SharedObject&) { return *this; }
+		SharedObject& operator=(const SharedObject&) { return *this; }
 
 	public:
 		Mutex _access_mutex;
@@ -45,7 +45,7 @@ namespace log4cplus {
 
 	private:
 
-#if defined (_MSC_VER)
+#if defined(_MSC_VER)
 		typedef long count_type;
 #else
 		typedef unsigned count_type;
@@ -61,50 +61,50 @@ namespace log4cplus {
 		// Ctor
 		explicit SharedObjectPtr(T* realPtr = 0) : _pointee(realPtr)
 		{
-			addref ();
+			addref();
 		}
 
 		SharedObjectPtr(const SharedObjectPtr& rhs) : _pointee(rhs._pointee)
 		{
-			addref ();
+			addref();
 		}
 
 		// Dtor
 		~SharedObjectPtr()
 		{
-			if (_pointee)
+			if(_pointee)
 				_pointee->removeReference();
 		}
 
 		// Operators
-		bool operator== (const SharedObjectPtr& rhs) const { return (_pointee == rhs._pointee); }
-		bool operator!= (const SharedObjectPtr& rhs) const { return (_pointee != rhs._pointee); }
-		bool operator== (const T* rhs) const { return (_pointee == rhs); }
-		bool operator!= (const T* rhs) const { return (_pointee != rhs); }
-		T* operator->() const {assert (_pointee); return _pointee; }
-		T& operator*() const {assert (_pointee); return *_pointee; }
+		bool operator==(const SharedObjectPtr& rhs) const { return(_pointee == rhs._pointee); }
+		bool operator!=(const SharedObjectPtr& rhs) const { return(_pointee != rhs._pointee); }
+		bool operator==(const T* rhs) const { return(_pointee == rhs); }
+		bool operator!=(const T* rhs) const { return(_pointee != rhs); }
+		T* operator->() const {assert(_pointee); return _pointee; }
+		T& operator*() const {assert(_pointee); return *_pointee; }
 
-		SharedObjectPtr& operator= (const SharedObjectPtr& rhs)
+		SharedObjectPtr& operator=(const SharedObjectPtr& rhs)
 		{
-			return this->operator = (rhs._pointee);
+			return this->operator =(rhs._pointee);
 		}
 
-		SharedObjectPtr& operator= (T* rhs)
+		SharedObjectPtr& operator=(T* rhs)
 		{
-			SharedObjectPtr<T> (rhs).swap (*this);
+			SharedObjectPtr<T>(rhs).swap(*this);
 			return *this;
 		}
 
 		// Methods
 		T* get() const { return _pointee; }
 
-		void swap (SharedObjectPtr & other) throw ()
+		void swap(SharedObjectPtr & other) throw()
 		{
-			std::swap (_pointee, other._pointee);
+			std::swap(_pointee, other._pointee);
 		}
 
-		typedef T * (SharedObjectPtr:: * unspec_bool_type) () const;
-		operator unspec_bool_type () const
+		typedef T *(SharedObjectPtr:: * unspec_bool_type)() const;
+		operator unspec_bool_type() const
 		{
 			return _pointee ? &SharedObjectPtr::get : 0;
 		}
@@ -118,7 +118,7 @@ namespace log4cplus {
 		// Methods
 		void addref() const
 		{
-			if (_pointee)
+			if(_pointee)
 				_pointee->addReference();
 		}
 

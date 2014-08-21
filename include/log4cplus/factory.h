@@ -53,7 +53,7 @@ namespace log4cplus {
 		/**
 		* Create an "Appender" object.
 		*/
-		virtual SharedAppenderPtr createObject(const log4cplus::Properties& props) = 0;
+		virtual SharedAppenderPtr createObject(const Properties& props) = 0;
 	};
 
 
@@ -73,7 +73,7 @@ namespace log4cplus {
 		/**
 		* Create a "Layout" object.
 		*/
-		virtual std::auto_ptr<Layout> createObject(const log4cplus::Properties& props) = 0;
+		virtual std::auto_ptr<Layout> createObject(const Properties& props) = 0;
 	};
 
 
@@ -94,7 +94,7 @@ namespace log4cplus {
 		/**
 		* Create a "Filter" object.
 		*/
-		virtual FilterPtr createObject(const log4cplus::Properties& props) = 0;
+		virtual FilterPtr createObject(const Properties& props) = 0;
 	};
 
 	/**
@@ -200,16 +200,16 @@ namespace log4cplus {
 #define LOG4CPLUS_REG_PRODUCT(reg, name, Factory) \
 	reg.put(																  \
 	std::auto_ptr<Factory>(                                                   \
-	new log4cplus::FactoryTempl<name, Factory>("log4cplus::"#name)))
+	new FactoryTempl<name, Factory>(#name)))
 
 #define LOG4CPLUS_REG_APPENDER(reg, appendername)                             \
-	LOG4CPLUS_REG_PRODUCT(reg, appendername, log4cplus::AppenderFactory) 
+	LOG4CPLUS_REG_PRODUCT(reg, appendername, AppenderFactory) 
 
 #define LOG4CPLUS_REG_LAYOUT(reg, layoutname)                                 \
-	LOG4CPLUS_REG_PRODUCT(reg, layoutname, log4cplus::LayoutFactory)
+	LOG4CPLUS_REG_PRODUCT(reg, layoutname, LayoutFactory)
 
 #define LOG4CPLUS_REG_FILTER(reg, filtername)                                 \
-	LOG4CPLUS_REG_PRODUCT(reg, filtername, log4cplus::FilterFactory)
+	LOG4CPLUS_REG_PRODUCT(reg, filtername, FilterFactory)
 }
 
 

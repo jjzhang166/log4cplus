@@ -8,7 +8,6 @@
 
 #include <log4cplus/config.h>
 
-
 #include <log4cplus/thread/Mutex.h>
 
 #include <map>

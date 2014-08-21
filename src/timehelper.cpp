@@ -27,10 +27,6 @@ using namespace std;
 const int ONE_SEC_IN_USEC = 1000000;
 
 
-//////////////////////////////////////////////////////////////////////////////
-// Time ctors
-//////////////////////////////////////////////////////////////////////////////
-
 TimeHelper::TimeHelper() : _tv_seconds(0), _tv_microseconds(0){}
 
 
@@ -59,23 +55,14 @@ TimeHelper TimeHelper::gettimeofday()
 
 	GetSystemTimeAsFileTime(&ft);
 
-
-	typedef unsigned __int64 uint64_type;
-	uint64_type st100ns
-		= uint64_type(ft.dwHighDateTime) << 32 | ft.dwLowDateTime;
+	__int64 st100ns = __int64(ft.dwHighDateTime) << 32 | ft.dwLowDateTime;
 
 	// Number of 100-ns intervals between UNIX epoch and Windows system time
 	// is 116444736000000000.
-	uint64_type const offset = uint64_type(116444736) * 1000 * 1000 * 1000;
-	uint64_type fixed_time = st100ns - offset;
+	__int64 const offset = __int64(116444736) * 1000 * 1000 * 1000;
+	__int64 fixed_time = st100ns - offset;
 
 	return TimeHelper(fixed_time /(10 * 1000 * 1000), fixed_time %(10 * 1000 * 1000) / 10);
-
-#elif defined(__linux__)
-	struct timeb tp;
-	ftime(&tp);
-
-	return TimeHelper(tp.time, tp.millitm * 1000);
 
 #else
 #warning "Time::gettimeofday()- low resolution timer: gettimeofday and ftime unavailable"
@@ -83,10 +70,6 @@ TimeHelper TimeHelper::gettimeofday()
 #endif
 }
 
-
-//////////////////////////////////////////////////////////////////////////////
-// Time methods
-//////////////////////////////////////////////////////////////////////////////
 
 time_t TimeHelper::setTime(tm* t)
 {
@@ -102,7 +85,6 @@ time_t TimeHelper::getTime() const
 {
 	return _tv_seconds;
 }
-
 
 
 void TimeHelper::localtime(tm* t) const
@@ -235,11 +217,6 @@ TimeHelper& TimeHelper::operator*=(long rhs)
 
 	return *this;
 }
-
-
-//////////////////////////////////////////////////////////////////////////////
-// Time globals
-//////////////////////////////////////////////////////////////////////////////
 
 
 const TimeHelper operator+(const TimeHelper& lhs, const TimeHelper& rhs)

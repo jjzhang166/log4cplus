@@ -20,10 +20,6 @@ using namespace log4cplus;
 void initializeLog4cplus();
 
 
-//////////////////////////////////////////////////////////////////////////////
-// PropertyConfigurator ctor and dtor
-//////////////////////////////////////////////////////////////////////////////
-
 PropertyConfigurator::PropertyConfigurator(const string& propertyFile, Hierarchy& hier)
 	: _hierarchy(hier), _propertyFilename(propertyFile), _properties(propertyFile)
 {
@@ -55,9 +51,6 @@ PropertyConfigurator::~PropertyConfigurator()
 {
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// PropertyConfigurator static methods
-//////////////////////////////////////////////////////////////////////////////
 
 void PropertyConfigurator::doConfigure(const string& file, Hierarchy& h)
 {
@@ -65,9 +58,6 @@ void PropertyConfigurator::doConfigure(const string& file, Hierarchy& h)
 	tmp.configure();
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// PropertyConfigurator public methods
-//////////////////////////////////////////////////////////////////////////////
 void PropertyConfigurator::configure()
 {
 	// Configure log4cplus internals.
@@ -98,10 +88,6 @@ string const& PropertyConfigurator::getPropertyFilename() const
 {
 	return _propertyFilename;
 }
-
-//////////////////////////////////////////////////////////////////////////////
-// PropertyConfigurator protected methods
-//////////////////////////////////////////////////////////////////////////////
 
 void PropertyConfigurator::configureLoggers()
 {
@@ -163,7 +149,6 @@ void PropertyConfigurator::configureLogger(Logger logger, const string& config)
 	}
 }
 
-
 void PropertyConfigurator::configureAppenders()
 {
 	Properties appenderProperties = _properties.getPropertySubset("appender.");
@@ -189,8 +174,7 @@ void PropertyConfigurator::configureAppenders()
 				SharedAppenderPtr appender = factory->createObject(props_subset);
 				if(!appender)
 				{
-					string err =
-						"PropertyConfigurator::configureAppenders() - Failed to create appender: ";
+					string err ="PropertyConfigurator::configureAppenders() - Failed to create appender: ";
 					getLogLog().error(err + *it);
 				}
 				else
@@ -219,10 +203,6 @@ void PropertyConfigurator::addAppender(Logger &logger, SharedAppenderPtr& append
 }
 
 
-//////////////////////////////////////////////////////////////////////////////
-// BasicConfigurator ctor and dtor
-//////////////////////////////////////////////////////////////////////////////
-
 
 BasicConfigurator::BasicConfigurator(Hierarchy& hier, bool logToStdErr)
 	: PropertyConfigurator("", hier )
@@ -236,9 +216,6 @@ BasicConfigurator::~BasicConfigurator()
 {
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// BasicConfigurator static methods
-//////////////////////////////////////////////////////////////////////////////
 
 void BasicConfigurator::doConfigure(Hierarchy& h, bool logToStdErr)
 {

@@ -68,7 +68,6 @@ void log4cplus::tokenize(const string& s, char c, OutputIter result, bool collap
 void log4cplus::convertIntegerToString(string & str, int intValue)
 {
 	typedef std::numeric_limits<int> intTypeLimits;
-	// typedef ConvertIntegerToStringHelper<intType, charType, intTypeLimits::is_signed> HelperType;
 
 	char buffer[intTypeLimits::digits10 + 2];
 	// We define buffer_size from buffer using sizeof operator

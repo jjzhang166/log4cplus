@@ -82,7 +82,7 @@ int snprintfBuf::printVaList(char const*& str, char const* fmt, std::va_list arg
 	if(output_estimate > buf_size)
 		_szBuf.resize(buf_size = output_estimate);
 
-	std::FILE *& fnull = getPerThreadData()->_fnull;
+	std::FILE*& fnull = getPerThreadData()->_fnull;
 	if(!fnull)
 	{
 		fnull = std::fopen(NULL_FILE, "wb");

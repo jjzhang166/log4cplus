@@ -19,10 +19,7 @@ public:
     snprintfBuf();
 
     char const* print(char const* fmt, ...);
-
-
     int printVaList(char const*& str, char const* fmt, std::va_list args);
-
 
 private:
     vector<char> _szBuf;

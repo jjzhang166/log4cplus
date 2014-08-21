@@ -8,12 +8,8 @@
 #include <log4cplus/property.h>
 #include <log4cplus/loggingevent.h>
 
-
 using namespace log4cplus;
 
-///////////////////////////////////////////////////////////////////////////////
-// global methods
-///////////////////////////////////////////////////////////////////////////////
 
 FilterResult log4cplus::checkFilter(const Filter* filter, const InternalLoggingEvent& loggingEvent)
 {
@@ -33,20 +29,9 @@ FilterResult log4cplus::checkFilter(const Filter* filter, const InternalLoggingE
 }
 
 
+Filter::Filter() {}
 
-///////////////////////////////////////////////////////////////////////////////
-// Filter implementation
-///////////////////////////////////////////////////////////////////////////////
-
-Filter::Filter()
-{
-}
-
-
-Filter::~Filter()
-{
-}
-
+Filter::~Filter() {}
 
 void Filter::appendFilter(FilterPtr filter)
 {
@@ -56,11 +41,6 @@ void Filter::appendFilter(FilterPtr filter)
 		_nextFilter->appendFilter(filter);
 }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// DenyAllFilter implementation
-///////////////////////////////////////////////////////////////////////////////
 
 DenyAllFilter::DenyAllFilter() { }
 
@@ -74,10 +54,6 @@ FilterResult DenyAllFilter::decide(const InternalLoggingEvent&) const
 }
 
 
-
-///////////////////////////////////////////////////////////////////////////////
-// LogLevelMatchFilter implementation
-///////////////////////////////////////////////////////////////////////////////
 
 LogLevelMatchFilter::LogLevelMatchFilter()
 {
@@ -119,16 +95,10 @@ FilterResult LogLevelMatchFilter::decide(const InternalLoggingEvent& loggingEven
 }
 
 
-
-///////////////////////////////////////////////////////////////////////////////
-// LogLevelRangeFilter implementation
-///////////////////////////////////////////////////////////////////////////////
-
 LogLevelRangeFilter::LogLevelRangeFilter()
 {
 	init();
 }
-
 
 
 LogLevelRangeFilter::LogLevelRangeFilter(const Properties& properties)

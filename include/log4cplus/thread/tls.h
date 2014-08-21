@@ -11,9 +11,6 @@
 
 #ifdef __linux__
 #include <pthread.h>
-
-#elif defined(_MSC_VER)
-
 #endif
 
 

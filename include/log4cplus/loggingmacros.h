@@ -82,7 +82,7 @@ inline Logger macros_getLogger(char const* logger)
 
 LOG4CPLUS_EXPORT snprintfBuf & macro_getStringBuf();
 LOG4CPLUS_EXPORT void macro_forcedLog(Logger const&, LogLevel, string const&, char const*, int, char const*);
-LOG4CPLUS_EXPORT void macro_forcedLog(Logger const&, LogLevel, char const*, char const*, int, char const*);
+
 
 } // namespace log4cplus
 

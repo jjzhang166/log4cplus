@@ -13,10 +13,6 @@ using namespace log4cplus;
 static const int LOG4CPLUS_DEFAULT_TYPE = 1;
 
 
-///////////////////////////////////////////////////////////////////////////////
-// InternalLoggingEvent ctors and dtor
-///////////////////////////////////////////////////////////////////////////////
-
 InternalLoggingEvent::InternalLoggingEvent(const string& logger,
 	LogLevel loglevel, const string& message_, const char* filename,
 	int line_, const char * function_)
@@ -68,11 +64,6 @@ unsigned int InternalLoggingEvent::getDefaultType()
 	return LOG4CPLUS_DEFAULT_TYPE;
 }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// InternalLoggingEvent implementation
-///////////////////////////////////////////////////////////////////////////////
 
 void InternalLoggingEvent::setLoggingEvent(const string& logger, LogLevel loglevel, const string& msg, 
 	const char * filename, int fline, const char * function_)

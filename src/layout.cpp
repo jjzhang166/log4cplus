@@ -27,38 +27,23 @@ void formatRelativeTimestamp (ostream & output, InternalLoggingEvent const& logg
 	output.fill (old_fill);
 }
 
-//
-//
-//
 
+Layout::Layout () : _llmCache(getLogLevelManager()) { }
 
-Layout::Layout () : _llmCache(getLogLevelManager())
-{ }
+Layout::Layout (const Properties&) : _llmCache(getLogLevelManager()) { }
 
-
-Layout::Layout (const Properties&) : _llmCache(getLogLevelManager())
-{ }
-
-
-Layout::~Layout()
-{ }
+Layout::~Layout() { }
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// SimpleLayout public methods
+// SimpleLayout 
 ///////////////////////////////////////////////////////////////////////////////
 
-SimpleLayout::SimpleLayout ()
-{ }
+SimpleLayout::SimpleLayout () { }
 
+SimpleLayout::SimpleLayout (const Properties& properties) : Layout (properties) { }
 
-SimpleLayout::SimpleLayout (const Properties& properties) : Layout (properties)
-{ }
-
-
-SimpleLayout::~SimpleLayout()
-{ }
-
+SimpleLayout::~SimpleLayout() { }
 
 void SimpleLayout::formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent)
 {

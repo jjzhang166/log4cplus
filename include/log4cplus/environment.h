@@ -14,13 +14,13 @@ using namespace log4cplus;
 
 
 //!Get environment variable value.
-bool get_env_var(string& envString, string const& name);
+bool getEnvString(string& envString, string const& name);
 
 //!Parse a string as a boolean value.
-bool parse_bool(bool& val, string const& str);
+bool parse2bool(bool& val, string const& str);
 
 //!Parse a path into path components.
-bool split_path(vector<string>& components, std::size_t& special, string const& path);
+bool splitFilePath(vector<string>& components, std::size_t& special, string const& path);
 
 //!Makes directories leading to file.
 void make_dirs(string const& file_path);

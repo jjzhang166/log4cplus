@@ -34,11 +34,8 @@ namespace log4cplus {
 			if(_fnull)
 				std::fclose(_fnull);
 		}
-
-		string _macrosStr;
-		string _faa_str;
 		InternalLoggingEvent _forcedLoggingEvent;
-		std::FILE * _fnull;
+		std::FILE* _fnull;
 		snprintfBuf _snprintfBuf;
 	};
 

@@ -16,10 +16,6 @@ Logger DefaultLoggerFactory::makeNewLoggerInstance(const string& name, Hierarchy
 	return Logger(new LoggerImpl(name, h));
 }
 
-
-//////////////////////////////////////////////////////////////////////////////
-// static Logger Methods
-//////////////////////////////////////////////////////////////////////////////
 //
 Hierarchy & Logger::getDefaultHierarchy()
 {
@@ -44,22 +40,15 @@ Logger Logger::getInstance(const string& name)
 	return getDefaultHierarchy().getInstance(name); 
 }
 
-
 Logger Logger::getInstance(const string& name, LoggerFactory& factory)
 { 
 	return getDefaultHierarchy().getInstance(name, factory); 
 }
 
-
 Logger Logger::getRoot() 
 { 
 	return getDefaultHierarchy().getRoot(); 
 }
-
-
-//////////////////////////////////////////////////////////////////////////////
-// Logger ctors and dtor
-//////////////////////////////////////////////////////////////////////////////
 
 Logger::Logger() : _pLoggerImpl(0)
 { }

@@ -223,7 +223,7 @@ bool Properties::getBool(bool& val, string const& key) const
 		return false;
 
 	string const& prop_val = getProperty(key);
-	return parse_bool(val, prop_val);
+	return parse2bool(val, prop_val);
 }
 
 const string emptystring = "";

@@ -13,13 +13,8 @@
 #include <log4cplus/internal.h>
 #include <stdexcept>
 
-
 using namespace log4cplus;
 
-
-///////////////////////////////////////////////////////////////////////////////
-// log4cplus::ErrorHandler dtor
-///////////////////////////////////////////////////////////////////////////////
 
 ErrorHandler::ErrorHandler() { }
 
@@ -47,9 +42,6 @@ void OnlyOnceErrorHandler::reset()
 	firstTime = true;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// log4cplus::Appender ctors
-///////////////////////////////////////////////////////////////////////////////
 
 Appender::Appender()
 	: _layout(new SimpleLayout()),
@@ -103,7 +95,7 @@ Appender::Appender(const log4cplus::Properties & properties)
 	{
 		string tmp = properties.getProperty("Threshold");
 		tmp = log4cplus::toUpper(tmp);
-		_threshold = log4cplus::getLogLevelManager().fromString(tmp);
+		_threshold = getLogLevelManager().fromString(tmp);
 	}
 
 	// Configure the filters
@@ -146,9 +138,6 @@ Appender::~Appender()
 		loglog.error("Derived Appender did not call destructorImpl().");
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// log4cplus::Appender public methods
-///////////////////////////////////////////////////////////////////////////////
 
 void Appender::destructorImpl()
 {

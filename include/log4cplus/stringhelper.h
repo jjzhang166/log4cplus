@@ -14,14 +14,12 @@
 #include <iterator>
 
 
-
 namespace log4cplus { 
 	/**
 	* Returns <code>s</code> in upper case.
 	*/
 	string toUpper(const string& s);
 	char toUpper(char);
-
 
 	/**
 	* Returns <code>s</code> in lower case.

@@ -242,22 +242,22 @@ void FormattingInfo::dump(LogLog& loglog)
 ////////////////////////////////////////////////
 // PatternConverter methods:
 ////////////////////////////////////////////////
-PatternConverter::PatternConverter(const FormattingInfo& i)
+PatternConverter::PatternConverter(const FormattingInfo& info)
 {
-	minLen = i.minLen;
-	maxLen = i.maxLen;
-	leftAlign = i.leftAlign;
+	minLen = info.minLen;
+	maxLen = info.maxLen;
+	leftAlign = info.leftAlign;
 }
 
 
 void PatternConverter::formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent)
 {
-	string& s = getPerThreadData()->_faa_str;
-	convert(s, loggingEvent);
-	std::size_t len = s.length();
+	string str;
+	convert(str, loggingEvent);
+	std::size_t len = str.length();
 
 	if(len > maxLen)
-		output << s.substr(len - maxLen);
+		output << str.substr(len - maxLen);
 	else if(static_cast<int>(len) < minLen)
 	{
 		std::ios_base::fmtflags const original_flags = output.flags();
@@ -265,12 +265,12 @@ void PatternConverter::formatAndAppend(ostream& output, const InternalLoggingEve
 		output.setf(leftAlign ? std::ios_base::left : std::ios_base::right,
 			std::ios_base::adjustfield);
 		output.width(minLen);
-		output << s;
+		output << str;
 		output.fill(fill);
 		output.flags(original_flags);
 	}
 	else
-		output << s;
+		output << str;
 }
 
 
@@ -431,7 +431,7 @@ EnvPatternConverter::EnvPatternConverter(const FormattingInfo& info, const strin
 
 void EnvPatternConverter::convert(string& result, const InternalLoggingEvent&)
 {
-	if(!get_env_var(result, _envKey))
+	if(!getEnvString(result, _envKey))
 	{
 		// Variable doesn't exist, return empty string.
 		result.clear();
