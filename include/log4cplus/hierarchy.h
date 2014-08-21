@@ -76,47 +76,22 @@ namespace log4cplus {
          * Similar to {@link #disable(LogLevel)} except that the LogLevel
          * argument is given as a string.  
          */
-        virtual void disable(const string& loglevelStr);
+        virtual void disableLevel(const string& loglevelStr);
 
         /**
          * Disable all logging requests of LogLevel <em>equal to or
          * below</em> the ll parameter <code>p</code>, for
          * <em>all</em> loggers in this hierarchy. Logging requests of
          * higher LogLevel then <code>p</code> remain unaffected.
-         *
-         * Nevertheless, if the
-         * BasicConfigurator::DISABLE_OVERRIDE_KEY property is set to
-         * true, then logging requests are evaluated as usual.
-         *
-         * The "disable" family of methods are there for speed. They
-         * allow printing methods such as debug, info, etc. to return
-         * immediately after an integer comparison without walking the
-         * logger hierarchy. In most modern computers an integer
-         * comparison is measured in nanoseconds where as a logger walk is
-         * measured in units of microseconds.
          */
-        virtual void disable(LogLevel ll);
+        virtual void disableLevel(LogLevel ll);
 
         /**
          * Disable all logging requests regardless of logger and LogLevel.
          * This method is equivalent to calling {@link #disable} with the
          * argument FATAL_LOG_LEVEL, the highest possible LogLevel.
          */
-        virtual void disableAll();
-
-        /**
-         * Disable all Debug logging requests regardless of logger.
-         * This method is equivalent to calling {@link #disable} with the
-         * argument DEBUG_LOG_LEVEL.
-         */
-        virtual void disableDebug();
-
-        /**
-         * Disable all Info logging requests regardless of logger.
-         * This method is equivalent to calling {@link #disable} with the
-         * argument INFO_LOG_LEVEL.
-         */
-        virtual void disableInfo();
+        virtual void disableAllLevel();
 
         /**
          * Undoes the effect of calling any of {@link #disable}, {@link
@@ -125,7 +100,7 @@ namespace log4cplus {
          * class internal variable called <code>disable</code> to its
          * default "off" value.
          */
-        virtual void enableAll();
+        virtual void enableAllLevel();
 
         /**
          * Return a new logger instance named as the first parameter using
@@ -171,21 +146,6 @@ namespace log4cplus {
         virtual Logger getRoot() const;
 
         /**
-         * Reset all values contained in this hierarchy instance to their
-         * default.  This removes all appenders from all loggers, sets
-         * the LogLevel of all non-root loggers to <code>NOT_SET_LOG_LEVEL</code>,
-         * sets their additivity flag to <code>true</code> and sets the LogLevel
-         * of the root logger to DEBUG_LOG_LEVEL.  Moreover, message disabling
-         * is set its default "off" value.
-         *
-         * Existing loggers are not removed. They are just reset.
-         *
-         * This method should be used sparingly and with care as it will
-         * block all logging until it is completed.</p>
-         */
-        virtual void resetConfiguration(); 
-
-        /**
          * Set the default LoggerFactory instance.
          */
         virtual void setLoggerFactory(std::auto_ptr<LoggerFactory> factory);
@@ -220,22 +180,6 @@ namespace log4cplus {
         /**
          * This method loops through all the *potential* parents of
          * logger'. There 3 possible cases:
-         *
-         * 1) No entry for the potential parent of 'logger' exists
-         *
-         *    We create a ProvisionNode for this potential parent and insert
-         *    'logger' in that provision node.
-         *
-         * 2) There is an entry of type Logger for the potential parent.
-         *
-         *    The entry is 'logger's nearest existing parent. We update logger's
-         *    parent field with this entry. We also break from the loop
-         *    because updating our parent's parent is our parent's
-         *    responsibility.
-         *
-         * 3) There entry is of type ProvisionNode for this potential parent.
-         *
-         *    We add 'logger' to the list of children for this potential parent.
          */
         void updateParents(Logger const& logger);
 
@@ -244,14 +188,6 @@ namespace log4cplus {
          * in the provision node 'pn'. The second argument 'logger' is a
          * reference for the newly created Logger, parent of all the
          * children in 'pn'
-         *
-         * We loop on all the children 'c' in 'pn':
-         *
-         *    If the child 'c' has been already linked to a child of
-         *    'logger' then there is no need to update 'c'.
-         *
-         *   Otherwise, we set logger's parent field to c's parent and set
-         *   c's parent field to logger.
          */
         void updateChildren(ProvisionNode& pn,
             Logger const& logger);
@@ -263,9 +199,9 @@ namespace log4cplus {
         LoggerMap loggerPtrs;
         Logger root;
 
-        int disableValue;
+        int _nDisableValue;
 
-        bool emittedNoAppenderWarning;
+        bool _isEmittedNoAppenderWarning;
 
         // Disallow copying of instances of this class
         Hierarchy(const Hierarchy&);

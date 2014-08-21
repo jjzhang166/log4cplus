@@ -13,19 +13,19 @@
 namespace log4cplus { 
 
 
-class LOG4CPLUS_EXPORT snprintf_buf
+class LOG4CPLUS_EXPORT snprintfBuf
 {
 public:
-    snprintf_buf();
+    snprintfBuf();
 
-    char const * print(char const * fmt, ...);
+    char const* print(char const* fmt, ...);
 
 
-    int print_va_list(char const * & str, char const * fmt, std::va_list args);
+    int printVaList(char const*& str, char const* fmt, std::va_list args);
 
 
 private:
-    vector<char> buf;
+    vector<char> _szBuf;
 };
   
 }  // namespace log4cplus 

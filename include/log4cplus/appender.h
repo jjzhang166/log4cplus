@@ -110,9 +110,7 @@ namespace log4cplus {
         /**
          * This function is for derived appenders to call from their
          * destructors. All classes derived from `Appender` class
-         * _must_ call this function from their destructors. It
-         * ensures that appenders will get properly closed during
-         * shutdown by call to `close()` function before they are
+         * _must_ call this function from their destructors. 
          * destroyed.
          */
         void destructorImpl();

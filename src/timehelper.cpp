@@ -31,16 +31,16 @@ const int ONE_SEC_IN_USEC = 1000000;
 // Time ctors
 //////////////////////////////////////////////////////////////////////////////
 
-TimeHelper::TimeHelper() : tv_sec(0), tv_usec(0){}
+TimeHelper::TimeHelper() : _tv_seconds(0), _tv_microseconds(0){}
 
 
-TimeHelper::TimeHelper(time_t tv_sec_, long tv_usec_) : tv_sec(tv_sec_), tv_usec(tv_usec_)
+TimeHelper::TimeHelper(time_t tv_sec_, long tv_usec_) : _tv_seconds(tv_sec_), _tv_microseconds(tv_usec_)
 {
-	assert(tv_usec < ONE_SEC_IN_USEC);
+	assert(_tv_microseconds < ONE_SEC_IN_USEC);
 }
 
 
-TimeHelper::TimeHelper(time_t time) : tv_sec(time), tv_usec(0)
+TimeHelper::TimeHelper(time_t time) : _tv_seconds(time), _tv_microseconds(0)
 {
 }
 
@@ -92,7 +92,7 @@ time_t TimeHelper::setTime(tm* t)
 {
 	time_t time = std::mktime(t);
 	if(time != -1)
-		tv_sec = time;
+		_tv_seconds = time;
 
 	return time;
 }
@@ -100,26 +100,14 @@ time_t TimeHelper::setTime(tm* t)
 
 time_t TimeHelper::getTime() const
 {
-	return tv_sec;
+	return _tv_seconds;
 }
 
-
-void TimeHelper::gmtime(tm* t) const
-{
-	time_t clock = tv_sec;
-#if defined(_MSC_VER)
-	gmtime_s(t, &clock);
-
-#else 
-	gmtime_r(&clock, t);
-
-#endif
-}
 
 
 void TimeHelper::localtime(tm* t) const
 {
-	time_t clock = tv_sec;
+	time_t clock = _tv_seconds;
 #if defined(__linux__) 
 	::localtime_r(&clock, t);
 #else
@@ -128,169 +116,61 @@ void TimeHelper::localtime(tm* t) const
 #endif
 }
 
-
-namespace 
+string TimeHelper::getFormattedTime(const string& string2Format) const
 {
+	string sFormatedArray;
+	string sFormated;
 
-
-	static string const padding_zeros[4] =
-	{
-		string("000"),
-		string("00"),
-		string("0"),
-		string("")
-	};
-
-
-	static string const uc_q_padding_zeros[4] =
-	{
-		string(".000"),
-		string(".00"),
-		string(".0"),
-		string(".")
-	};
-
-
-	static void build_q_value(string& q_str, long tv_usec)
-	{
-		convertIntegerToString(q_str, tv_usec / 1000);
-		std::size_t const len = q_str.length();
-		if(len <= 2)
-			q_str.insert(0, padding_zeros[q_str.length()]);
-	}
-
-
-	static void build_uc_q_value(string& uc_q_str, long tv_usec, string& tmp)
-	{
-		build_q_value(uc_q_str, tv_usec);
-
-		convertIntegerToString(tmp, tv_usec % 1000);
-		std::size_t const usecs_len = tmp.length();
-		tmp.insert(0, usecs_len <= 3 ? uc_q_padding_zeros[usecs_len] : uc_q_padding_zeros[3]);
-		uc_q_str.append(tmp);
-	}
-
-
-} // namespace
-
-
-string TimeHelper::getFormattedTime(const string& fmt_orig, bool use_gmtime) const
-{
-	if(fmt_orig.empty() || fmt_orig[0] == 0)
+	if(string2Format.empty() || string2Format[0] == 0)
 		return string();
 
-	tm time;
+	std::tm time;
 
-	if(use_gmtime)
-		gmtime(&time);
-	else 
-		localtime(&time);
+	localtime(&time);
 
-	enum State
-	{
-		TEXT,
-		PERCENT_SIGN
-	};
-
-	gft_scratch_pad & gft_sp = get_gft_scratch_pad();
-	gft_sp.reset();
-
-	std::size_t const fmt_orig_size = gft_sp._fmt.size();
-	gft_sp._ret.reserve(fmt_orig_size + fmt_orig_size / 3);
-	State state = TEXT;
-
+	bool isText = true;
 	// Walk the format string and process all occurences of %q, %Q and %s.
 
-	for(string::const_iterator fmt_it = fmt_orig.begin(); fmt_it != fmt_orig.end(); ++fmt_it)
+	for(string::const_iterator it = string2Format.begin(); it != string2Format.end(); ++it)
 	{
-		switch(state)
+		if (isText)
 		{
-		case TEXT:
-			{
-				if(*fmt_it == '%')
-					state = PERCENT_SIGN;
-				else
-					gft_sp._ret.push_back(*fmt_it);
-			}
-			break;
-
-		case PERCENT_SIGN:
-			{
-				switch(*fmt_it)
-				{
-				case 'q':
-					{
-						if(!gft_sp._q_str_valid)
-						{
-							build_q_value(gft_sp._q_str, tv_usec);
-							gft_sp._q_str_valid = true;
-						}
-						gft_sp._ret.append(gft_sp._q_str);
-						state = TEXT;
-					}
-					break;
-
-				case 'Q':
-					{
-						if(!gft_sp._uc_q_str_valid)
-						{
-							build_uc_q_value(gft_sp._uc_q_str, tv_usec, gft_sp._tmp);
-							gft_sp._uc_q_str_valid = true;
-						}
-						gft_sp._ret.append(gft_sp._uc_q_str);
-						state = TEXT;
-					}
-					break;
-
-					// Windows do not support %s format specifier
-					//(seconds since epoch).
-				case 's':
-					{
-						if(!gft_sp._s_str_valid)
-						{
-							convertIntegerToString(gft_sp._s_str, tv_sec);
-							gft_sp._s_str_valid = true;
-						}
-						gft_sp._ret.append(gft_sp._s_str);
-						state = TEXT;
-					}
-					break;
-
-				default:
-					{
-						gft_sp._ret.push_back('%');
-						gft_sp._ret.push_back(*fmt_it);
-						state = TEXT;
-					}
-				}
-			}
-			break;
+			if(*it == '%')
+				isText = false;
+			else
+				sFormatedArray.push_back(*it);
+		}
+		else
+		{
+			sFormatedArray.push_back('%');
+			sFormatedArray.push_back(*it);
+			isText = true;
 		}
 	}
 
 	// Finally call strftime/wcsftime to format the rest of the string.
 
-	gft_sp._fmt.swap(gft_sp._ret);
-	std::size_t buffer_size = gft_sp._fmt.size() + 1;
+	sFormated.swap(sFormatedArray);
+	std::size_t bufSize = sFormated.size() + 1;
 	std::size_t len;
 
 	// Limit how far can the buffer grow. This is necessary so that we
 	// catch bad format string. Some implementations of strftime() signal
 	// both too small buffer and invalid format string by returning 0
 	// without changing errno. 
-	std::size_t const buffer_size_max = (std::max)(static_cast<std::size_t>(1024), buffer_size * 16);
+	std::size_t const maxBufferSize = (std::max)(static_cast<std::size_t>(1024), bufSize * 16);
 
+	vector<char> szbuf;
 	do
 	{
-		gft_sp._buffer.resize(buffer_size);
+		szbuf.resize(bufSize);
 		errno = 0;
-		len = std::strftime(&gft_sp._buffer[0], buffer_size,
-			gft_sp._fmt.c_str(), &time);
+		len = std::strftime(&szbuf[0], bufSize, sFormated.c_str(), &time);
 		if(len == 0)
 		{
 			int const eno = errno;
-			buffer_size *= 2;
-			if(buffer_size > buffer_size_max)
+			bufSize *= 2;
+			if(bufSize > maxBufferSize)
 			{
 				LogLog::getLogLog()->error("Error in strftime(): "+ convertIntegerToString(eno), true);
 			}
@@ -298,19 +178,19 @@ string TimeHelper::getFormattedTime(const string& fmt_orig, bool use_gmtime) con
 	} 
 	while(len == 0);
 
-	return string(gft_sp._buffer.begin(), gft_sp._buffer.begin() + len);
+	return string(szbuf.begin(), szbuf.begin() + len);
 }
 
 
 TimeHelper& TimeHelper::operator+=(const TimeHelper& rhs)
 {
-	tv_sec += rhs.tv_sec;
-	tv_usec += rhs.tv_usec;
+	_tv_seconds += rhs._tv_seconds;
+	_tv_microseconds += rhs._tv_microseconds;
 
-	if(tv_usec > ONE_SEC_IN_USEC) 
+	if(_tv_microseconds > ONE_SEC_IN_USEC) 
 	{
-		++tv_sec;
-		tv_usec -= ONE_SEC_IN_USEC;
+		++_tv_seconds;
+		_tv_microseconds -= ONE_SEC_IN_USEC;
 	}
 
 	return *this;
@@ -319,13 +199,13 @@ TimeHelper& TimeHelper::operator+=(const TimeHelper& rhs)
 
 TimeHelper& TimeHelper::operator-=(const TimeHelper& rhs)
 {
-	tv_sec -= rhs.tv_sec;
-	tv_usec -= rhs.tv_usec;
+	_tv_seconds -= rhs._tv_seconds;
+	_tv_microseconds -= rhs._tv_microseconds;
 
-	if(tv_usec < 0) 
+	if(_tv_microseconds < 0) 
 	{
-		--tv_sec;
-		tv_usec += ONE_SEC_IN_USEC;
+		--_tv_seconds;
+		_tv_microseconds += ONE_SEC_IN_USEC;
 	}
 
 	return *this;
@@ -334,11 +214,11 @@ TimeHelper& TimeHelper::operator-=(const TimeHelper& rhs)
 
 TimeHelper& TimeHelper::operator/=(long rhs)
 {
-	long rem_secs = static_cast<long>(tv_sec % rhs);
-	tv_sec /= rhs;
+	long rem_secs = static_cast<long>(_tv_seconds % rhs);
+	_tv_seconds /= rhs;
 
-	tv_usec /= rhs;
-	tv_usec += static_cast<long>((rem_secs * ONE_SEC_IN_USEC) / rhs);
+	_tv_microseconds /= rhs;
+	_tv_microseconds += static_cast<long>((rem_secs * ONE_SEC_IN_USEC) / rhs);
 
 	return *this;
 }
@@ -346,12 +226,12 @@ TimeHelper& TimeHelper::operator/=(long rhs)
 
 TimeHelper& TimeHelper::operator*=(long rhs)
 {
-	long new_usec = tv_usec * rhs;
+	long new_usec = _tv_microseconds * rhs;
 	long overflow_sec = new_usec / ONE_SEC_IN_USEC;
-	tv_usec = new_usec % ONE_SEC_IN_USEC;
+	_tv_microseconds = new_usec % ONE_SEC_IN_USEC;
 
-	tv_sec *= rhs;
-	tv_sec += overflow_sec;
+	_tv_seconds *= rhs;
+	_tv_seconds += overflow_sec;
 
 	return *this;
 }

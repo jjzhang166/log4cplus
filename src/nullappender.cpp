@@ -22,7 +22,6 @@ NullAppender::NullAppender(const Properties& properties)
 }
 
 
-
 NullAppender::~NullAppender()
 {
     destructorImpl();
@@ -30,25 +29,15 @@ NullAppender::~NullAppender()
 
 
 
-///////////////////////////////////////////////////////////////////////////////
-// NullAppender public methods
-///////////////////////////////////////////////////////////////////////////////
-
-void
-NullAppender::close()
+void NullAppender::close()
 {
 }
 
 
 
-///////////////////////////////////////////////////////////////////////////////
-// NullAppender protected methods
-///////////////////////////////////////////////////////////////////////////////
-
 // This method does not need to be locked since it is called by
 // doAppend() which performs the locking
-void
-NullAppender::append(const InternalLoggingEvent&)
+void NullAppender::append(const InternalLoggingEvent&)
 {
 }
 

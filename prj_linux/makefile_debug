@@ -33,7 +33,6 @@ OBJS :=  $(SRC_DIR)/appender \
 	$(SRC_DIR)/environment \
 	$(SRC_DIR)/factory \
 	$(SRC_DIR)/fileappender \
-	$(SRC_DIR)/fileinfo \
 	$(SRC_DIR)/filter \
 	$(SRC_DIR)/global-init \
 	$(SRC_DIR)/hierarchy \

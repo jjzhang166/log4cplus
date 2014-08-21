@@ -9,7 +9,6 @@
 #include <log4cplus/stringhelper.h>
 #include <log4cplus/property.h>
 #include <log4cplus/timehelper.h>
-#include <log4cplus/fileinfo.h>
 #include <log4cplus/factory.h>
 #include <log4cplus/loggerimpl.h>
 #include <log4cplus/environment.h>
@@ -80,15 +79,10 @@ void PropertyConfigurator::configure()
 	if(_properties.getBool(quiet_mode, "quietMode"))
 		getLogLog().setQuietMode(quiet_mode);
 
-	bool disable_override = false;
-	_properties.getBool(disable_override, "disableOverride");
-
 	initializeLog4cplus();
 	configureAppenders();
 	configureLoggers();
 
-	if(disable_override)
-		_hierarchy.disable(DISABLE_LOG_OVERRIDE);
 
 	// Erase the appenders so that we are not artificially keeping them "alive".
 	_appenders.clear();
@@ -207,8 +201,7 @@ void PropertyConfigurator::configureAppenders()
 			}
 			catch(std::exception const& e)
 			{
-				string err =
-					"PropertyConfigurator::configureAppenders() - Error while creating Appender: ";
+				string err = "PropertyConfigurator::configureAppenders() - Error while creating Appender: ";
 				getLogLog().error(err + string(e.what()));
 			}
 		}

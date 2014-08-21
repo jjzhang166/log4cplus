@@ -62,12 +62,10 @@ void Filter::appendFilter(FilterPtr filter)
 // DenyAllFilter implementation
 ///////////////////////////////////////////////////////////////////////////////
 
-DenyAllFilter::DenyAllFilter()
-{ }
+DenyAllFilter::DenyAllFilter() { }
 
 
-DenyAllFilter::DenyAllFilter(const Properties&)
-{ }
+DenyAllFilter::DenyAllFilter(const Properties&) { }
 
 
 FilterResult DenyAllFilter::decide(const InternalLoggingEvent&) const

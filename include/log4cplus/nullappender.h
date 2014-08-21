@@ -16,29 +16,29 @@
 
 namespace log4cplus {
 
-    /**
-     * Appends log events to a file. 
-     */
-    class LOG4CPLUS_EXPORT NullAppender : public Appender {
-    public:
-      // Ctors
-        NullAppender();
-        NullAppender(const log4cplus::Properties&);
+	/**
+	* Appends log events to a file. 
+	*/
+	class LOG4CPLUS_EXPORT NullAppender : public Appender {
+	public:
+		// Ctors
+		NullAppender();
+		NullAppender(const log4cplus::Properties&);
 
-      // Dtor
-        virtual ~NullAppender();
+		// Dtor
+		virtual ~NullAppender();
 
-      // Methods
-        virtual void close();
+		// Methods
+		virtual void close();
 
-    protected:
-        virtual void append(const log4cplus::InternalLoggingEvent& loggingEvent);
+	protected:
+		virtual void append(const log4cplus::InternalLoggingEvent& loggingEvent);
 
-    private:
-      // Disallow copying of instances of this class
-        NullAppender(const NullAppender&);
-        NullAppender& operator= (const NullAppender&);
-    };
+	private:
+		// Disallow copying of instances of this class
+		NullAppender(const NullAppender&);
+		NullAppender& operator= (const NullAppender&);
+	};
 
 } // end namespace log4cplus
 

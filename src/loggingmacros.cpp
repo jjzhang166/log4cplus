@@ -12,25 +12,24 @@
 using namespace log4cplus;
 
 
-snprintf_buf & log4cplus::get_macro_body_snprintf_buf()
+snprintfBuf & log4cplus::macro_getStringBuf()
 {
-	return get_ptd()->_snprintf_buf;
+	return getPerThreadData()->_snprintfBuf;
 }
 
 
-void log4cplus::macro_forced_log(Logger const& logger, LogLevel log_level, 
-	char const * msg, char const * filename, int line, char const * func)
+void log4cplus::macro_forcedLog(Logger const& logger, LogLevel log_level, 
+	char const* msg, char const* filename, int line, char const* func)
 {
-	macro_forced_log(logger, log_level,
-		get_ptd()->_macros_str = msg, filename, line, func);
+	macro_forcedLog(logger, log_level, getPerThreadData()->_macrosStr = msg, filename, line, func);
 }
 
 
-void log4cplus::macro_forced_log(Logger const& logger, LogLevel log_level, 
-	string const& msg, char const * filename, int line, char const * func)
+void log4cplus::macro_forcedLog(Logger const& logger, LogLevel logLevel, 
+	string const& msg, char const* filename, int line, char const* func)
 {
-	InternalLoggingEvent & loggingEvent = get_ptd()->_forcedLoggingEvent;
-	loggingEvent.setLoggingEvent(logger.getName(), log_level, msg, filename, line, func);
+	InternalLoggingEvent & loggingEvent = getPerThreadData()->_forcedLoggingEvent;
+	loggingEvent.setLoggingEvent(logger.getName(), logLevel, msg, filename, line, func);
 	logger.forcedLog(loggingEvent);
 }
 

@@ -60,6 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\lib\osp\debug\win32_2010</AdditionalLibraryDirectories>
       <AdditionalDependencies>OspLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4204 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(TargetName).dll" "..\bin\$(TargetName).dll" /y</Command>
@@ -98,7 +99,6 @@
     <ClInclude Include="..\include\log4cplus\environment.h" />
     <ClInclude Include="..\include\log4cplus\factory.h" />
     <ClInclude Include="..\include\log4cplus\fileappender.h" />
-    <ClInclude Include="..\include\log4cplus\fileinfo.h" />
     <ClInclude Include="..\include\log4cplus\filter.h" />
     <ClInclude Include="..\include\log4cplus\hierarchy.h" />
     <ClInclude Include="..\include\log4cplus\internal.h" />
@@ -134,7 +134,6 @@
     <ClCompile Include="..\src\environment.cpp" />
     <ClCompile Include="..\src\factory.cpp" />
     <ClCompile Include="..\src\fileappender.cpp" />
-    <ClCompile Include="..\src\fileinfo.cpp" />
     <ClCompile Include="..\src\filter.cpp" />
     <ClCompile Include="..\src\global-init.cpp" />
     <ClCompile Include="..\src\hierarchy.cpp" />

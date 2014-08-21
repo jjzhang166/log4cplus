@@ -14,51 +14,49 @@
 
 #elif defined(_MSC_VER)
 
-
 #endif
 
 
-namespace log4cplus { namespace Thread {
+namespace log4cplus { 
 
 
-typedef void * tls_value_type;
-typedef void(* tls_init_cleanup_func_type)(void *);
+typedef void * TLSValueType;
+typedef void (* TLSInitCleanupFunc)(void *);
 
 #ifdef __linux__
-typedef pthread_key_t * tls_key_type;
+typedef pthread_key_t * TLSKeyType;
 
 #elif defined(_MSC_VER)
-typedef DWORD tls_key_type;
-
+typedef DWORD TLSKeyType;
 
 #endif
 
 
-inline tls_key_type tls_init(tls_init_cleanup_func_type);
-inline tls_value_type tls_get_value(tls_key_type);
-inline void tls_set_value(tls_key_type, tls_value_type);
-inline void tls_cleanup(tls_key_type);
+inline TLSKeyType TLSInit(TLSInitCleanupFunc);
+inline TLSValueType TLSGetValue(TLSKeyType);
+inline void TLSSetValue(TLSKeyType, TLSValueType);
+inline void TLSCleanup(TLSKeyType);
 
 
 #if defined(__linux__)
-tls_key_type tls_init(tls_init_cleanup_func_type cleanupfunc)
+TLSKeyType TLSInit(TLSInitCleanupFunc cleanupfunc)
 {
     pthread_key_t * key = new pthread_key_t;
     pthread_key_create(key, cleanupfunc);
     return key;
 }
 
-tls_value_type tls_get_value(tls_key_type key)
+TLSValueType TLSGetValue(TLSKeyType key)
 {
     return pthread_getspecific(*key);
 }
 
-void tls_set_value(tls_key_type key, tls_value_type value)
+void TLSSetValue(TLSKeyType key, TLSValueType value)
 {
     pthread_setspecific(*key, value);
 }
 
-void tls_cleanup(tls_key_type key)
+void TLSCleanup(TLSKeyType key)
 {
     pthread_key_delete(*key);
     delete key;
@@ -66,28 +64,28 @@ void tls_cleanup(tls_key_type key)
 
 #elif defined(_MSC_VER)
 
-tls_key_type tls_init(tls_init_cleanup_func_type)
+TLSKeyType TLSInit(TLSInitCleanupFunc)
 {
     return TlsAlloc();
 }
 
-tls_value_type tls_get_value(tls_key_type k)
+TLSValueType TLSGetValue(TLSKeyType key)
 {
-    return TlsGetValue(k);
+    return TlsGetValue(key);
 }
 
-void tls_set_value(tls_key_type k, tls_value_type value)
+void TLSSetValue(TLSKeyType key, TLSValueType val)
 {
-    TlsSetValue(k, value);
+    TlsSetValue(key, val);
 }
 
-void tls_cleanup(tls_key_type k)
+void TLSCleanup(TLSKeyType key)
 {
-    TlsFree(k);
+    TlsFree(key);
 }
 
 #endif
 
-} } // namespace log4cplus { namespace thread { 
+}  // namespace log4cplus 
 
 #endif // LOG4CPLUS_THREAD_IMPL_TLS_H

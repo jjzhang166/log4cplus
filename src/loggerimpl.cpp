@@ -40,11 +40,11 @@ void LoggerImpl::callAppenders(const InternalLoggingEvent& loggingEvent)
 	}
 
 	// No appenders in hierarchy, warn user only once.
-	if(!_hierarchy.emittedNoAppenderWarning && writes == 0) 
+	if(!_hierarchy._isEmittedNoAppenderWarning && writes == 0) 
 	{
 		getLogLog().error("No appenders could be found for logger (" + getName() + ").");
 		getLogLog().error("Please initialize the log4cplus system properly.");
-		_hierarchy.emittedNoAppenderWarning = true;
+		_hierarchy._isEmittedNoAppenderWarning = true;
 	}
 }
 
@@ -63,7 +63,7 @@ void LoggerImpl::closeNestedAppenders()
 
 bool LoggerImpl::isEnabledFor(LogLevel loglevel) const
 {
-	if(_hierarchy.disableValue >= loglevel) 
+	if(_hierarchy._nDisableValue >= loglevel) 
 	{
 		return false;
 	}
@@ -110,7 +110,7 @@ Hierarchy& LoggerImpl::getHierarchy() const
 void LoggerImpl::forcedLog(LogLevel loglevel, const string& message,
 	const char* file, int line, const char* _function)
 {
-	InternalLoggingEvent & loggingEvent = get_ptd()->_forcedLoggingEvent;
+	InternalLoggingEvent & loggingEvent = getPerThreadData()->_forcedLoggingEvent;
 	assert (_function);
 	loggingEvent.setLoggingEvent (this->getName(), loglevel, message, file, line,
 		_function);

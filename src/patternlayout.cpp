@@ -157,11 +157,10 @@ private:
 class DatePatternConverter : public PatternConverter 
 {
 public:
-	DatePatternConverter(const FormattingInfo& info, const string& pattern, bool use_gmtime);
+	DatePatternConverter(const FormattingInfo& info, const string& pattern);
 	virtual void convert(string& result, const InternalLoggingEvent& loggingEvent);
 
 private:
-	bool isUse_gmtime;
 	string _stringFormat;
 };
 
@@ -253,7 +252,7 @@ PatternConverter::PatternConverter(const FormattingInfo& i)
 
 void PatternConverter::formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent)
 {
-	string& s = get_ptd()->_faa_str;
+	string& s = getPerThreadData()->_faa_str;
 	convert(s, loggingEvent);
 	std::size_t len = s.length();
 
@@ -410,15 +409,15 @@ void LoggerPatternConverter::convert(string& result, const InternalLoggingEvent&
 ////////////////////////////////////////////////
 
 
-DatePatternConverter::DatePatternConverter(const FormattingInfo& info, const string& pattern, bool use_gmtime_)
-	: PatternConverter(info), isUse_gmtime(use_gmtime_), _stringFormat(pattern)
+DatePatternConverter::DatePatternConverter(const FormattingInfo& info, const string& pattern)
+	: PatternConverter(info), _stringFormat(pattern)
 {
 }
 
 
 void DatePatternConverter::convert(string& result, const InternalLoggingEvent& loggingEvent)
 {
-	result = loggingEvent.getTimestamp().getFormattedTime(_stringFormat, isUse_gmtime);
+	result = loggingEvent.getTimestamp().getFormattedTime(_stringFormat);
 }
 
 
@@ -626,8 +625,7 @@ void PatternParser::finalizeConverter(char c)
 			{
 				dOpt = "%Y-%m-%d %H:%M:%S";
 			}
-			bool use_gmtime = c == 'd';
-			pc = new DatePatternConverter(_formattingInfo, dOpt, use_gmtime);      
+			pc = new DatePatternConverter(_formattingInfo, dOpt);      
 		}
 		break;
 

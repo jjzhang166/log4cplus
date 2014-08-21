@@ -9,7 +9,6 @@
 #include <log4cplus/stringhelper.h>
 #include <log4cplus/TimeHelper.h>
 #include <log4cplus/property.h>
-#include <log4cplus/fileinfo.h>
 #include <log4cplus/loggingevent.h>
 #include <log4cplus/factory.h>
 #include <log4cplus/internal.h>
@@ -51,7 +50,7 @@ static long removeFile(string const& src)
 
 }
 
-static void loglog_renamingResult(LogLog & loglog, string const& src, string const& target, long ret)
+static void loglog_renamingResult(LogLog& loglog, string const& src, string const& target, long ret)
 {
 	if(ret == 0)
 	{
@@ -65,7 +64,7 @@ static void loglog_renamingResult(LogLog & loglog, string const& src, string con
 	}
 }
 
-static void loglog_openingResult(LogLog & loglog, ostream const& os, string const& filename)
+static void loglog_openingResult(LogLog& loglog, ostream const& os, string const& filename)
 {
 	if(!os)
 	{
@@ -186,15 +185,6 @@ void FileAppender::close()
 	_isClosed = true;
 }
 
-std::locale FileAppender::getloc() const
-{
-	return _out.getloc();
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// FileAppender protected methods
-///////////////////////////////////////////////////////////////////////////////
 
 // This method does not need to be locked since it is called by
 // doAppend() which performs the locking
@@ -344,7 +334,7 @@ void RollingFileAppender::append(const InternalLoggingEvent& loggingEvent)
 
 void RollingFileAppender::rollover()
 {
-	LogLog & loglog = getLogLog();
+	LogLog& loglog = getLogLog();
 
 	// Close the current file
 	_out.close();
@@ -522,7 +512,6 @@ void DailyRollingFileAppender::append(const InternalLoggingEvent& loggingEvent)
 }
 
 
-
 void DailyRollingFileAppender::rollover()
 {
 	// Close the current file
@@ -543,7 +532,7 @@ void DailyRollingFileAppender::rollover()
 	backup_target_oss << _scheduledFilename << "." << 1;
 	string backupTarget = backup_target_oss.str();
 
-	LogLog & loglog = getLogLog();
+	LogLog& loglog = getLogLog();
 	long ret;
 
 #if defined(_MSC_VER)
@@ -580,7 +569,6 @@ void DailyRollingFileAppender::rollover()
 		_nextRolloverTime = calculateNextRolloverTime(now);
 	}
 }
-
 
 
 TimeHelper DailyRollingFileAppender::calculateNextRolloverTime(const TimeHelper& t) const
@@ -632,7 +620,7 @@ TimeHelper DailyRollingFileAppender::calculateNextRolloverTime(const TimeHelper&
 
 string DailyRollingFileAppender::getFilename(const TimeHelper& t) const
 {
-	char const * pattern = 0;
+	char const* pattern = 0;
 	switch(_schedule)
 	{
 	case MONTHLY:
@@ -653,7 +641,7 @@ string DailyRollingFileAppender::getFilename(const TimeHelper& t) const
 
 	string result(_filename);
 	result += ".";
-	result += t.getFormattedTime(pattern, false);
+	result += t.getFormattedTime(pattern);
 	return result;
 }
 

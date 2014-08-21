@@ -13,21 +13,13 @@
 using namespace log4cplus;
 
 
-AppenderAttachable::~AppenderAttachable()
-{ }
+AppenderAttachable::~AppenderAttachable() { }
 
 
-//////////////////////////////////////////////////////////////////////////////
-// log4cplus::AppenderAttachableImpl ctor and dtor
-//////////////////////////////////////////////////////////////////////////////
-
-AppenderAttachableImpl::AppenderAttachableImpl()
-{ }
+AppenderAttachableImpl::AppenderAttachableImpl() { }
 
 
-AppenderAttachableImpl::~AppenderAttachableImpl()
-{ }
-
+AppenderAttachableImpl::~AppenderAttachableImpl() { }
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,95 +28,93 @@ AppenderAttachableImpl::~AppenderAttachableImpl()
 
 void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
 {
-    if(newAppender == NULL) 
+	if(newAppender == NULL) 
 	{
-        getLogLog().warn("Tried to add NULL appender");
-        return;
-    }
+		getLogLog().warn("Tried to add NULL appender");
+		return;
+	}
 
-   Mutex::ScopedLock lock(appender_list_mutex);
+	Mutex::ScopedLock lock(appender_list_mutex);
 
-    ListType::iterator it = std::find(appenderList.begin(), appenderList.end(), newAppender);
-    if(it == appenderList.end()) 
+	ListType::iterator it = std::find(_appenderList.begin(), _appenderList.end(), newAppender);
+	if(it == _appenderList.end()) 
 	{
-        appenderList.push_back(newAppender);
-    }
+		_appenderList.push_back(newAppender);
+	}
 }
-
 
 
 AppenderAttachableImpl::ListType AppenderAttachableImpl::getAllAppenders()
 {
-    Mutex::ScopedLock lock(appender_list_mutex);
-    
-    return appenderList;
-}
+	Mutex::ScopedLock lock(appender_list_mutex);
 
+	return _appenderList;
+}
 
 
 SharedAppenderPtr AppenderAttachableImpl::getAppender(const string& name)
 {
-    Mutex::ScopedLock lock(appender_list_mutex);
+	Mutex::ScopedLock lock(appender_list_mutex);
 
-    for(ListType::iterator it=appenderList.begin(); it!=appenderList.end(); ++it)
-    {
-        if((*it)->getName() == name) {
-            return *it;
-        }
-    }
+	for(ListType::iterator it=_appenderList.begin(); it!=_appenderList.end(); ++it)
+	{
+		if((*it)->getName() == name) {
+			return *it;
+		}
+	}
 
-    return SharedAppenderPtr(NULL);
+	return SharedAppenderPtr(NULL);
 }
 
 
 
 void AppenderAttachableImpl::removeAllAppenders()
 {
-   Mutex::ScopedLock lock(appender_list_mutex);
+	Mutex::ScopedLock lock(appender_list_mutex);
 
-    appenderList.erase(appenderList.begin(), appenderList.end());
+	_appenderList.erase(_appenderList.begin(), _appenderList.end());
 }
 
 
 
 void AppenderAttachableImpl::removeAppender(SharedAppenderPtr appender)
 {
-    if(appender == NULL) {
-        getLogLog().warn("Tried to remove NULL appender");
-        return;
-    }
+	if(appender == NULL) {
+		getLogLog().warn("Tried to remove NULL appender");
+		return;
+	}
 
-    Mutex::ScopedLock lock(appender_list_mutex);
+	Mutex::ScopedLock lock(appender_list_mutex);
 
-    ListType::iterator it =
-        std::find(appenderList.begin(), appenderList.end(), appender);
-    if(it != appenderList.end()) 
+	ListType::iterator it =
+		std::find(_appenderList.begin(), _appenderList.end(), appender);
+	if(it != _appenderList.end()) 
 	{
-        appenderList.erase(it);
-    }
+		_appenderList.erase(it);
+	}
 }
 
 
 
 void AppenderAttachableImpl::removeAppender(const string& name)
 {
-    removeAppender(getAppender(name));
+	removeAppender(getAppender(name));
 }
 
 
 
 int AppenderAttachableImpl::appendLoopOnAppenders(const InternalLoggingEvent& loggingEvent) const
 {
-    int count = 0;
+	int count = 0;
 
-   Mutex::ScopedLock lock(const_cast<Mutex&>(appender_list_mutex));
+	Mutex::ScopedLock lock(const_cast<Mutex&>(appender_list_mutex));
 
-    for(ListType::const_iterator it=appenderList.begin(); it!=appenderList.end(); ++it)
-    {
-        ++count;
-       (*it)->doAppend(loggingEvent);
-    }
+	for(ListType::const_iterator it=_appenderList.begin(); it!=_appenderList.end(); ++it)
+	{
+		++count;
+		(*it)->doAppend(loggingEvent);
+	}
 
-    return count;
+	return count;
 }
 

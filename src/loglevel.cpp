@@ -22,19 +22,11 @@ static string const NOTSET_STRING ("NOTSET");
 static string const UNKNOWN_STRING ("UNKNOWN");
 
 
-LogLevelManager::LogLevelManager() 
-{
-}
+LogLevelManager::LogLevelManager() {}
 
 
-LogLevelManager::~LogLevelManager() 
-{ }
+LogLevelManager::~LogLevelManager() { }
 
-
-
-//////////////////////////////////////////////////////////////////////////////
-// LogLevelManager public methods
-//////////////////////////////////////////////////////////////////////////////
 
 string const& LogLevelManager::toString(LogLevel ll) const
 {

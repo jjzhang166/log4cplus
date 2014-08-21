@@ -3,18 +3,14 @@
 // File:    appenderattachableimpl.h
 
 
-/** @file */
-
 #ifndef LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 #define LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 
 #include <log4cplus/config.h>
 
-
 #include <log4cplus/pointer.h>
 #include <log4cplus/appenderattachable.h>
 #include <log4cplus/thread/Mutex.h>
-
 
 #include <memory>
 #include <vector>
@@ -84,7 +80,7 @@ namespace log4cplus {
 
 		// Data
 		/** Array of appenders. */
-		ListType appenderList;
+		ListType _appenderList;
 
 	private:
 		AppenderAttachableImpl(AppenderAttachableImpl const&);

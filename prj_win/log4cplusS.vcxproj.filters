@@ -90,9 +90,6 @@
     <ClInclude Include="..\include\log4cplus\environment.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\fileinfo.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\internal.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -141,9 +138,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fileappender.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\fileinfo.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\filter.cpp">

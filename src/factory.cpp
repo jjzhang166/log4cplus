@@ -20,57 +20,44 @@
 using namespace log4cplus;
     
 
-BaseFactory::~BaseFactory()
-{ }
+BaseFactory::~BaseFactory() { }
 
+AppenderFactory::AppenderFactory() { }
 
-AppenderFactory::AppenderFactory()
-{ }
+AppenderFactory::~AppenderFactory() { }
 
-AppenderFactory::~AppenderFactory()
-{ }
+LayoutFactory::LayoutFactory() { }
 
+LayoutFactory::~LayoutFactory() { }
 
-LayoutFactory::LayoutFactory()
-{ }
+FilterFactory::FilterFactory() { }
 
-LayoutFactory::~LayoutFactory()
-{ }
+FilterFactory::~FilterFactory()	{ }
 
-
-FilterFactory::FilterFactory()
-{ }
-
-FilterFactory::~FilterFactory()
-{ }
-
-LoggerFactory::~LoggerFactory()
-{ }
+LoggerFactory::~LoggerFactory()	{ }
 
 
 
-
-void initializeFactoryRegistry()
+void log4cplus::initializeFactoryRegistry()
 {
     AppenderFactoryRegistry& reg = getAppenderFactoryRegistry();
-    LOG4CPLUS_REG_APPENDER (reg, ConsoleAppender);
-    LOG4CPLUS_REG_APPENDER (reg, NullAppender);
-    LOG4CPLUS_REG_APPENDER (reg, FileAppender);
-    LOG4CPLUS_REG_APPENDER (reg, RollingFileAppender);
-    LOG4CPLUS_REG_APPENDER (reg, DailyRollingFileAppender);
+    LOG4CPLUS_REG_APPENDER(reg, ConsoleAppender);
+    LOG4CPLUS_REG_APPENDER(reg, NullAppender);
+    LOG4CPLUS_REG_APPENDER(reg, FileAppender);
+    LOG4CPLUS_REG_APPENDER(reg, RollingFileAppender);
+    LOG4CPLUS_REG_APPENDER(reg, DailyRollingFileAppender);
 
 #ifdef LOG4CPLUS_USE_OSP
-	LOG4CPLUS_REG_APPENDER (reg, OspAppender);
+	LOG4CPLUS_REG_APPENDER(reg, OspAppender);
 #endif
 
-
     LayoutFactoryRegistry& reg2 = getLayoutFactoryRegistry();
-    LOG4CPLUS_REG_LAYOUT (reg2, SimpleLayout);
-    LOG4CPLUS_REG_LAYOUT (reg2, PatternLayout);
+    LOG4CPLUS_REG_LAYOUT(reg2, SimpleLayout);
+    LOG4CPLUS_REG_LAYOUT(reg2, PatternLayout);
 
     FilterFactoryRegistry& reg3 = getFilterFactoryRegistry();
-    LOG4CPLUS_REG_FILTER (reg3, DenyAllFilter);
-    LOG4CPLUS_REG_FILTER (reg3, LogLevelMatchFilter);
-    LOG4CPLUS_REG_FILTER (reg3, LogLevelRangeFilter);
+    LOG4CPLUS_REG_FILTER(reg3, DenyAllFilter);
+    LOG4CPLUS_REG_FILTER(reg3, LogLevelMatchFilter);
+    LOG4CPLUS_REG_FILTER(reg3, LogLevelRangeFilter);
 }
 

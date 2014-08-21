@@ -15,11 +15,6 @@
 
 namespace log4cplus { 
 
-
-	using std::time_t;
-	using std::tm;
-
-
 	/**
 	* This class represents a Epoch time with microsecond accuracy.
 	*/
@@ -27,8 +22,8 @@ namespace log4cplus {
 	{
 	public:
 		TimeHelper();
-		TimeHelper(time_t tv_sec, long tv_usec);
-		explicit TimeHelper(time_t time);
+		TimeHelper(std::time_t tv_sec, long tv_usec);
+		explicit TimeHelper(std::time_t time);
 
 		/**
 		* Returns the current time using the <code>gettimeofday()</code>
@@ -41,27 +36,27 @@ namespace log4cplus {
 		/**
 		* Returns <i>seconds</i> value.
 		*/
-		time_t sec() const { return tv_sec; }
+		time_t sec() const { return _tv_seconds; }
 
 		/**
 		* Returns <i>microseconds</i> value.
 		*/
-		long usec() const { return tv_usec; }
+		long usec() const { return _tv_microseconds; }
 
 		/**
 		* Sets the <i>seconds</i> value.
 		*/
-		void sec(time_t s) { tv_sec = s; }
+		void sec(std::time_t s) { _tv_seconds = s; }
 
 		/**
 		* Sets the <i>microseconds</i> value.
 		*/
-		void usec(long us) { tv_usec = us; }
+		void usec(long us) { _tv_microseconds = us; }
 
 		/**
 		* Sets this Time using the <code>mktime</code> function.
 		*/
-		time_t setTime(tm* t);
+		time_t setTime(std::tm* t);
 
 		/**
 		* Returns this Time as a <code>time_t</code> value.
@@ -69,16 +64,10 @@ namespace log4cplus {
 		time_t getTime() const;
 
 		/**
-		* Populates <code>tm</code> using the <code>gmtime()</code>
-		* function.
-		*/
-		void gmtime(tm* t) const;
-
-		/**
 		* Populates <code>tm</code> using the <code>localtime()</code>
 		* function.
 		*/
-		void localtime(tm* t) const;
+		void localtime(std::tm* t) const;
 
 		/**
 		* Returns a string with a "formatted time" specified by
@@ -93,7 +82,7 @@ namespace log4cplus {
 		* <code>%Q</code> - 7 character field that provides fractional 
 		* milliseconds.
 		*/
-		string getFormattedTime(const string& fmt, bool use_gmtime = false) const;
+		string getFormattedTime(const string& fmt) const;
 
 		// Operators
 		TimeHelper& operator+= (const TimeHelper& rhs);
@@ -103,31 +92,33 @@ namespace log4cplus {
 
 	private:
 		// Data
-		time_t tv_sec;  /* seconds */
-		long tv_usec;  /* microseconds */
+		time_t _tv_seconds;  /* seconds */
+		long _tv_microseconds;  /* microseconds */
 	};
-} // namespace log4cplus 
+} // namespace log4cplus
+
+
 using namespace log4cplus;
 
-	LOG4CPLUS_EXPORT const TimeHelper operator+(const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT const TimeHelper operator+(const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT const TimeHelper operator-(const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT const TimeHelper operator-(const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT const TimeHelper operator/(const TimeHelper& lhs, long rhs);
+LOG4CPLUS_EXPORT const TimeHelper operator/(const TimeHelper& lhs, long rhs);
 
-	LOG4CPLUS_EXPORT const TimeHelper operator*(const TimeHelper& lhs, long rhs);
+LOG4CPLUS_EXPORT const TimeHelper operator*(const TimeHelper& lhs, long rhs);
 
-	LOG4CPLUS_EXPORT bool operator < (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator < (const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT bool operator <= (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator <= (const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT bool operator > (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator > (const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT bool operator >= (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator >= (const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT bool operator == (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator == (const TimeHelper& lhs, const TimeHelper& rhs);
 
-	LOG4CPLUS_EXPORT bool operator != (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator != (const TimeHelper& lhs, const TimeHelper& rhs);
 
 
 

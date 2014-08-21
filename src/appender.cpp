@@ -138,7 +138,7 @@ Appender::Appender(const log4cplus::Properties & properties)
 
 Appender::~Appender()
 {
-	LogLog & loglog = getLogLog();
+	LogLog& loglog = getLogLog();
 
 	loglog.debug("Destroying appender named [" + _name + "].");
 
@@ -172,7 +172,8 @@ void Appender::doAppend(const log4cplus::InternalLoggingEvent& loggingEvent)
 {
 	Mutex::ScopedLock lock(_access_mutex);
 
-	if(_isClosed) {
+	if(_isClosed) 
+	{
 		getLogLog().error("Attempted to append to closed appender named [" + _name + "].");
 		return;
 	}

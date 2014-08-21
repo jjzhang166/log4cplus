@@ -62,10 +62,10 @@ namespace log4cplus
 //! storage. It is important only for multi-threaded static library builds
 //! of log4cplus and user threads. In all other cases the clean up is provided
 //! automatically by other means.
-LOG4CPLUS_EXPORT void threadCleanup ();
+LOG4CPLUS_EXPORT void threadCleanup();
 
 //! Initializes log4cplus.
-LOG4CPLUS_EXPORT void initializeLog4cplus ();
+LOG4CPLUS_EXPORT void initializeLog4cplus();
 
 } // namespace log4cplus
 

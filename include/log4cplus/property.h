@@ -32,7 +32,7 @@ namespace log4cplus {
 		* Tests to see if <code>key</code> can be found in this map.
 		*/
 		bool exists(const string& key) const;
-		bool exists(char const * key) const;
+		bool exists(char const* key) const;
 
 		/**
 		* Returns the number of entries in this map.
@@ -49,7 +49,7 @@ namespace log4cplus {
 		* The method returns <code>null</code> if the property is not found.
 		*/
 		string const& getProperty(const string& key) const;
-		string const& getProperty(char const * key) const;
+		string const& getProperty(char const* key) const;
 
 		/**
 		* Searches for the property with the specified key in this property
@@ -82,7 +82,7 @@ namespace log4cplus {
 		*/
 		Properties getPropertySubset(const string& prefix) const;
 
-		bool getInt(int & val, string const& key) const;
+		bool getInt(int& val, string const& key) const;
 		bool getUInt(unsigned & val, string const& key) const;
 		bool getLong(long & val, string const& key) const;
 		bool getULong(unsigned long & val, string const& key) const;
@@ -99,10 +99,10 @@ namespace log4cplus {
 		StringMap _stringMap;
 
 	private:
-		string const& get_property_worker(string const& key) const;
+		string const& getProperty2(string const& key) const;
 
 		template <typename ValType>
-		bool get_type_val_worker(ValType & val, string const& key) const;
+		bool getValType(ValType& val, string const& key) const;
 	};
 } 
 

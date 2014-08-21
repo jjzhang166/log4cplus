@@ -24,7 +24,7 @@ LogLog* LogLog::getLogLog()
 
 LogLog::LogLog() : _isDebugEnabled(false), _isQuietMode(false) { }
 
-LogLog::~LogLog(){ }
+LogLog::~LogLog() { }
 
 void LogLog::setInternalDebugging(bool enabled)
 {
@@ -46,7 +46,7 @@ void LogLog::debug(const string& msg) const
 }
 
 
-void LogLog::debug(char const * msg) const
+void LogLog::debug(char const* msg) const
 {
     loggingWorker(PREFIX, msg);
 }
@@ -56,7 +56,7 @@ void LogLog::warn(const string& msg) const
     loggingWorker(WARN_PREFIX, msg);
 }
 
-void LogLog::warn(char const * msg) const
+void LogLog::warn(char const* msg) const
 {
     loggingWorker(WARN_PREFIX, msg);
 }
@@ -67,7 +67,7 @@ void LogLog::error(const string& msg, bool throw_flag) const
     loggingWorker(ERR_PREFIX, msg, throw_flag);
 }
 
-void LogLog::error(char const * msg, bool throw_flag) const
+void LogLog::error(char const* msg, bool throw_flag) const
 {
     loggingWorker(ERR_PREFIX, msg, throw_flag);
 }
@@ -82,7 +82,7 @@ bool LogLog::getDebugMode() const
     return _isDebugEnabled && !_isQuietMode;
 }
 
-void LogLog::loggingWorker(char const * prefix, string const& msg, bool throw_flag) const
+void LogLog::loggingWorker(char const* prefix, string const& msg, bool throw_flag) const
 {
     if(!_isQuietMode)
     {

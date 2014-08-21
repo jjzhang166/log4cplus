@@ -32,7 +32,7 @@ OspAppender::~OspAppender()
 
 void OspAppender::close()
 {
-    _isClosed = true;
+	_isClosed = true;
 }
 
 

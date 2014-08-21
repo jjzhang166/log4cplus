@@ -60,7 +60,7 @@ namespace log4cplus {
 		* statements. Output goes to <code>std::cout</code>.
 		*/
 		void debug(const string& msg) const;
-		void debug(char const * msg) const;
+		void debug(char const* msg) const;
 
 		/**
 		* This method is used to output log4cplus internal error
@@ -70,7 +70,7 @@ namespace log4cplus {
 		* throw std::runtime_error exception too.
 		*/
 		void error(const string& msg, bool throw_flag = false) const;
-		void error(char const * msg, bool throw_flag = false) const;
+		void error(char const* msg, bool throw_flag = false) const;
 
 		/**
 		* This method is used to output log4cplus internal warning
@@ -78,7 +78,7 @@ namespace log4cplus {
 		* Output goes to <code>std::cerr</code>.
 		*/
 		void warn(const string& msg) const;
-		void warn(char const * msg) const;
+		void warn(char const* msg) const;
 
 		// Public ctor and dtor to be used only by internal::DefaultContext.
 		LogLog();
@@ -86,7 +86,7 @@ namespace log4cplus {
 
 	private:
 
-		void loggingWorker(char const *, string const&, bool throw_flag = false) const;
+		void loggingWorker(char const*, string const&, bool throw_flag = false) const;
 
 		bool getNotQuietMode() const;
 		bool getDebugMode() const;
@@ -97,11 +97,11 @@ namespace log4cplus {
 		Mutex _mutex;
 
 		LogLog(const LogLog&);
-		LogLog & operator =(LogLog const&);
+		LogLog& operator =(LogLog const&);
 
 	};
 
-	LOG4CPLUS_EXPORT LogLog & getLogLog();
+	LOG4CPLUS_EXPORT LogLog& getLogLog();
 
 }  // end namespace log4cplus 
 

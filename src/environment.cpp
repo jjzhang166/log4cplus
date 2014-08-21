@@ -3,10 +3,10 @@
 #include <log4cplus/environment.h>
 #include <log4cplus/stringhelper.h>
 #include <log4cplus/loglog.h>
-#include <log4cplus/fileinfo.h>
 
 #ifdef _MSC_VER 
 #include <direct.h>
+#include <tchar.h>
 #endif
 
 #include <sys/stat.h>
@@ -27,7 +27,7 @@ string const dir_sep("/");
 
 bool get_env_var(string& envString, string const& name)
 {
-    char const * val = std::getenv(name.c_str());
+    char const* val = std::getenv(name.c_str());
     if(val)
         envString = val;
 
@@ -403,7 +403,7 @@ static long make_directory(string const& dir)
 }
 
 
-static void loglog_make_directory_result(LogLog & loglog, string const& path, long ret)
+static void loglog_make_directory_result(LogLog& loglog, string const& path, long ret)
 {
     if(ret == 0)
     {
@@ -417,13 +417,29 @@ static void loglog_make_directory_result(LogLog & loglog, string const& path, lo
     }
 }
 
+int checkFileOK(string const& name)
+{
+#if defined(_MSC_VER)
+	struct _stat fileStatus;
+	if(_tstat(name.c_str(), &fileStatus) == -1)
+		return -1;
+
+#else
+	struct stat fileStatus;
+	if(stat(name.c_str(), &fileStatus) == -1)
+		return -1;
+
+#endif
+
+	return 0;
+}
 
 //!Creates missing directories in file path.
 void make_dirs(string const& file_path)
 {
     vector<string> components;
     std::size_t special = 0;
-    LogLog & loglog = getLogLog();
+    LogLog& loglog = getLogLog();
 
     // Split file path into components.
 
@@ -446,8 +462,7 @@ void make_dirs(string const& file_path)
 
         // Check whether path exists.
 
-        FileInfo fi;
-        if(getFileInfo(&fi, path) == 0)
+        if(checkFileOK(path) == 0)
             // This directory exists. Move forward onto another path component.
             continue;
 

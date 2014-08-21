@@ -14,30 +14,30 @@
 
 namespace log4cplus {
 
-    /**
-     * Appends log events to osp. 
-     */
-    class LOG4CPLUS_EXPORT OspAppender : public Appender
-    {
-    public:
-      // Ctors
-        OspAppender();
-        OspAppender(const Properties& properties);
+	/**
+	* Appends log events to osp. 
+	*/
+	class LOG4CPLUS_EXPORT OspAppender : public Appender
+	{
+	public:
+		// Ctors
+		OspAppender();
+		OspAppender(const Properties& properties);
 
-      // Dtor
-        virtual ~OspAppender();
+		// Dtor
+		virtual ~OspAppender();
 
-      // Methods
-        virtual void close();
+		// Methods
+		virtual void close();
 
-    protected:
-        virtual void append(const InternalLoggingEvent& loggingEvent);
+	protected:
+		virtual void append(const InternalLoggingEvent& loggingEvent);
 
-    private:
-      // Disallow copying of instances of this class
-        OspAppender(const OspAppender&);
-        OspAppender& operator=(const OspAppender&);
-    };
+	private:
+		// Disallow copying of instances of this class
+		OspAppender(const OspAppender&);
+		OspAppender& operator=(const OspAppender&);
+	};
 
 } // end namespace log4cplus
 
