@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_APPENDER_HEADER_
 #define LOG4CPLUS_APPENDER_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/layout.h>
 #include <log4cplus/loglevel.h>
@@ -32,7 +32,7 @@ namespace log4cplus {
     public:
         ErrorHandler ();
         virtual ~ErrorHandler() = 0;
-        virtual void error(const string& err) = 0;
+        virtual void error(const std::string& err) = 0;
         virtual void reset() = 0;
     };
 
@@ -43,7 +43,7 @@ namespace log4cplus {
       // Ctor
         OnlyOnceErrorHandler();
         virtual ~OnlyOnceErrorHandler ();
-        virtual void error(const string& err);
+        virtual void error(const std::string& err);
         virtual void reset();
 
     private:
@@ -140,13 +140,13 @@ namespace log4cplus {
          * Get the name of this appender. The name uniquely identifies the
          * appender.
          */
-        virtual string getName();
+        virtual std::string getName();
 
         /**
          * Set the name of this appender. The name is used by other
          * components to identify this appender.
          */
-        virtual void setName(const string& name);
+        virtual void setName(const std::string& name);
 
         /**
          * Set the {@link ErrorHandler} for this Appender.
@@ -195,7 +195,7 @@ namespace log4cplus {
          * 
          * In configuration files this option is specified by setting the
          * value of the <b>Threshold</b> option to a LogLevel
-         * string, such as "DEBUG", "INFO" and so on.
+         * std::string, such as "DEBUG", "INFO" and so on.
          */
         void setThreshold(LogLevel th) { _threshold = th; }
 
@@ -225,7 +225,7 @@ namespace log4cplus {
         std::auto_ptr<Layout> _layout;
 
         /** Appenders are named. */
-        string _name;
+        std::string _name;
 
         /** There is no LogLevel threshold filtering by default.  */
         LogLevel _threshold;

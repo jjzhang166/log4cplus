@@ -4,7 +4,7 @@
 #ifndef LOG4CPLUS_HELPERS_SNPRINTF_H
 #define LOG4CPLUS_HELPERS_SNPRINTF_H
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <cstdarg>
 #include <vector>
@@ -22,7 +22,7 @@ public:
     int printVaList(char const*& str, char const* fmt, std::va_list args);
 
 private:
-    vector<char> _szBuf;
+    std::vector<char> _szBuf;
 };
   
 }  // namespace log4cplus 

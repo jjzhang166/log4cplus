@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_HELPERS_LOGLOG
 #define LOG4CPLUS_HELPERS_LOGLOG
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 
 
@@ -59,7 +59,7 @@ namespace log4cplus {
 		* This method is used to output log4cplus internal debug
 		* statements. Output goes to <code>std::cout</code>.
 		*/
-		void debug(const string& msg) const;
+		void debug(const std::string& msg) const;
 		void debug(char const* msg) const;
 
 		/**
@@ -69,7 +69,7 @@ namespace log4cplus {
 		* <code>std::cerr</code>. Optionally, this method can
 		* throw std::runtime_error exception too.
 		*/
-		void error(const string& msg, bool throw_flag = false) const;
+		void error(const std::string& msg, bool throw_flag = false) const;
 		void error(char const* msg, bool throw_flag = false) const;
 
 		/**
@@ -77,7 +77,7 @@ namespace log4cplus {
 		* statements. There is no way to disable warning statements.
 		* Output goes to <code>std::cerr</code>.
 		*/
-		void warn(const string& msg) const;
+		void warn(const std::string& msg) const;
 		void warn(char const* msg) const;
 
 		// Public ctor and dtor to be used only by internal::DefaultContext.
@@ -86,7 +86,7 @@ namespace log4cplus {
 
 	private:
 
-		void loggingWorker(char const*, string const&, bool throw_flag = false) const;
+		void loggingWorker(char const*, std::string const&, bool throw_flag = false) const;
 
 		bool getNotQuietMode() const;
 		bool getDebugMode() const;

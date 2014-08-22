@@ -5,7 +5,7 @@
 #if !defined (LOG4CPLUS_VERSION_H)
 #define LOG4CPLUS_VERSION_H
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #define LOG4CPLUS_MAKE_VERSION(major, minor, point) \
     (major * 1000 * 1000u + minor * 1000u + point)

@@ -8,6 +8,7 @@
 #include <log4cplus/internal.h>
 #include <algorithm>
 
+using namespace std;
 using namespace log4cplus;
 
 static string const ALL_STRING ("ALL");
@@ -25,7 +26,7 @@ static string const UNKNOWN_STRING ("UNKNOWN");
 LogLevelManager::LogLevelManager() {}
 
 
-LogLevelManager::~LogLevelManager() { }
+LogLevelManager::~LogLevelManager() {}
 
 
 string const& LogLevelManager::toString(LogLevel ll) const

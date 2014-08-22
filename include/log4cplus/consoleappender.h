@@ -7,7 +7,7 @@
 #ifndef LOG4CPLUS_CONSOLE_APPENDER_HEADER_
 #define LOG4CPLUS_CONSOLE_APPENDER_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 #include <log4cplus/appender.h>
 #include <log4cplus/thread/Mutex.h>
 

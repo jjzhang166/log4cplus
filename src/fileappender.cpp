@@ -20,7 +20,7 @@
 
 #include <cerrno>
 
-
+using namespace std;
 using namespace log4cplus;
 
 const long DEFAULT_ROLLING_LOG_SIZE = 10 * 1024 * 1024L;

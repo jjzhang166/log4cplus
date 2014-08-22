@@ -13,7 +13,7 @@
 #ifndef LOG4CPLUS_HELPERS_POINTERS_HEADER_
 #define LOG4CPLUS_HELPERS_POINTERS_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 #include <log4cplus/thread/Mutex.h>
 
 #include <cassert>
@@ -29,9 +29,9 @@ namespace log4cplus {
 
 	protected:
 		// Ctor
-		SharedObject() : _access_mutex(), _count(0) { }
+		SharedObject() : _access_mutex(), _count(0) {}
 
-		SharedObject(const SharedObject&) : _access_mutex(), _count(0) { }
+		SharedObject(const SharedObject&) : _access_mutex(), _count(0) {}
 
 		// Dtor
 		virtual ~SharedObject();

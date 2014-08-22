@@ -6,7 +6,7 @@
 #include <log4cplus/internal.h>
 #include <algorithm>
 
-
+using namespace std;
 using namespace log4cplus;
 
 
@@ -38,7 +38,7 @@ InternalLoggingEvent::InternalLoggingEvent(const string& logger,
 
 InternalLoggingEvent::InternalLoggingEvent()
 	: _ll(NOT_SET_LOG_LEVEL), _function(), _line(0)
-{ }
+{}
 
 InternalLoggingEvent::InternalLoggingEvent(const InternalLoggingEvent& rhs)
 	: _message(rhs.getMessage())

@@ -11,7 +11,7 @@
 #include <ostream>
 #include <iomanip>
 
-
+using namespace std;
 using namespace log4cplus;
 
 void formatRelativeTimestamp (ostream & output, InternalLoggingEvent const& loggingEvent)
@@ -28,22 +28,22 @@ void formatRelativeTimestamp (ostream & output, InternalLoggingEvent const& logg
 }
 
 
-Layout::Layout () : _llmCache(getLogLevelManager()) { }
+Layout::Layout () : _llmCache(getLogLevelManager()) {}
 
-Layout::Layout (const Properties&) : _llmCache(getLogLevelManager()) { }
+Layout::Layout (const Properties&) : _llmCache(getLogLevelManager()) {}
 
-Layout::~Layout() { }
+Layout::~Layout() {}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // SimpleLayout 
 ///////////////////////////////////////////////////////////////////////////////
 
-SimpleLayout::SimpleLayout () { }
+SimpleLayout::SimpleLayout () {}
 
-SimpleLayout::SimpleLayout (const Properties& properties) : Layout (properties) { }
+SimpleLayout::SimpleLayout (const Properties& properties) : Layout (properties) {}
 
-SimpleLayout::~SimpleLayout() { }
+SimpleLayout::~SimpleLayout() {}
 
 void SimpleLayout::formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent)
 {

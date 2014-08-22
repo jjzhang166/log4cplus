@@ -7,7 +7,7 @@
 #ifndef LOG4CPLUS_INTERNAL_INTERNAL_HEADER_
 #define LOG4CPLUS_INTERNAL_INTERNAL_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <memory>
 #include <vector>

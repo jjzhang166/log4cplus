@@ -7,7 +7,7 @@
 #ifndef _LOG4CPLUS_OSP_APPENDER_HEADER_
 #define _LOG4CPLUS_OSP_APPENDER_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #ifdef LOG4CPLUS_USE_OSP
 #include <log4cplus/appender.h>

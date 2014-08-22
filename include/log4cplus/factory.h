@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_SPI_FACTORY_HEADER_
 #define LOG4CPLUS_SPI_FACTORY_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/appender.h>
 #include <log4cplus/layout.h>
@@ -33,7 +33,7 @@ namespace log4cplus {
 		/**
 		* Returns the typename of the objects this factory creates.
 		*/
-		virtual string const& getTypeName() const = 0;
+		virtual std::string const& getTypeName() const = 0;
 	};
 
 
@@ -110,7 +110,6 @@ namespace log4cplus {
 	class LOG4CPLUS_EXPORT FactoryRegistry : public ObjectRegistryBase
 	{
 	public:
-		typedef T product_type;
 
 		virtual ~FactoryRegistry() 
 		{
@@ -133,7 +132,7 @@ namespace log4cplus {
 		* Used to retrieve an object from the registry. (The registry
 		* owns the returned pointer.)
 		*/
-		T* get(const string& name) const 
+		T* get(const std::string& name) const 
 		{
 			return static_cast<T*>(getVal(name));
 		}
@@ -170,15 +169,15 @@ namespace log4cplus {
 	class LocalFactoryBase : public ProductFactoryBase
 	{
 	public:
-		LocalFactoryBase(char const* name) : _typeName(name){ }
+		LocalFactoryBase(char const* name) : _typeName(name){}
 
-		virtual string const& getTypeName() const
+		virtual std::string const& getTypeName() const
 		{
 			return _typeName;
 		}
 
 	private:
-		string _typeName;
+		std::string _typeName;
 	};
 
 
@@ -188,7 +187,7 @@ namespace log4cplus {
 	public:
 		typedef typename ProductFactoryBase::ProductPtr ProductPtr;
 
-		FactoryTempl(char const* name) : LocalFactoryBase<ProductFactoryBase>(name) { }
+		FactoryTempl(char const* name) : LocalFactoryBase<ProductFactoryBase>(name) {}
 
 		virtual ProductPtr createObject(Properties const& props)
 		{

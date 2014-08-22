@@ -1,0 +1,5 @@
+#/bin/bash
+cd prj_linux
+make
+cd ..
+

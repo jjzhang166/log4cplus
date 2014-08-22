@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_SPI_LOGGER_HEADER_
 #define LOG4CPLUS_SPI_LOGGER_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 
 #include <log4cplus/appenderattachableimpl.h>

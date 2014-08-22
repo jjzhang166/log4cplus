@@ -6,24 +6,21 @@
 #ifndef LOG4CPLUS_INTERNAL_ENV_H
 #define LOG4CPLUS_INTERNAL_ENV_H
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 #include <vector>
 
 
-using namespace log4cplus;
-
-
 //!Get environment variable value.
-bool getEnvString(string& envString, string const& name);
+bool getEnvString(std::string& envString, std::string const& name);
 
-//!Parse a string as a boolean value.
-bool parse2bool(bool& val, string const& str);
+//!Parse a std::string as a boolean value.
+bool parse2bool(bool& val, std::string const& str);
 
 //!Parse a path into path components.
-bool splitFilePath(vector<string>& components, std::size_t& special, string const& path);
+bool splitFilePath(std::vector<std::string>& components, std::size_t& special, std::string const& path);
 
 //!Makes directories leading to file.
-void make_dirs(string const& file_path);
+void make_dirs(std::string const& file_path);
 
 
 

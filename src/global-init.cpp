@@ -2,7 +2,7 @@
 // File:    global-init.cpp
 
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/logger.h>
 #include <log4cplus/loglog.h>

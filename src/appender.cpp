@@ -13,20 +13,20 @@
 #include <log4cplus/internal.h>
 #include <stdexcept>
 
+using namespace std;
 using namespace log4cplus;
 
+ErrorHandler::ErrorHandler() {}
 
-ErrorHandler::ErrorHandler() { }
-
-ErrorHandler::~ErrorHandler() { }
+ErrorHandler::~ErrorHandler() {}
 
 ///////////////////////////////////////////////////////////////////////////////
 // log4cplus::OnlyOnceErrorHandler 
 ///////////////////////////////////////////////////////////////////////////////
 
-OnlyOnceErrorHandler::OnlyOnceErrorHandler() : firstTime(true) { }
+OnlyOnceErrorHandler::OnlyOnceErrorHandler() : firstTime(true) {}
 
-OnlyOnceErrorHandler::~OnlyOnceErrorHandler() { }
+OnlyOnceErrorHandler::~OnlyOnceErrorHandler() {}
 
 void OnlyOnceErrorHandler::error(const string& err)
 {

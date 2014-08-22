@@ -7,7 +7,7 @@
 #ifndef LOG4CPLUS_CONFIGURATOR_HEADER_
 #define LOG4CPLUS_CONFIGURATOR_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/appender.h>
 #include <log4cplus/logger.h>
@@ -31,16 +31,16 @@ namespace log4cplus
     public:
         
         // ctor and dtor
-        PropertyConfigurator(const string& propertyFile, Hierarchy& h = Logger::getDefaultHierarchy());
+        PropertyConfigurator(const std::string& propertyFile, Hierarchy& h = Logger::getDefaultHierarchy());
         PropertyConfigurator(const Properties& props, Hierarchy& h = Logger::getDefaultHierarchy());
-        PropertyConfigurator(istream& propertyStream, Hierarchy& h = Logger::getDefaultHierarchy());
+        PropertyConfigurator(std::istream& propertyStream, Hierarchy& h = Logger::getDefaultHierarchy());
         virtual ~PropertyConfigurator();
 
         /**
          * This method eliminates the need to create a temporary
          * <code>PropertyConfigurator</code> to configure log4cplus.
          */
-        static void doConfigure(const string& configFilename, Hierarchy& h = Logger::getDefaultHierarchy());
+        static void doConfigure(const std::string& configFilename, Hierarchy& h = Logger::getDefaultHierarchy());
 
         /**
          * Read configuration from a file. <b>The existing configuration is
@@ -60,30 +60,30 @@ namespace log4cplus
         Properties const& getProperties() const;
 
         /**
-         * \return The return value is a reference to string
+         * \return The return value is a reference to std::string
          * containing filename of properties source file. It will be
-         * string "UNAVAILABLE" if the PropertyConfigurator instance has been
+         * std::string "UNAVAILABLE" if the PropertyConfigurator instance has been
          * constructed using one of the other constructors that do not take
          * filename as parameter.
          */
-        string const& getPropertyFilename() const;
+        std::string const& getPropertyFilename() const;
 
     protected:
       // Methods
         void init();  // called by the ctor
         void configureLoggers();
-        void configureLogger(Logger logger, const string& config);
+        void configureLogger(Logger logger, const std::string& config);
         void configureAppenders();
         
-        virtual Logger getLogger(const string& name);
+        virtual Logger getLogger(const std::string& name);
         virtual void addAppender(Logger &logger, SharedAppenderPtr& appender);
 
       // Types
-        typedef std::map<string, SharedAppenderPtr> AppenderMap;
+        typedef std::map<std::string, SharedAppenderPtr> AppenderMap;
 
       // Data
         Hierarchy& _hierarchy;
-        string _propertyFilename;
+        std::string _propertyFilename;
         Properties _properties; 
         AppenderMap _appenders;
         

@@ -1,7 +1,7 @@
 // Module:  Log4CPLUS
 // File:    consoleappender.cpp
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 #include <log4cplus/layout.h>
 #include <log4cplus/consoleappender.h>
 

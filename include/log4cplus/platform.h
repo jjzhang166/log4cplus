@@ -4,7 +4,6 @@
 
 #include <string>
 #include <iostream>
-using namespace std;
 
 #if defined (_MSC_VER)
 	#if !defined (LOG4CPLUS_STATIC)

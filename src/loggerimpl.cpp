@@ -10,7 +10,7 @@
 #include <log4cplus/loggingevent.h>
 #include <log4cplus/rootlogger.h>
 
-
+using namespace std;
 using namespace log4cplus;	
 
 

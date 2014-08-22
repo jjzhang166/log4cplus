@@ -8,11 +8,11 @@
 using namespace log4cplus;
 
 
-LogLogUser::LogLogUser() { }
+LogLogUser::LogLogUser() {}
 
-LogLogUser::LogLogUser(const LogLogUser&) { }
+LogLogUser::LogLogUser(const LogLogUser&) {}
 
-LogLogUser::~LogLogUser() { }
+LogLogUser::~LogLogUser() {}
 
 LogLog& LogLogUser::getLogLog() const
 {

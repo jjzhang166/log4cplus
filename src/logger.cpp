@@ -9,6 +9,7 @@
 #include <log4cplus/loggerimpl.h>
 #include <utility>
 
+using namespace std;
 using namespace log4cplus;
 
 Logger DefaultLoggerFactory::makeNewLoggerInstance(const string& name, Hierarchy& h)
@@ -51,7 +52,7 @@ Logger Logger::getRoot()
 }
 
 Logger::Logger() : _pLoggerImpl(0)
-{ }
+{}
 
 
 Logger::Logger(LoggerImpl * ptr) : _pLoggerImpl(ptr)

@@ -7,7 +7,7 @@
 #ifndef LOG4CPLUS_HELPERS_LOGLOG_USER
 #define LOG4CPLUS_HELPERS_LOGLOG_USER
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 namespace log4cplus { 
 	// forward declarations

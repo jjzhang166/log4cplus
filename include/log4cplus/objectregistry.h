@@ -6,7 +6,7 @@
 #ifndef LOG4CPLUS_SPI_OBJECT_REGISTRY_HEADER_
 #define LOG4CPLUS_SPI_OBJECT_REGISTRY_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/thread/Mutex.h>
 
@@ -28,12 +28,12 @@ namespace log4cplus {
 		* Tests to see whether or not an object is bound in the
 		* registry as <code>name</code>.
 		*/
-		bool exists(const string& name) const;
+		bool exists(const std::string& name) const;
 
 		/**
 		* Returns the names of all registered objects.
 		*/
-		vector<string> getAllNames() const;
+		std::vector<std::string> getAllNames() const;
 
 	protected:
 		// Ctor and Dtor
@@ -45,13 +45,13 @@ namespace log4cplus {
 		* Used to enter an object into the registry.  (The registry now
 		* owns <code>object</code>.)
 		*/
-		bool putVal(const string& name, void* object);
+		bool putVal(const std::string& name, void* object);
 
 		/**
 		* Used to retrieve an object from the registry.  (The registry
 		* owns the returned pointer.)
 		*/
-		void* getVal(const string& name) const;
+		void* getVal(const std::string& name) const;
 
 		/**
 		* Deletes <code>object</code>.
@@ -64,7 +64,7 @@ namespace log4cplus {
 		virtual void clear();
 
 		// Types
-		typedef std::map<string, void*> ObjectMap;
+		typedef std::map<std::string, void*> ObjectMap;
 
 		// Data
 		Mutex _mutex;

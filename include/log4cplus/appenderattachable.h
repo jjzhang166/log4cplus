@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_SPI_APPENDER_ATTACHABLE_HEADER_
 #define LOG4CPLUS_SPI_APPENDER_ATTACHABLE_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/appender.h>
 

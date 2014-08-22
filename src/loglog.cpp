@@ -9,6 +9,7 @@
 #include <ostream>
 #include <stdexcept>
 
+using namespace std;
 using namespace log4cplus;
 
 static char const PREFIX[] = "log4cplus: ";
@@ -22,9 +23,9 @@ LogLog* LogLog::getLogLog()
 }
 
 
-LogLog::LogLog() : _isDebugEnabled(false), _isQuietMode(false) { }
+LogLog::LogLog() : _isDebugEnabled(false), _isQuietMode(false) {}
 
-LogLog::~LogLog() { }
+LogLog::~LogLog() {}
 
 void LogLog::setInternalDebugging(bool enabled)
 {

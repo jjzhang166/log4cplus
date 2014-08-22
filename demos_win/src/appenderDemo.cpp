@@ -30,10 +30,10 @@ class BadDerivedAppender
 {
 public:
     virtual void close ()
-    { }
+    {}
 
     virtual void append (const log4cplus::InternalLoggingEvent&)
-    { }
+    {}
 };
 
 

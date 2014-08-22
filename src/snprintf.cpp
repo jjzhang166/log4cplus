@@ -9,6 +9,7 @@
 #include <wchar.h>
 #include <stdio.h>
 
+using namespace std;
 using namespace log4cplus;
 
 
@@ -50,7 +51,7 @@ static inline int vstprintf(char * dest, std::size_t dest_size, char const* fmt,
 
 
 snprintfBuf::snprintfBuf() : _szBuf(START_BUF_SIZE)
-{ }
+{}
 
 
 char const* snprintfBuf::print(char const* fmt, ...)

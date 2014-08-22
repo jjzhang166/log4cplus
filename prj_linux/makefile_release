@@ -71,5 +71,5 @@ INC_PATH += $(TOP)/include
            
 LIB_PATH := $(TOP)/lib/osp/release/linux
 
-INSTALL_LIB_PATH = $(TOP)/lib/linux
+INSTALL_LIB_PATH = $(TOP)/lib/log4cplus
 include $(COMM_DIR)/common.mk

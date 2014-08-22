@@ -8,7 +8,7 @@
 #define Foundation_Mutex_WIN32_INCLUDED
 
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 
 

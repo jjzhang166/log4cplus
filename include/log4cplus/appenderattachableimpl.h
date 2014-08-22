@@ -6,7 +6,7 @@
 #ifndef LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 #define LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/pointer.h>
 #include <log4cplus/appenderattachable.h>
@@ -51,7 +51,7 @@ namespace log4cplus {
 		* Return the appender with that name if in the list. Return null
 		* otherwise.  
 		*/
-		virtual SharedAppenderPtr getAppender(const string& name);
+		virtual SharedAppenderPtr getAppender(const std::string& name);
 
 		/**
 		* Remove all previously added appenders.
@@ -67,7 +67,7 @@ namespace log4cplus {
 		* Remove the appender with the name passed as parameter from the
 		* list of appenders.  
 		*/
-		virtual void removeAppender(const string& name);
+		virtual void removeAppender(const std::string& name);
 
 		/**
 		* Call the <code>doAppend</code> method on all attached appenders.  
@@ -76,7 +76,7 @@ namespace log4cplus {
 
 	protected:
 		// Types
-		typedef vector<SharedAppenderPtr> ListType;
+		typedef std::vector<SharedAppenderPtr> ListType;
 
 		// Data
 		/** Array of appenders. */

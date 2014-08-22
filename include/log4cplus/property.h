@@ -7,7 +7,7 @@
 #ifndef LOG4CPLUS_HELPERS_PROPERTY_HEADER_
 #define LOG4CPLUS_HELPERS_PROPERTY_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <map>
 #include <vector>
@@ -20,8 +20,8 @@ namespace log4cplus {
 	public:
 
 		Properties();
-		explicit Properties(istream& input);
-		explicit Properties(const string& inputFile);
+		explicit Properties(std::istream& input);
+		explicit Properties(const std::string& inputFile);
 		virtual ~Properties();
 
 		// constants
@@ -31,7 +31,7 @@ namespace log4cplus {
 		/**
 		* Tests to see if <code>key</code> can be found in this map.
 		*/
-		bool exists(const string& key) const;
+		bool exists(const std::string& key) const;
 		bool exists(char const* key) const;
 
 		/**
@@ -48,8 +48,8 @@ namespace log4cplus {
 		* property list, and its defaults, recursively, are then checked. 
 		* The method returns <code>null</code> if the property is not found.
 		*/
-		string const& getProperty(const string& key) const;
-		string const& getProperty(char const* key) const;
+		std::string const& getProperty(const std::string& key) const;
+		std::string const& getProperty(char const* key) const;
 
 		/**
 		* Searches for the property with the specified key in this property
@@ -58,51 +58,51 @@ namespace log4cplus {
 		* The method returns the default value argument if the property is 
 		* not found.
 		*/
-		string getProperty(const string& key, const string& defaultVal) const;
+		std::string getProperty(const std::string& key, const std::string& defaultVal) const;
 
 		/**
 		* Returns all the keys in this property list.
 		*/
-		vector<string> propertyNames() const;
+		std::vector<std::string> propertyNames() const;
 
 		/**
 		* Inserts <code>value</code> into this map indexed by <code>key</code>.
 		*/
-		void setProperty(const string& key, const string& value);
+		void setProperty(const std::string& key, const std::string& value);
 
 		/**
 		* Removed the property index by <code>key</code> from this map.
 		*/
-		bool removeProperty(const string& key);
+		bool removeProperty(const std::string& key);
 
 		/**
 		* Returns a subset of the "properties" whose keys start with
 		* "prefix".  The returned "properties" have "prefix" trimmed from
 		* their keys.
 		*/
-		Properties getPropertySubset(const string& prefix) const;
+		Properties getPropertySubset(const std::string& prefix) const;
 
-		bool getInt(int& val, string const& key) const;
-		bool getUInt(unsigned & val, string const& key) const;
-		bool getLong(long & val, string const& key) const;
-		bool getULong(unsigned long & val, string const& key) const;
-		bool getBool(bool& val, string const& key) const;
+		bool getInt(int& val, std::string const& key) const;
+		bool getUInt(unsigned & val, std::string const& key) const;
+		bool getLong(long & val, std::string const& key) const;
+		bool getULong(unsigned long & val, std::string const& key) const;
+		bool getBool(bool& val, std::string const& key) const;
 
 	protected:
 		// Types
-		typedef std::map<string, string> StringMap;
+		typedef std::map<std::string, std::string> StringMap;
 
 		// Methods
-		void init(istream& input);
+		void init(std::istream& input);
 
 		// Data
 		StringMap _stringMap;
 
 	private:
-		string const& getProperty2(string const& key) const;
+		std::string const& getProperty2(std::string const& key) const;
 
 		template <typename ValType>
-		bool getValType(ValType& val, string const& key) const;
+		bool getValType(ValType& val, std::string const& key) const;
 	};
 } 
 

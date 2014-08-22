@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_HELPERS_TIME_HELPER_HEADER_
 #define LOG4CPLUS_HELPERS_TIME_HELPER_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 #include <log4cplus/timehelper.h>
 #include <ctime>
 
@@ -82,7 +82,7 @@ namespace log4cplus {
 		* <code>%Q</code> - 7 character field that provides fractional 
 		* milliseconds.
 		*/
-		string getFormattedTime(const string& fmt) const;
+		std::string getFormattedTime(const std::string& fmt) const;
 
 		// Operators
 		TimeHelper& operator+= (const TimeHelper& rhs);
@@ -98,27 +98,26 @@ namespace log4cplus {
 } // namespace log4cplus
 
 
-using namespace log4cplus;
 
-LOG4CPLUS_EXPORT const TimeHelper operator+(const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT const log4cplus::TimeHelper operator+(const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT const TimeHelper operator-(const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT const log4cplus::TimeHelper operator-(const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT const TimeHelper operator/(const TimeHelper& lhs, long rhs);
+LOG4CPLUS_EXPORT const log4cplus::TimeHelper operator/(const log4cplus::TimeHelper& lhs, long rhs);
 
-LOG4CPLUS_EXPORT const TimeHelper operator*(const TimeHelper& lhs, long rhs);
+LOG4CPLUS_EXPORT const log4cplus::TimeHelper operator*(const log4cplus::TimeHelper& lhs, long rhs);
 
-LOG4CPLUS_EXPORT bool operator < (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator < (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT bool operator <= (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator <= (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT bool operator > (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator > (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT bool operator >= (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator >= (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT bool operator == (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator == (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
-LOG4CPLUS_EXPORT bool operator != (const TimeHelper& lhs, const TimeHelper& rhs);
+LOG4CPLUS_EXPORT bool operator != (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
 
 
 

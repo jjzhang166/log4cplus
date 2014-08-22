@@ -8,8 +8,8 @@
 #include <log4cplus/property.h>
 #include <log4cplus/loggingevent.h>
 
+using namespace std;
 using namespace log4cplus;
-
 
 FilterResult log4cplus::checkFilter(const Filter* filter, const InternalLoggingEvent& loggingEvent)
 {
@@ -42,10 +42,10 @@ void Filter::appendFilter(FilterPtr filter)
 }
 
 
-DenyAllFilter::DenyAllFilter() { }
+DenyAllFilter::DenyAllFilter() {}
 
 
-DenyAllFilter::DenyAllFilter(const Properties&) { }
+DenyAllFilter::DenyAllFilter(const Properties&) {}
 
 
 FilterResult DenyAllFilter::decide(const InternalLoggingEvent&) const

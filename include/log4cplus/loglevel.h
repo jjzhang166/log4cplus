@@ -9,7 +9,7 @@
 #ifndef LOG4CPLUS_LOGLEVEL_HEADER_
 #define LOG4CPLUS_LOGLEVEL_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <vector>
 
@@ -94,7 +94,7 @@ namespace log4cplus {
 		* Note: It traverses the list of <code>LogLevelToStringMethod</code>
 		*       to do this, so all "derived" LogLevels are recognized as well.
 		*/
-		string const& toString(LogLevel ll) const;
+		std::string const& toString(LogLevel ll) const;
 
 		/**
 		* This method is called by all classes internally to log4cplus to
@@ -103,7 +103,7 @@ namespace log4cplus {
 		* Note: It traverses the list of <code>StringToLogLevelMethod</code>
 		*       to do this, so all "derived" LogLevels are recognized as well.
 		*/
-		LogLevel fromString(const string& s) const;
+		LogLevel fromString(const std::string& s) const;
 
 	private:
 		// Data

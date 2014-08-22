@@ -8,7 +8,7 @@
 #ifndef LOG4CPLUS_LOGGING_MACROS_HEADER_
 #define LOG4CPLUS_LOGGING_MACROS_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 
 #include <log4cplus/logger.h>
@@ -33,7 +33,7 @@
 
 #define LOG4CPLUS_DOWHILE_NOTHING()                 \
     LOG4CPLUS_SUPPRESS_DOWHILE_WARNING()            \
-    do { } while(0)                                \
+    do {} while(0)                                \
     LOG4CPLUS_RESTORE_DOWHILE_WARNING()
 
 #if defined(LOG4CPLUS_DISABLE_FATAL) && !defined(LOG4CPLUS_DISABLE_ERROR)
@@ -68,7 +68,7 @@ inline Logger const& macros_getLogger(Logger & logger)
     return logger;
 }
 
-inline Logger macros_getLogger(string const& logger)
+inline Logger macros_getLogger(std::string const& logger)
 {
     return Logger::getInstance(logger);
 }
@@ -81,7 +81,7 @@ inline Logger macros_getLogger(char const* logger)
 
 
 LOG4CPLUS_EXPORT snprintfBuf & macro_getStringBuf();
-LOG4CPLUS_EXPORT void macro_forcedLog(Logger const&, LogLevel, string const&, char const*, int, char const*);
+LOG4CPLUS_EXPORT void macro_forcedLog(Logger const&, LogLevel, std::string const&, char const*, int, char const*);
 
 
 } // namespace log4cplus

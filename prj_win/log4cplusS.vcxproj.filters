@@ -18,9 +18,6 @@
     <ClInclude Include="..\include\log4cplus\appenderattachable.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\config.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\configurator.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -117,6 +114,7 @@
     <ClInclude Include="..\include\log4cplus\timehelper.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\log4cplus\platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\appender.cpp">

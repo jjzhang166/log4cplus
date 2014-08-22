@@ -94,7 +94,6 @@
     <ClInclude Include="..\include\log4cplus\appender.h" />
     <ClInclude Include="..\include\log4cplus\appenderattachable.h" />
     <ClInclude Include="..\include\log4cplus\appenderattachableimpl.h" />
-    <ClInclude Include="..\include\log4cplus\config.h" />
     <ClInclude Include="..\include\log4cplus\configurator.h" />
     <ClInclude Include="..\include\log4cplus\consoleappender.h" />
     <ClInclude Include="..\include\log4cplus\environment.h" />
@@ -115,6 +114,7 @@
     <ClInclude Include="..\include\log4cplus\nullappender.h" />
     <ClInclude Include="..\include\log4cplus\objectregistry.h" />
     <ClInclude Include="..\include\log4cplus\ospappender.h" />
+    <ClInclude Include="..\include\log4cplus\platform.h" />
     <ClInclude Include="..\include\log4cplus\pointer.h" />
     <ClInclude Include="..\include\log4cplus\property.h" />
     <ClInclude Include="..\include\log4cplus\rootlogger.h" />

@@ -7,7 +7,7 @@
 #define Foundation_Mutex_POSIX_INCLUDED
 
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <stdexcept>
 #include <pthread.h>

@@ -12,6 +12,9 @@
 #include <log4cplus/environment.h>
 #include <cstdlib>
 
+using namespace std;
+using namespace log4cplus;
+
 namespace log4cplus
 {
 	/**
@@ -23,11 +26,17 @@ namespace log4cplus
 		int minLen;
 		std::size_t maxLen;
 		bool leftAlign;
-		FormattingInfo() { reset(); 
+		FormattingInfo() 
+		{
+			reset(); 
 		}
 
-		void reset();
-		void dump(LogLog&);
+		void reset()
+		{
+			minLen = -1;
+			maxLen = 0x7FFFFFFF;
+			leftAlign = false;
+		}
 	};
 
 	/**
@@ -48,13 +57,13 @@ namespace log4cplus
 			const InternalLoggingEvent& loggingEvent) = 0;
 
 	private:
-		int minLen;
-		std::size_t maxLen;
-		bool leftAlign;
+		int _minLen;
+		std::size_t _maxLen;
+		bool _leftAlign;
 	};
 }
+
 typedef vector<PatternConverter*> PatternConverterList;
-using namespace log4cplus;
 
 static string get_basename(const string& filename)
 {
@@ -75,11 +84,6 @@ static string get_basename(const string& filename)
 static char const ESCAPE_CHAR = '%';
 
 extern void formatRelativeTimestamp(ostream & output, log4cplus::InternalLoggingEvent const& loggingEvent);
-
-
-
-
-
 
 
 
@@ -218,35 +222,13 @@ private:
 
 
 ////////////////////////////////////////////////
-// FormattingInfo methods:
-////////////////////////////////////////////////
-
-void FormattingInfo::reset() 
-{
-	minLen = -1;
-	maxLen = 0x7FFFFFFF;
-	leftAlign = false;
-}
-
-
-void FormattingInfo::dump(LogLog& loglog) 
-{
-	ostringstream buf;
-	buf << "min=" << minLen
-		<< ", max=" << maxLen
-		<< ", leftAlign=" << std::boolalpha << leftAlign;
-	loglog.debug(buf.str());
-}
-
-
-////////////////////////////////////////////////
 // PatternConverter methods:
 ////////////////////////////////////////////////
 PatternConverter::PatternConverter(const FormattingInfo& info)
 {
-	minLen = info.minLen;
-	maxLen = info.maxLen;
-	leftAlign = info.leftAlign;
+	_minLen = info.minLen;
+	_maxLen = info.maxLen;
+	_leftAlign = info.leftAlign;
 }
 
 
@@ -256,15 +238,15 @@ void PatternConverter::formatAndAppend(ostream& output, const InternalLoggingEve
 	convert(str, loggingEvent);
 	std::size_t len = str.length();
 
-	if(len > maxLen)
-		output << str.substr(len - maxLen);
-	else if(static_cast<int>(len) < minLen)
+	if(len > _maxLen)
+		output << str.substr(len - _maxLen);
+	else if(static_cast<int>(len) < _minLen)
 	{
 		std::ios_base::fmtflags const original_flags = output.flags();
 		char const fill = output.fill(' ');
-		output.setf(leftAlign ? std::ios_base::left : std::ios_base::right,
+		output.setf(_leftAlign ? std::ios_base::left : std::ios_base::right,
 			std::ios_base::adjustfield);
-		output.width(minLen);
+		output.width(_minLen);
 		output << str;
 		output.fill(fill);
 		output.flags(original_flags);
@@ -426,7 +408,7 @@ void DatePatternConverter::convert(string& result, const InternalLoggingEvent& l
 ////////////////////////////////////////////////
 EnvPatternConverter::EnvPatternConverter(const FormattingInfo& info, const string& env)
 	: PatternConverter(info), _envKey(env)
-{ }
+{}
 
 
 void EnvPatternConverter::convert(string& result, const InternalLoggingEvent&)
@@ -721,12 +703,12 @@ PatternLayout::PatternLayout(const Properties& properties)
 void PatternLayout::init(const string& pattern_)
 {
 	_pattern = pattern_;
-	parsedPattern = PatternParser(_pattern).parse();
+	_parsedPattern = PatternParser(_pattern).parse();
 
 	// Let's validate that our parser didn't give us any NULLs.  If it did,
 	// we will convert them to a valid PatternConverter that does nothing so
 	// at least we don't core.
-	for(PatternConverterList::iterator it=parsedPattern.begin(); it!=parsedPattern.end(); ++it)
+	for(PatternConverterList::iterator it=_parsedPattern.begin(); it!=_parsedPattern.end(); ++it)
 	{
 		if((*it) == 0 ) 
 		{
@@ -734,17 +716,17 @@ void PatternLayout::init(const string& pattern_)
 			(*it) = new LiteralPatternConverter("");
 		}
 	}
-	if(parsedPattern.empty()) 
+	if(_parsedPattern.empty()) 
 	{
 		getLogLog().warn("PatternLayout pattern is empty.  Using default...");
-		parsedPattern.push_back(new BasicPatternConverter(FormattingInfo(), BasicPatternConverter::MESSAGE_CONVERTER));
+		_parsedPattern.push_back(new BasicPatternConverter(FormattingInfo(), BasicPatternConverter::MESSAGE_CONVERTER));
 	}
 }
 
 
 PatternLayout::~PatternLayout()
 {
-	for(PatternConverterList::iterator it=parsedPattern.begin(); it!=parsedPattern.end(); ++it)
+	for(PatternConverterList::iterator it=_parsedPattern.begin(); it!=_parsedPattern.end(); ++it)
 	{
 		delete(*it);
 	}
@@ -752,7 +734,7 @@ PatternLayout::~PatternLayout()
 
 void PatternLayout::formatAndAppend(ostream& output, const InternalLoggingEvent& loggingEvent)
 {
-	for(PatternConverterList::iterator it=parsedPattern.begin(); it!=parsedPattern.end(); ++it)
+	for(PatternConverterList::iterator it=_parsedPattern.begin(); it!=_parsedPattern.end(); ++it)
 	{
 		(*it)->formatAndAppend(output, loggingEvent);
 	}

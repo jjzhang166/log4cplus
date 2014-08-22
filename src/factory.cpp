@@ -15,21 +15,21 @@
 using namespace log4cplus;
     
 
-BaseFactory::~BaseFactory() { }
+BaseFactory::~BaseFactory() {}
 
-AppenderFactory::AppenderFactory() { }
+AppenderFactory::AppenderFactory() {}
 
-AppenderFactory::~AppenderFactory() { }
+AppenderFactory::~AppenderFactory() {}
 
-LayoutFactory::LayoutFactory() { }
+LayoutFactory::LayoutFactory() {}
 
-LayoutFactory::~LayoutFactory() { }
+LayoutFactory::~LayoutFactory() {}
 
-FilterFactory::FilterFactory() { }
+FilterFactory::FilterFactory() {}
 
-FilterFactory::~FilterFactory()	{ }
+FilterFactory::~FilterFactory()	{}
 
-LoggerFactory::~LoggerFactory()	{ }
+LoggerFactory::~LoggerFactory()	{}
 
 
 

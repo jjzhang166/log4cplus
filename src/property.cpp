@@ -2,7 +2,7 @@
 // File:    property.cpp
 
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <cstring>
 #include <cctype>
@@ -15,7 +15,7 @@
 #include <log4cplus/environment.h>
 #include <log4cplus/loglog.h>
 
-
+using namespace std;
 using namespace log4cplus;
 
 const char Properties::PROPERTIES_COMMENT_CHAR = '#';

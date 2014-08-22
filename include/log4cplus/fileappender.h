@@ -6,7 +6,7 @@
 #ifndef LOG4CPLUS_FILE_APPENDER_HEADER_
 #define LOG4CPLUS_FILE_APPENDER_HEADER_
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 
 #include <log4cplus/appender.h>
 #include <log4cplus/TimeHelper.h>
@@ -23,7 +23,7 @@ namespace log4cplus{
 	class LOG4CPLUS_EXPORT FileAppender : public Appender {
 	public:
 		// Ctors
-		FileAppender(const string& filename, 
+		FileAppender(const std::string& filename, 
 			std::ios_base::openmode mode = std::ios_base::trunc,
 			bool immediateFlush = true, bool createDirs = false);
 		FileAppender(const Properties& properties,
@@ -77,12 +77,12 @@ namespace log4cplus{
 		unsigned long _ofstreamBufferSize;
 		char * _ofstreamBuffer;
 		std::ofstream _out;
-		string _filename;
+		std::string _filename;
 
 		TimeHelper _reopen_time;
 
 	private:
-		void init(const string& filename, std::ios_base::openmode mode);
+		void init(const std::string& filename, std::ios_base::openmode mode);
 
 		// Disallow copying of instances of this class
 		FileAppender(const FileAppender&);
@@ -101,7 +101,7 @@ namespace log4cplus{
 	class LOG4CPLUS_EXPORT RollingFileAppender : public FileAppender {
 	public:
 		// Ctors
-		RollingFileAppender(const string& filename,
+		RollingFileAppender(const std::string& filename,
 			long maxFileSize = 10*1024*1024, // 10 MB
 			int maxBackupIndex = 1,
 			bool immediateFlush = true,
@@ -135,7 +135,7 @@ namespace log4cplus{
 	class LOG4CPLUS_EXPORT DailyRollingFileAppender : public FileAppender {
 	public:
 		// Ctors
-		DailyRollingFileAppender(const string& filename,
+		DailyRollingFileAppender(const std::string& filename,
 			DailyRollingFileSchedule schedule = DAILY,
 			bool immediateFlush = true,
 			int maxBackupIndex = 10,
@@ -156,11 +156,11 @@ namespace log4cplus{
 
 		TimeHelper calculateNextRolloverTime(const TimeHelper& t) const;
 
-		string getFilename(const TimeHelper& t) const;
+		std::string getFilename(const TimeHelper& t) const;
 
 		// Data
 		DailyRollingFileSchedule _schedule;
-		string _scheduledFilename;
+		std::string _scheduledFilename;
 		TimeHelper _nextRolloverTime;
 		int _maxBackupIndex;
 

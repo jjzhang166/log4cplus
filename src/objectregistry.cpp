@@ -4,12 +4,13 @@
 
 #include <log4cplus/objectregistry.h>
 
+using namespace std;
 using namespace log4cplus;
 
 
-ObjectRegistryBase::ObjectRegistryBase() { }
+ObjectRegistryBase::ObjectRegistryBase() {}
 
-ObjectRegistryBase::~ObjectRegistryBase() { }
+ObjectRegistryBase::~ObjectRegistryBase() {}
 
 
 bool ObjectRegistryBase::exists(const string& name) const

@@ -15,6 +15,8 @@
 
 #include <iterator>
 
+
+using namespace std;
 using namespace log4cplus;
 
 void initializeLog4cplus();

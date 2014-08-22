@@ -10,16 +10,17 @@
 
 #include <algorithm>
 
+using namespace std;
 using namespace log4cplus;
 
 
-AppenderAttachable::~AppenderAttachable() { }
+AppenderAttachable::~AppenderAttachable() {}
 
 
-AppenderAttachableImpl::AppenderAttachableImpl() { }
+AppenderAttachableImpl::AppenderAttachableImpl() {}
 
 
-AppenderAttachableImpl::~AppenderAttachableImpl() { }
+AppenderAttachableImpl::~AppenderAttachableImpl() {}
 
 
 void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)

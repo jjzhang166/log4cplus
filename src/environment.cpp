@@ -15,7 +15,7 @@
 #include <sstream>
 #include <stdexcept>
 
-
+using namespace std;
 using namespace log4cplus;
 
 #if defined(_MSC_VER)

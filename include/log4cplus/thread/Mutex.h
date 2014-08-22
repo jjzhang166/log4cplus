@@ -5,7 +5,7 @@
 #ifndef Foundation_Mutex_INCLUDED
 #define Foundation_Mutex_INCLUDED
 
-#include <log4cplus/config.h>
+#include <log4cplus/platform.h>
 #include "ScopedLock.h"
 
 #ifdef _MSC_VER

@@ -11,6 +11,7 @@
 #include "osp/osp.h"
 #include <strstream>
 
+using namespace std;
 using namespace log4cplus;
 
 
