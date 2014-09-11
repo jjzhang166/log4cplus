@@ -9,7 +9,7 @@
 #include <log4cplus/consoleappender.h>
 #include <log4cplus/fileappender.h>
 #include <log4cplus/nullappender.h>
-#include <log4cplus/ospappender.h>
+#include <log4cplus/customappender.h>
 
 
 using namespace log4cplus;
@@ -41,10 +41,8 @@ void log4cplus::initializeFactoryRegistry()
     LOG4CPLUS_REG_APPENDER(reg, FileAppender);
     LOG4CPLUS_REG_APPENDER(reg, RollingFileAppender);
     LOG4CPLUS_REG_APPENDER(reg, DailyRollingFileAppender);
+	LOG4CPLUS_REG_APPENDER(reg, CustomAppender);
 
-#ifdef LOG4CPLUS_USE_OSP
-	LOG4CPLUS_REG_APPENDER(reg, OspAppender);
-#endif
 
     LayoutFactoryRegistry& reg2 = getLayoutFactoryRegistry();
     LOG4CPLUS_REG_LAYOUT(reg2, SimpleLayout);

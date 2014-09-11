@@ -10,8 +10,6 @@ TOP := ..
 
 COMM_DIR := .
 
-SRC_DIR := .
-
 ## Name and type of the target for this Makefile
 
 APP_TARGET := demoD
@@ -26,11 +24,11 @@ CFLAGS += -D_LINUX
 
 ## Object files that compose the target(s)
 
-OBJS :=   $(SRC_DIR)/main  
+OBJS :=   ../src/demo
 
 ## Libraries to include in shared object file
 
-LIBS := pthread log4cplusd osp kdvsys rt
+LIBS := pthread log4cplusd 
         
 
 ## Add driver-specific include directory to the search path
@@ -38,7 +36,7 @@ LIBS := pthread log4cplusd osp kdvsys rt
 INC_PATH += $(TOP)/include 
             
 
-LIB_PATH := $(TOP)/lib/linux $(TOP)/lib/osp/debug/linux
+LIB_PATH := $(TOP)/lib/linux/ 
 
-INSTALL_APP_PATH = debug
+INSTALL_APP_PATH = ../../bin/
 include $(COMM_DIR)/common.mk

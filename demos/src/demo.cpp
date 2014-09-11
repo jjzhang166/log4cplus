@@ -1,26 +1,44 @@
 
+#include <iostream>
+
 #include <log4cplus/configurator.h>
 #include <log4cplus/loggingmacros.h>
 #include <log4cplus/sleep.h>
-#include "osp/osp.h"
-
+#include "log4cplus/customappender.h"
 #include "log4cplus/loglog.h"
+
 
 
 using namespace std;
 using namespace log4cplus;
 
 
+
 static Logger logFile1 = Logger::getInstance("logFile1");
 static Logger logFile2 = Logger::getInstance("logFile2");
+
+#ifdef WIN32
+
+void __stdcall customFunc(const char* sz)
+{
+	OutputDebugString(sz);
+}
+
+#else	__linux__
+void customFunc(const char* sz)
+{
+	//
+}
+#endif
 
 
 int main()
 {
-	OspInit(TRUE, 2501);
-
+	log4cplus::CustomAppender::setCustomFunc(customFunc);
 	log4cplus::PropertyConfigurator::doConfigure("urconfig.properties");
 	LogLog::getLogLog()->setInternalDebugging(true);
+
+	sleepmillis(2000);
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -40,5 +58,8 @@ int main()
 
 		sleepmillis(100);
 	}
+
 	return 0;
 }
+
+

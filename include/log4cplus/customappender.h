@@ -9,39 +9,43 @@
 
 #include <log4cplus/platform.h>
 
-#ifdef LOG4CPLUS_USE_OSP
 #include <log4cplus/appender.h>
+
+#ifdef WIN32
+typedef void (__stdcall *pCustomFuncCallBack)(const char*);
+#else
+typedef void (*pCustomFuncCallBack)(const char*);
+#endif	
 
 namespace log4cplus {
 
-	/**
-	* Appends log events to osp. 
-	*/
-	class LOG4CPLUS_EXPORT OspAppender : public Appender
+	class LOG4CPLUS_EXPORT CustomAppender : public Appender
 	{
 	public:
+
 		// Ctors
-		OspAppender();
-		OspAppender(const Properties& properties);
+		CustomAppender();
+		CustomAppender(const Properties& properties);
 
 		// Dtor
-		virtual ~OspAppender();
+		virtual ~CustomAppender();
 
 		// Methods
 		virtual void close();
+
+		static void setCustomFunc(pCustomFuncCallBack pCustomFunc);	
 
 	protected:
 		virtual void append(const InternalLoggingEvent& loggingEvent);
 
 	private:
 		// Disallow copying of instances of this class
-		OspAppender(const OspAppender&);
-		OspAppender& operator=(const OspAppender&);
+		CustomAppender(const CustomAppender&);
+		CustomAppender& operator=(const CustomAppender&);
+		static pCustomFuncCallBack _pCustomFunc;
 	};
 
 } // end namespace log4cplus
-
-#endif // LOG4CPLUS_USE_OSP
 
 #endif // _LOG4CPLUS_OSP_APPENDER_HEADER_
 

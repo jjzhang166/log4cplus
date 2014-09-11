@@ -96,6 +96,7 @@
     <ClInclude Include="..\include\log4cplus\appenderattachableimpl.h" />
     <ClInclude Include="..\include\log4cplus\configurator.h" />
     <ClInclude Include="..\include\log4cplus\consoleappender.h" />
+    <ClInclude Include="..\include\log4cplus\customappender.h" />
     <ClInclude Include="..\include\log4cplus\environment.h" />
     <ClInclude Include="..\include\log4cplus\factory.h" />
     <ClInclude Include="..\include\log4cplus\fileappender.h" />
@@ -113,7 +114,6 @@
     <ClInclude Include="..\include\log4cplus\logloguser.h" />
     <ClInclude Include="..\include\log4cplus\nullappender.h" />
     <ClInclude Include="..\include\log4cplus\objectregistry.h" />
-    <ClInclude Include="..\include\log4cplus\ospappender.h" />
     <ClInclude Include="..\include\log4cplus\platform.h" />
     <ClInclude Include="..\include\log4cplus\pointer.h" />
     <ClInclude Include="..\include\log4cplus\property.h" />
@@ -132,6 +132,7 @@
     <ClCompile Include="..\src\appenderattachableimpl.cpp" />
     <ClCompile Include="..\src\configurator.cpp" />
     <ClCompile Include="..\src\consoleappender.cpp" />
+    <ClCompile Include="..\src\customappender.cpp" />
     <ClCompile Include="..\src\environment.cpp" />
     <ClCompile Include="..\src\factory.cpp" />
     <ClCompile Include="..\src\fileappender.cpp" />
@@ -149,7 +150,6 @@
     <ClCompile Include="..\src\Mutex.cpp" />
     <ClCompile Include="..\src\nullappender.cpp" />
     <ClCompile Include="..\src\objectregistry.cpp" />
-    <ClCompile Include="..\src\ospappender.cpp" />
     <ClCompile Include="..\src\patternlayout.cpp" />
     <ClCompile Include="..\src\pointer.cpp" />
     <ClCompile Include="..\src\property.cpp" />

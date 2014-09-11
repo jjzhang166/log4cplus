@@ -1,0 +1,43 @@
+
+#########################################################################
+###
+###  DESCRIPTION:
+###    Common definitions for all Makefiles in UAS linux project.
+###
+#########################################################################
+
+TOP := ..
+
+COMM_DIR := .
+
+
+## Name and type of the target for this Makefile
+
+APP_TARGET := demo
+
+## Define debugging symbols
+DEBUG = 0
+LINUX_COMPILER=_LINUX_# _EQUATOR_, _HHPPC_, _LINUX_ and so on
+PWLIB_SUPPORT = 0
+
+CFLAGS += -fno-omit-frame-pointer
+CFLAGS += -D_LINUX
+
+## Object files that compose the target(s)
+
+OBJS :=   ../src/demo  
+
+## Libraries to include in shared object file
+
+LIBS := pthread log4cplus 
+        
+
+## Add driver-specific include directory to the search path
+
+INC_PATH += $(TOP)/include 
+            
+
+LIB_PATH := $(TOP)/lib/linux $(TOP)/lib/osp/release/linux
+
+INSTALL_APP_PATH = ../../bin/
+include $(COMM_DIR)/common.mk

@@ -63,9 +63,6 @@
     <ClInclude Include="..\include\log4cplus\objectregistry.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\ospappender.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\rootlogger.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -115,6 +112,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\platform.h" />
+    <ClInclude Include="..\include\log4cplus\customappender.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\appender.cpp">
@@ -180,9 +180,6 @@
     <ClCompile Include="..\src\objectregistry.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ospappender.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\patternlayout.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -208,6 +205,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\version.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\customappender.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
