@@ -47,7 +47,7 @@
 	#pragma warning(disable : 4996)
 
 #else	//linux
-
+	#include <pthread.h>
 	#define LOG4CPLUS_EXPORT /* empty */
 #endif
 

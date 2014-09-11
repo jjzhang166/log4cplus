@@ -36,7 +36,7 @@ int main()
 {
 	log4cplus::CustomAppender::setCustomFunc(customFunc);
 	log4cplus::PropertyConfigurator::doConfigure("urconfig.properties");
-	LogLog::getLogLog()->setInternalDebugging(true);
+	//LogLog::getLogLog()->setInternalDebugging(true);
 
 	sleepmillis(2000);
 

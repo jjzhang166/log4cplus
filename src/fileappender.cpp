@@ -168,7 +168,7 @@ FileAppender::~FileAppender()
 
 void FileAppender::close()
 {
-	Mutex::ScopedLock lock(_access_mutex);
+	MutexLock lock(&_access_mutex);
 
 	_out.close();
 	delete[] _ofstreamBuffer;

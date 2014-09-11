@@ -28,7 +28,7 @@ Hierarchy::~Hierarchy()
 
 void Hierarchy::clear() 
 {
-	Mutex::ScopedLock lock(_hashtable_mutex);
+	MutexLock lock(&_hashtable_mutex);
 
 	provisionNodes.erase(provisionNodes.begin(), provisionNodes.end());
 	loggerPtrs.erase(loggerPtrs.begin(), loggerPtrs.end());
@@ -41,7 +41,7 @@ bool Hierarchy::exists(const string& name)
 	if (name.empty ())
 		return true;
 
-	Mutex::ScopedLock lock(_hashtable_mutex);
+	MutexLock lock(&_hashtable_mutex);
 
 	LoggerMap::iterator it = loggerPtrs.find(name);
 	return it != loggerPtrs.end();
@@ -78,7 +78,7 @@ Logger Hierarchy::getInstance(const string& name)
 
 Logger Hierarchy::getInstance(const string& name, LoggerFactory& factory)
 {
-	Mutex::ScopedLock lock(_hashtable_mutex);
+	MutexLock lock(&_hashtable_mutex);
 
 	return getInstanceImpl(name, factory);
 }
@@ -87,7 +87,7 @@ LoggerList Hierarchy::getCurrentLoggers()
 {
 	LoggerList retList;
 
-	Mutex::ScopedLock lock(_hashtable_mutex);
+	MutexLock lock(&_hashtable_mutex);
 	initializeLoggerList(retList);
 
 	return retList;

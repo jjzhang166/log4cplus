@@ -15,7 +15,7 @@
 #include <cstdio>
 
 #include <log4cplus/loggingevent.h>
-#include <log4cplus/thread/tls.h>
+#include <log4cplus/tls.h>
 #include <log4cplus/snprintf.h>
 
 

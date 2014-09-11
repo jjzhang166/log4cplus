@@ -24,7 +24,7 @@ void SharedObject::addReference() const
 	_InterlockedIncrement (&_count);
 
 #else
-	Mutex::ScopedLock lock(const_cast<Mutex&>(_access_mutex));
+	MutexLock lock(&const_cast<Mutex&>(_access_mutex));
 	++_count;
 
 #endif
@@ -41,7 +41,7 @@ void SharedObject::removeReference() const
 
 #else
 	{
-		Mutex::ScopedLock lock(const_cast<Mutex&>(_access_mutex));
+		MutexLock lock(&const_cast<Mutex&>(_access_mutex));
 		isDestroy = --_count == 0;
 	}
 

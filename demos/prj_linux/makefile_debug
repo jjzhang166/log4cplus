@@ -6,7 +6,7 @@
 ###
 #########################################################################
 
-TOP := ..
+SRC_DIR := ../src
 
 COMM_DIR := .
 
@@ -33,10 +33,9 @@ LIBS := pthread log4cplusd
 
 ## Add driver-specific include directory to the search path
 
-INC_PATH += $(TOP)/include 
-            
+INC_PATH += ../../include            
 
-LIB_PATH := $(TOP)/lib/linux/ 
+LIB_PATH := ../../lib/log4cplus
 
-INSTALL_APP_PATH = ../../bin/
+INSTALL_APP_PATH = ../../bin
 include $(COMM_DIR)/common.mk

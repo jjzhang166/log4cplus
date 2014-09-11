@@ -14,7 +14,7 @@
 #define LOG4CPLUS_HELPERS_POINTERS_HEADER_
 
 #include <log4cplus/platform.h>
-#include <log4cplus/thread/Mutex.h>
+#include <log4cplus/mutex.h>
 
 #include <cassert>
 

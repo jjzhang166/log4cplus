@@ -13,7 +13,7 @@
 
 
 
-#include <log4cplus/thread/Mutex.h>
+#include <log4cplus/mutex.h>
 
 
 

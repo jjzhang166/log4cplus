@@ -10,7 +10,7 @@
 
 #include <log4cplus/pointer.h>
 #include <log4cplus/appenderattachable.h>
-#include <log4cplus/thread/Mutex.h>
+#include <log4cplus/mutex.h>
 
 #include <memory>
 #include <vector>

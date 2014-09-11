@@ -29,14 +29,14 @@ LogLog::~LogLog() {}
 
 void LogLog::setInternalDebugging(bool enabled)
 {
-     Mutex::ScopedLock lock(_mutex);
+     MutexLock lock(&_mutex);
 
     _isDebugEnabled = enabled ;
 }
 
 void LogLog::setQuietMode(bool quietMode)
 {
-     Mutex::ScopedLock lock(_mutex);
+     MutexLock lock(&_mutex);
 
     _isQuietMode = quietMode;
 }
@@ -89,7 +89,7 @@ void LogLog::loggingWorker(char const* prefix, string const& msg, bool throw_fla
     {
         // XXX This is potential recursive lock of
         // ConsoleAppender::outputMutex.
-		Mutex::ScopedLock lock(const_cast<Mutex&>(ConsoleAppender::getOutputMutex()));
+		MutexLock lock(&const_cast<Mutex&>(ConsoleAppender::getOutputMutex()));
 		std::cout << prefix << msg << std::endl;
     }
 

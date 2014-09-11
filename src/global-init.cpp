@@ -7,14 +7,14 @@
 #include <log4cplus/logger.h>
 #include <log4cplus/loglog.h>
 #include <log4cplus/internal.h>
-#include <log4cplus/thread/tls.h>
+#include <log4cplus/tls.h>
 #include <log4cplus/loglog.h>
 #include <log4cplus/factory.h>
 #include <log4cplus/hierarchy.h>
 #include <cstdio>
 #include <iostream>
 #include <stdexcept>
-#include <log4cplus/thread/Mutex.h>
+#include <log4cplus/mutex.h>
 
 using namespace log4cplus;
 //!Default context.

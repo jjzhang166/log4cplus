@@ -45,7 +45,7 @@ void ConsoleAppender::close()
 
 void ConsoleAppender::append(const InternalLoggingEvent& loggingEvent)
 {
-	Mutex::ScopedLock lock(const_cast<Mutex&>(getOutputMutex()));
+	MutexLock lock(const_cast<Mutex*>(&getOutputMutex()));
 
 	_layout->formatAndAppend(std::cout, loggingEvent);
 	if(_immediateFlush) 

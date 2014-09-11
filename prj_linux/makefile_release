@@ -30,6 +30,7 @@ OBJS :=  $(SRC_DIR)/appender \
 	$(SRC_DIR)/appenderattachableimpl \
 	$(SRC_DIR)/configurator \
 	$(SRC_DIR)/consoleappender \
+	$(SRC_DIR)/customappender \
 	$(SRC_DIR)/environment \
 	$(SRC_DIR)/factory \
 	$(SRC_DIR)/fileappender \
@@ -44,10 +45,9 @@ OBJS :=  $(SRC_DIR)/appender \
 	$(SRC_DIR)/loglevel \
 	$(SRC_DIR)/loglog \
 	$(SRC_DIR)/logloguser \
-	$(SRC_DIR)/Mutex \
+	$(SRC_DIR)/mutex \
 	$(SRC_DIR)/nullappender \
 	$(SRC_DIR)/objectregistry \
-	$(SRC_DIR)/ospappender \
 	$(SRC_DIR)/patternlayout \
 	$(SRC_DIR)/pointer \
 	$(SRC_DIR)/property \

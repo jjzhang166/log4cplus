@@ -15,7 +15,7 @@ ObjectRegistryBase::~ObjectRegistryBase() {}
 
 bool ObjectRegistryBase::exists(const string& name) const
 {
-	Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
+	MutexLock lock(&const_cast<Mutex&>(_mutex));
 
 	return _ObjectMap.find(name) != _ObjectMap.end();
 }
@@ -25,7 +25,7 @@ vector<string> ObjectRegistryBase::getAllNames() const
 {
 	vector<string> tmp;
 
-	Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
+	MutexLock lock(&const_cast<Mutex&>(_mutex));
 	for(ObjectMap::const_iterator it=_ObjectMap.begin(); it!=_ObjectMap.end(); ++it)
 		tmp.push_back( (*it).first );
 
@@ -42,7 +42,7 @@ bool ObjectRegistryBase::putVal(const string& name, void* object)
 	ObjectMap::value_type v(name, object);
 	std::pair<ObjectMap::iterator, bool> ret;
 
-	Mutex::ScopedLock lock(_mutex);
+	MutexLock lock(&_mutex);
 	ret = _ObjectMap.insert(v);
 
 	if (!ret.second)
@@ -53,7 +53,7 @@ bool ObjectRegistryBase::putVal(const string& name, void* object)
 
 void* ObjectRegistryBase::getVal(const string& name) const
 {
-	Mutex::ScopedLock lock(const_cast<Mutex&>(_mutex));
+	MutexLock lock(&const_cast<Mutex&>(_mutex));
 
 	ObjectMap::const_iterator it (_ObjectMap.find (name));
 	if (it != _ObjectMap.end ())
@@ -65,7 +65,7 @@ void* ObjectRegistryBase::getVal(const string& name) const
 
 void ObjectRegistryBase::clear()
 {
-	Mutex::ScopedLock lock(_mutex);
+	MutexLock lock(&_mutex);
 
 	for(ObjectMap::iterator it=_ObjectMap.begin(); it!=_ObjectMap.end(); ++it)
 		deleteObject( it->second );

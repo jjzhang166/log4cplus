@@ -1,5 +1,5 @@
 // Module:  Log4CPLUS
-// File:    ospappender.h
+// File:    customappender.h
 
 
 /** @file */

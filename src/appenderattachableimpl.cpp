@@ -31,7 +31,7 @@ void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
 		return;
 	}
 
-	Mutex::ScopedLock lock(appender_list_mutex);
+	MutexLock lock(&appender_list_mutex);
 
 	ListType::iterator it = std::find(_appenderList.begin(), _appenderList.end(), newAppender);
 	if(it == _appenderList.end()) 
@@ -43,7 +43,7 @@ void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
 
 AppenderAttachableImpl::ListType AppenderAttachableImpl::getAllAppenders()
 {
-	Mutex::ScopedLock lock(appender_list_mutex);
+	MutexLock lock(&appender_list_mutex);
 
 	return _appenderList;
 }
@@ -51,7 +51,7 @@ AppenderAttachableImpl::ListType AppenderAttachableImpl::getAllAppenders()
 
 SharedAppenderPtr AppenderAttachableImpl::getAppender(const string& name)
 {
-	Mutex::ScopedLock lock(appender_list_mutex);
+	MutexLock lock(&appender_list_mutex);
 
 	for(ListType::iterator it=_appenderList.begin(); it!=_appenderList.end(); ++it)
 	{
@@ -67,7 +67,7 @@ SharedAppenderPtr AppenderAttachableImpl::getAppender(const string& name)
 
 void AppenderAttachableImpl::removeAllAppenders()
 {
-	Mutex::ScopedLock lock(appender_list_mutex);
+	MutexLock lock(&appender_list_mutex);
 
 	_appenderList.erase(_appenderList.begin(), _appenderList.end());
 }
@@ -81,7 +81,7 @@ void AppenderAttachableImpl::removeAppender(SharedAppenderPtr appender)
 		return;
 	}
 
-	Mutex::ScopedLock lock(appender_list_mutex);
+	MutexLock lock(&appender_list_mutex);
 
 	ListType::iterator it =
 		std::find(_appenderList.begin(), _appenderList.end(), appender);
@@ -104,7 +104,7 @@ int AppenderAttachableImpl::appendLoopOnAppenders(const InternalLoggingEvent& lo
 {
 	int count = 0;
 
-	Mutex::ScopedLock lock(const_cast<Mutex&>(appender_list_mutex));
+	MutexLock lock(&const_cast<Mutex&>(appender_list_mutex));
 
 	for(ListType::const_iterator it=_appenderList.begin(); it!=_appenderList.end(); ++it)
 	{

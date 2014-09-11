@@ -159,7 +159,7 @@ bool Appender::isClosed() const
 
 void Appender::doAppend(const log4cplus::InternalLoggingEvent& loggingEvent)
 {
-	Mutex::ScopedLock lock(_access_mutex);
+	MutexLock lock(&_access_mutex);
 
 	if(_isClosed) 
 	{
@@ -207,14 +207,14 @@ void Appender::setErrorHandler(std::auto_ptr<ErrorHandler> eh)
 		return;
 	}
 
-	Mutex::ScopedLock lock(_access_mutex);
+	MutexLock lock(&_access_mutex);
 
 	this->_errorHandler = eh;
 }
 
 void Appender::setLayout(std::auto_ptr<Layout> lo)
 {
-	Mutex::ScopedLock lock(_access_mutex);
+	MutexLock lock(&_access_mutex);
 
 	this->_layout = lo;
 }

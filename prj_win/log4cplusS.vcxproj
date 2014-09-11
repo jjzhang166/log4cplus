@@ -52,7 +52,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LOG4CPLUS_BUILD_DLL;INSIDE_LOG4CPLUS;LOG4CPLUS_USE_OSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;LOG4CPLUS_STATIC;INSIDE_LOG4CPLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -74,7 +74,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LOG4CPLUS_BUILD_DLL;INSIDE_LOG4CPLUS;LOG4CPLUS_USE_OSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LOG4CPLUS_STATIC;INSIDE_LOG4CPLUS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -112,6 +112,7 @@
     <ClInclude Include="..\include\log4cplus\loglevel.h" />
     <ClInclude Include="..\include\log4cplus\loglog.h" />
     <ClInclude Include="..\include\log4cplus\logloguser.h" />
+    <ClInclude Include="..\include\log4cplus\mutex.h" />
     <ClInclude Include="..\include\log4cplus\nullappender.h" />
     <ClInclude Include="..\include\log4cplus\objectregistry.h" />
     <ClInclude Include="..\include\log4cplus\platform.h" />
@@ -121,9 +122,6 @@
     <ClInclude Include="..\include\log4cplus\sleep.h" />
     <ClInclude Include="..\include\log4cplus\snprintf.h" />
     <ClInclude Include="..\include\log4cplus\stringhelper.h" />
-    <ClInclude Include="..\include\log4cplus\thread\Mutex.h" />
-    <ClInclude Include="..\include\log4cplus\thread\ScopedLock.h" />
-    <ClInclude Include="..\include\log4cplus\thread\tls.h" />
     <ClInclude Include="..\include\log4cplus\timehelper.h" />
     <ClInclude Include="..\include\log4cplus\version.h" />
   </ItemGroup>
@@ -147,7 +145,7 @@
     <ClCompile Include="..\src\loglevel.cpp" />
     <ClCompile Include="..\src\loglog.cpp" />
     <ClCompile Include="..\src\logloguser.cpp" />
-    <ClCompile Include="..\src\Mutex.cpp" />
+    <ClCompile Include="..\src\mutex.cpp" />
     <ClCompile Include="..\src\nullappender.cpp" />
     <ClCompile Include="..\src\objectregistry.cpp" />
     <ClCompile Include="..\src\patternlayout.cpp" />
