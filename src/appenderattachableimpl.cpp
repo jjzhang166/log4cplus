@@ -3,10 +3,10 @@
 
 
 
-#include <log4cplus/appender.h>
-#include <log4cplus/appenderattachableimpl.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/loggingevent.h>
+#include "log4cplus/appender.h"
+#include "log4cplus/appenderattachableimpl.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/loggingevent.h"
 
 #include <algorithm>
 
@@ -27,7 +27,7 @@ void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
 {
 	if(newAppender == NULL) 
 	{
-		getLogLog().warn("Tried to add NULL appender");
+		LogLog::getLogLog()->error("Tried to add NULL appender");
 		return;
 	}
 
@@ -77,7 +77,7 @@ void AppenderAttachableImpl::removeAllAppenders()
 void AppenderAttachableImpl::removeAppender(SharedAppenderPtr appender)
 {
 	if(appender == NULL) {
-		getLogLog().warn("Tried to remove NULL appender");
+		LogLog::getLogLog()->error("Tried to remove NULL appender");
 		return;
 	}
 

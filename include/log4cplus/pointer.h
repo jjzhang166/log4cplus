@@ -1,23 +1,14 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    pointer.h
-
-
-//
-// Note: Some of this code uses ideas from "More Effective C++" by Scott
-// Myers, Addison Wesley Longmain, Inc.,(c) 1996, Chapter 29, pp. 183-213
-//
-
-/** @file */
 
 #ifndef LOG4CPLUS_HELPERS_POINTERS_HEADER_
 #define LOG4CPLUS_HELPERS_POINTERS_HEADER_
 
-#include <log4cplus/platform.h>
-#include <log4cplus/mutex.h>
-
 #include <cassert>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/mutex.h"
 
 namespace log4cplus { 
 

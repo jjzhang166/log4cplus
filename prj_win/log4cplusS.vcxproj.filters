@@ -72,9 +72,6 @@
     <ClInclude Include="..\include\log4cplus\environment.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\loglog.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -85,12 +82,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\property.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\sleep.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\snprintf.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\stringhelper.h">
@@ -178,12 +169,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\rootlogger.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\sleep.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\snprintf.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\stringhelper.cpp">

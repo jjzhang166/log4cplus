@@ -1,19 +1,16 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    objectregistry.h
 
-
 #ifndef LOG4CPLUS_SPI_OBJECT_REGISTRY_HEADER_
 #define LOG4CPLUS_SPI_OBJECT_REGISTRY_HEADER_
-
-#include <log4cplus/platform.h>
-
-#include <log4cplus/mutex.h>
 
 #include <map>
 #include <memory>
 #include <vector>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/mutex.h"
 
 namespace log4cplus {
 

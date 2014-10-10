@@ -1,0 +1,50 @@
+###
+### Copyright (c) 2006 Kedacom
+###
+
+#########################################################################
+###
+###  DESCRIPTION:
+###    Common definitions for all Makefiles in NetWork linux project.
+###
+#########################################################################
+
+SRC_DIR := ../src
+
+COMM_DIR := .
+
+## Name and type of the target for this Makefile
+
+APP_TARGET := log4cplusWapperS_demoD
+
+## Define debugging symbols
+DEBUG = 1
+LINUX_COMPILER=_LINUX_# _EQUATOR_, _HHPPC_, _LINUX_ and so on
+PWLIB_SUPPORT = 0
+
+CFLAGS += -fno-omit-frame-pointer
+CFLAGS += -D_LINUX
+
+## Object files that compose the target(s)
+
+OBJS :=   ../src/log4cpluswapper_demo
+
+## Libraries to include in shared object file
+
+LIBS := pthread log4cplusWapperSd log4cplusSd
+        
+
+## Add driver-specific include directory to the search path
+
+INC_PATH += ../../include ../../log4cplus_wapper/include     
+
+LIB_PATH := ../../lib/log4cplus
+
+INSTALL_APP_PATH = ../../bin
+
+include $(COMM_DIR)/common.mk
+
+clean:
+	rm -f $(SRC_DIR)/*.o
+	rm -f *.a
+	rm -f $(APP_TARGET)

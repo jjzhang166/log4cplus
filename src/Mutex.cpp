@@ -1,9 +1,9 @@
-#include <log4cplus/mutex.h>
-
-using namespace log4cplus;
 
 #include <stdlib.h>      // for abort()
 
+#include "log4cplus/mutex.h"
+
+using namespace log4cplus;
 
 #ifdef _MSC_VER
 

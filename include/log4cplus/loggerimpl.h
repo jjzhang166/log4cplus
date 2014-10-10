@@ -1,22 +1,22 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    loggerimpl.h
 
 
-/** @file */
+
 
 #ifndef LOG4CPLUS_SPI_LOGGER_HEADER_
 #define LOG4CPLUS_SPI_LOGGER_HEADER_
 
-#include <log4cplus/platform.h>
+#include "log4cplus/platform.h"
 
 
-#include <log4cplus/appenderattachableimpl.h>
-#include <log4cplus/pointer.h>
-#include <log4cplus/loggerfactory.h>
 #include <memory>
 #include <vector>
 
+#include "log4cplus/appenderattachableimpl.h"
+#include "log4cplus/pointer.h"
+#include "log4cplus/loggerfactory.h"
 
 namespace log4cplus {
 	class DefaultLoggerFactory;
@@ -64,8 +64,7 @@ namespace log4cplus {
 		/**
 		* This generic form is intended to be used by wrappers. 
 		*/
-		virtual void log(LogLevel ll, const std::string& message,
-			const char* file=NULL, int line=-1, const char* _function=NULL);
+		virtual void log(LogLevel ll, const std::string& message);
 
 		virtual void log(InternalLoggingEvent const&);
 
@@ -124,8 +123,7 @@ namespace log4cplus {
 		* This method creates a new logging loggingEvent and logs the loggingEvent
 		* without further checks.  
 		*/
-		virtual void forcedLog(LogLevel ll, const std::string& message,
-			const char* file,  int line, const char* _function);
+		virtual void forcedLog(LogLevel ll, const std::string& message);
 
 		virtual void forcedLog(InternalLoggingEvent const& ev);
 

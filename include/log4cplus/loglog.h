@@ -1,31 +1,16 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    loglog.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_HELPERS_LOGLOG
 #define LOG4CPLUS_HELPERS_LOGLOG
 
-#include <log4cplus/platform.h>
-
-
-
-
-#include <log4cplus/mutex.h>
-
-
+#include "log4cplus/platform.h"
+#include "log4cplus/mutex.h"
 
 namespace log4cplus { 
 
 	/**
-	* This class used to output log statements from within the log4cplus package.
-	*
-	* Log4cplus components cannot make log4cplus logging calls. However, it is
-	* sometimes useful for the user to learn about what log4cplus is
-	* doing. You can enable log4cplus internal logging by defining the
-	* <b>log4cplus.configDebug</b> variable.
 	*
 	* All log4cplus internal debug calls go to <code>cout</code>
 	* where as internal errormessages are sent to
@@ -35,7 +20,7 @@ namespace log4cplus {
 	class LOG4CPLUS_EXPORT LogLog
 	{
 	public:
-		//!Return type of getLogLog().
+		//!Return type of LogLog::getLogLog()->
 
 		/**
 		* Returns a reference to the <code>LogLog</code> singleton.
@@ -46,14 +31,6 @@ namespace log4cplus {
 		* Allows to enable/disable log4cplus internal logging.
 		*/
 		void setInternalDebugging(bool enabled);
-
-		/**
-		* In quite mode no LogLog generates strictly no output, not even
-		* for errors. 
-		*
-		* @param quietMode A true for not
-		*/
-		void setQuietMode(bool quietMode);
 
 		/**
 		* This method is used to output log4cplus internal debug
@@ -72,14 +49,6 @@ namespace log4cplus {
 		void error(const std::string& msg, bool throw_flag = false) const;
 		void error(char const* msg, bool throw_flag = false) const;
 
-		/**
-		* This method is used to output log4cplus internal warning
-		* statements. There is no way to disable warning statements.
-		* Output goes to <code>std::cerr</code>.
-		*/
-		void warn(const std::string& msg) const;
-		void warn(char const* msg) const;
-
 		// Public ctor and dtor to be used only by internal::DefaultContext.
 		LogLog();
 		virtual ~LogLog();
@@ -87,21 +56,17 @@ namespace log4cplus {
 	private:
 
 		void loggingWorker(char const*, std::string const&, bool throw_flag = false) const;
-
-		bool getNotQuietMode() const;
-		bool getDebugMode() const;
-
 		// Data
 		mutable bool _isDebugEnabled;
-		mutable bool _isQuietMode;
 		Mutex _mutex;
 
 		LogLog(const LogLog&);
 		LogLog& operator =(LogLog const&);
 
+		static LogLog* s_pLogLog;
 	};
 
-	LOG4CPLUS_EXPORT LogLog& getLogLog();
+
 
 }  // end namespace log4cplus 
 

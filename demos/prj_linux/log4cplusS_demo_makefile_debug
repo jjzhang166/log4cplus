@@ -12,7 +12,7 @@ COMM_DIR := .
 
 ## Name and type of the target for this Makefile
 
-APP_TARGET := demoD
+APP_TARGET := log4cplusS_demoD
 
 ## Define debugging symbols
 DEBUG = 1
@@ -24,18 +24,22 @@ CFLAGS += -D_LINUX
 
 ## Object files that compose the target(s)
 
-OBJS :=   ../src/demo
+OBJS :=   ../src/log4cplus_demo
 
 ## Libraries to include in shared object file
 
-LIBS := pthread log4cplusd 
+LIBS := pthread log4cplusSd
         
 
 ## Add driver-specific include directory to the search path
 
-INC_PATH += ../../include            
+INC_PATH += ../../include      
 
 LIB_PATH := ../../lib/log4cplus
 
 INSTALL_APP_PATH = ../../bin
 include $(COMM_DIR)/common.mk
+
+clean:
+	rm -f $(SRC_DIR)/*.o
+	rm -f *.a

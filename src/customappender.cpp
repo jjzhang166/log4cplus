@@ -1,11 +1,11 @@
 // Module:  Log4CPLUS
 // File:    customappender.cpp
 
-#include <log4cplus/layout.h>
-#include <log4cplus/customappender.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/loggingevent.h>
+#include "log4cplus/layout.h"
+#include "log4cplus/customappender.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/loggingevent.h"
 #include <strstream>
 
 using namespace std;

@@ -1,13 +1,11 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    loggerfactory.h
-
 
 #ifndef LOG4CPLUS_SPI_LOGGER_FACTORY_HEADER
 #define LOG4CPLUS_SPI_LOGGER_FACTORY_HEADER
 
-#include <log4cplus/platform.h>
-
+#include "log4cplus/platform.h"
 
 namespace log4cplus {
 	// Forward Declarations

@@ -102,7 +102,6 @@
     <ClInclude Include="..\include\log4cplus\fileappender.h" />
     <ClInclude Include="..\include\log4cplus\filter.h" />
     <ClInclude Include="..\include\log4cplus\hierarchy.h" />
-    <ClInclude Include="..\include\log4cplus\internal.h" />
     <ClInclude Include="..\include\log4cplus\layout.h" />
     <ClInclude Include="..\include\log4cplus\logger.h" />
     <ClInclude Include="..\include\log4cplus\loggerfactory.h" />
@@ -119,8 +118,6 @@
     <ClInclude Include="..\include\log4cplus\pointer.h" />
     <ClInclude Include="..\include\log4cplus\property.h" />
     <ClInclude Include="..\include\log4cplus\rootlogger.h" />
-    <ClInclude Include="..\include\log4cplus\sleep.h" />
-    <ClInclude Include="..\include\log4cplus\snprintf.h" />
     <ClInclude Include="..\include\log4cplus\stringhelper.h" />
     <ClInclude Include="..\include\log4cplus\timehelper.h" />
     <ClInclude Include="..\include\log4cplus\version.h" />
@@ -152,8 +149,6 @@
     <ClCompile Include="..\src\pointer.cpp" />
     <ClCompile Include="..\src\property.cpp" />
     <ClCompile Include="..\src\rootlogger.cpp" />
-    <ClCompile Include="..\src\sleep.cpp" />
-    <ClCompile Include="..\src\snprintf.cpp" />
     <ClCompile Include="..\src\stringhelper.cpp" />
     <ClCompile Include="..\src\timehelper.cpp" />
     <ClCompile Include="..\src\version.cpp" />

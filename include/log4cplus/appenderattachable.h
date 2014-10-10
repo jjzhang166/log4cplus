@@ -1,19 +1,15 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    appenderattachable.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_SPI_APPENDER_ATTACHABLE_HEADER_
 #define LOG4CPLUS_SPI_APPENDER_ATTACHABLE_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/appender.h>
-
-#include <log4cplus/pointer.h>
 #include <vector>
+
+#include "log4cplus/platform.h"
+#include "log4cplus/appender.h"
+#include "log4cplus/pointer.h"
 
 namespace log4cplus {
 	// Forward Declarations

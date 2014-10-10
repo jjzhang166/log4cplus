@@ -1,23 +1,17 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    appender.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_APPENDER_HEADER_
 #define LOG4CPLUS_APPENDER_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/layout.h>
-#include <log4cplus/loglevel.h>
-
-#include <log4cplus/pointer.h>
-#include <log4cplus/filter.h>
-
 #include <memory>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/layout.h"
+#include "log4cplus/loglevel.h"
+#include "log4cplus/pointer.h"
+#include "log4cplus/filter.h"
 
 namespace log4cplus {
 
@@ -50,53 +44,6 @@ namespace log4cplus {
         bool firstTime;
     };
 
-
-    /**
-     * Extend this class for implementing your own strategies for printing log
-     * statements.
-     *
-     * <h3>Properties</h3>
-     * <dl>
-     *
-     * <dt><tt>layout</tt></dt>
-     * <dd>This property specifies message layout used by
-     * Appender.
-     * \sa Layout
-     * </dd>
-     *
-     * <dt><tt>filters</tt></dt>
-     * <dd>This property specifies possibly multiple filters used by
-     * Appender. Each of multple filters and its properties is under a
-     * numbered subkey of filters key. E.g.:
-     * <tt>filters.<em>1</em>=LogLevelMatchFilter</tt>. Filter
-     * subkey numbers must be consecutive.</dd>
-     *
-     * <dt><tt>Threshold</tt></dt>
-     * <dd>This property specifies log level threshold. Events with
-     * lower log level than the threshold will not be logged by
-     * appender.</dd>
-     *
-     * <dt><tt>UseLockFile</tt></dt>
-     * <dd>Set this property to <tt>true</tt> if you want your output
-     * through this appender to be synchronized between multiple
-     * processes. When this property is set to true then log4cplus
-     * uses OS specific facilities (e.g., <code>lockf()</code>) to
-     * provide inter-process locking. With the exception of
-     * FileAppender and its derived classes, it is also necessary to
-     * provide path to a lock file using the <tt>LockFile</tt>
-     * property.
-     * \sa FileAppender
-     * </dd>
-     *
-     * <dt><tt>LockFile</tt></dt>
-     * <dd>This property specifies lock file, file used for
-     * inter-process synchronization of log file access. The property
-     * is only used when <tt>UseLockFile</tt> is set to true. Then it
-     * is mandatory.
-     * \sa FileAppender
-     * </dd>
-     * </dl>
-     */
     class LOG4CPLUS_EXPORT Appender : public virtual SharedObject
     {
     public:

@@ -1,8 +1,8 @@
 // Module:  Log4CPLUS
 // File:    rootlogger.cpp
 
-#include <log4cplus/rootlogger.h>
-#include <log4cplus/loglog.h>
+#include "log4cplus/rootlogger.h"
+#include "log4cplus/loglog.h"
 
 using namespace log4cplus;
 
@@ -22,7 +22,7 @@ void RootLogger::setLogLevel(LogLevel loglevel)
 {
 	if(loglevel == NOT_SET_LOG_LEVEL) 
 	{
-		getLogLog().error("You have tried to set NOT_SET_LOG_LEVEL to root.");
+		LogLog::getLogLog()->error("You have tried to set NOT_SET_LOG_LEVEL to root.");
 	}
 	else 
 	{

@@ -2,12 +2,11 @@
 // File:    layout.cpp
 
 
-#include <log4cplus/layout.h>
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/timehelper.h>
-#include <log4cplus/loggingevent.h>
-#include <log4cplus/property.h>
-#include <log4cplus/internal.h>
+#include "log4cplus/layout.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/timehelper.h"
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/property.h"
 #include <ostream>
 #include <iomanip>
 

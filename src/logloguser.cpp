@@ -2,8 +2,8 @@
 // File:    logloguser.cpp
 
 
-#include <log4cplus/logloguser.h>
-#include <log4cplus/loglog.h>
+#include "log4cplus/logloguser.h"
+#include "log4cplus/loglog.h"
 
 using namespace log4cplus;
 

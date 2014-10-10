@@ -1,21 +1,17 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    hierarchy.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_HIERARCHY_HEADER_
 #define LOG4CPLUS_HIERARCHY_HEADER_
 
-#include <log4cplus/platform.h>
-#include <log4cplus/mutex.h>
-
-#include <log4cplus/logger.h>
 #include <map>
 #include <memory>
 #include <vector>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/mutex.h"
+#include "log4cplus/logger.h"
 
 namespace log4cplus {
 	// Forward Declarations
@@ -189,8 +185,7 @@ namespace log4cplus {
 		* reference for the newly created Logger, parent of all the
 		* children in 'pn'
 		*/
-		void updateChildren(ProvisionNode& pn,
-			Logger const& logger);
+		void updateChildren(ProvisionNode& pn,Logger const& logger);
 
 		// Data
 		Mutex _hashtable_mutex;

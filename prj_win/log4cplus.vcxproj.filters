@@ -75,22 +75,10 @@
     <ClInclude Include="..\include\log4cplus\environment.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\internal.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\loglog.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\logloguser.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\pointer.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\sleep.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\log4cplus\snprintf.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\stringhelper.h">
@@ -99,18 +87,16 @@
     <ClInclude Include="..\include\log4cplus\timehelper.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\platform.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\customappender.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\mutex.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\thread\tls.h">
+    <ClInclude Include="..\include\log4cplus\tls.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\log4cplus\platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\appender.cpp">
@@ -164,9 +150,6 @@
     <ClCompile Include="..\src\loglog.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\logloguser.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\nullappender.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -183,12 +166,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\rootlogger.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\sleep.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\snprintf.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\stringhelper.cpp">

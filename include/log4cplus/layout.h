@@ -1,18 +1,15 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    Layout.h
-
-/** @file */
 
 #ifndef LOG4CPLUS_LAYOUT_HEADER_
 #define LOG4CPLUS_LAYOUT_HEADER_
 
-#include <log4cplus/platform.h>
-#include <log4cplus/loglevel.h>
-#include <log4cplus/property.h>
-
 #include <vector>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/loglevel.h"
+#include "log4cplus/property.h"
 
 namespace log4cplus {
 	

@@ -2,18 +2,18 @@
 // File:    property.cpp
 
 
-#include <log4cplus/platform.h>
+#include "log4cplus/platform.h"
 
 #include <cstring>
 #include <cctype>
 #include <fstream>
 #include <sstream>
 
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/property.h>
-#include <log4cplus/internal.h>
-#include <log4cplus/environment.h>
-#include <log4cplus/loglog.h>
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/property.h"
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/environment.h"
+#include "log4cplus/loglog.h"
 
 using namespace std;
 using namespace log4cplus;
@@ -69,7 +69,7 @@ Properties::Properties(const string& inputFile)
 
 	file.open(inputFile.c_str(), std::ios::binary);
 	if(!file.good())
-		getLogLog().error("could not open file " + inputFile);
+		LogLog::getLogLog()->error("could not open file " + inputFile);
 
 	init(file);
 }
@@ -113,7 +113,7 @@ void Properties::init(istream& input)
 
 			file.open(included.c_str(), std::ios::binary);
 			if(!file.good())
-				getLogLog().error("could not open file " + included);
+				LogLog::getLogLog()->error("could not open file " + included);
 
 			init(file);
 		}

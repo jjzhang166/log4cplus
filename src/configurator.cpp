@@ -2,16 +2,15 @@
 // File:    configurator.cpp
 
 
-#include <log4cplus/configurator.h>
-#include <log4cplus/hierarchy.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/sleep.h>
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/property.h>
-#include <log4cplus/timehelper.h>
-#include <log4cplus/factory.h>
-#include <log4cplus/loggerimpl.h>
-#include <log4cplus/environment.h>
+#include "log4cplus/configurator.h"
+#include "log4cplus/hierarchy.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/property.h"
+#include "log4cplus/timehelper.h"
+#include "log4cplus/factory.h"
+#include "log4cplus/loggerimpl.h"
+#include "log4cplus/environment.h"
 
 #include <iterator>
 
@@ -62,15 +61,6 @@ void PropertyConfigurator::doConfigure(const string& file, Hierarchy& h)
 
 void PropertyConfigurator::configure()
 {
-	// Configure log4cplus internals.
-	bool isInternalDebugging = false;
-	if(_properties.getBool(isInternalDebugging, "configDebug"))
-		getLogLog().setInternalDebugging(isInternalDebugging);
-
-	bool quiet_mode = false;
-	if(_properties.getBool(quiet_mode, "quietMode"))
-		getLogLog().setQuietMode(quiet_mode);
-
 	initializeLog4cplus();
 	configureAppenders();
 	configureLoggers();
@@ -122,7 +112,7 @@ void PropertyConfigurator::configureLogger(Logger logger, const string& config)
 
 	if(tokens.empty())
 	{
-		getLogLog().error(
+		LogLog::getLogLog()->error(
 			"PropertyConfigurator::configureLogger()- Invalid config string Logger = " + logger.getName());
 		return;
 	}
@@ -143,7 +133,7 @@ void PropertyConfigurator::configureLogger(Logger logger, const string& config)
 		AppenderMap::iterator appenderIt = _appenders.find(tokens[j]);
 		if(appenderIt == _appenders.end())
 		{
-			getLogLog().error(
+			LogLog::getLogLog()->error(
 				"PropertyConfigurator::configureLogger()- Invalid appender: " + tokens[j]);
 			continue;
 		}
@@ -166,7 +156,7 @@ void PropertyConfigurator::configureAppenders()
 			if(!factory)
 			{
 				string err = "PropertyConfigurator::configureAppenders()- Cannot find AppenderFactory: ";
-				getLogLog().error(err + factoryName);
+				LogLog::getLogLog()->error(err + factoryName);
 				continue;
 			}
 
@@ -177,7 +167,7 @@ void PropertyConfigurator::configureAppenders()
 				if(!appender)
 				{
 					string err ="PropertyConfigurator::configureAppenders() - Failed to create appender: ";
-					getLogLog().error(err + *it);
+					LogLog::getLogLog()->error(err + *it);
 				}
 				else
 				{
@@ -188,7 +178,7 @@ void PropertyConfigurator::configureAppenders()
 			catch(std::exception const& e)
 			{
 				string err = "PropertyConfigurator::configureAppenders() - Error while creating Appender: ";
-				getLogLog().error(err + string(e.what()));
+				LogLog::getLogLog()->error(err + string(e.what()));
 			}
 		}
 	} // end for loop

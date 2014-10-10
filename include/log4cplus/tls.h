@@ -1,10 +1,10 @@
-// -*- C++ -*-
+
 
 
 #ifndef LOG4CPLUS_THREAD_IMPL_TLS_H
 #define LOG4CPLUS_THREAD_IMPL_TLS_H
 
-#include <log4cplus/platform.h>
+#include "log4cplus/platform.h"
 
 #include <new>
 #include <cassert>

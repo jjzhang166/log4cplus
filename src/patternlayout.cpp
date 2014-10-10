@@ -1,16 +1,17 @@
 // Module:  Log4CPLUS
 // File:    patternlayout.cpp
 
-
-#include <log4cplus/layout.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/timehelper.h>
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/property.h>
-#include <log4cplus/loggingevent.h>
-#include <log4cplus/internal.h>
-#include <log4cplus/environment.h>
+#include <sstream>
 #include <cstdlib>
+
+#include "log4cplus/layout.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/timehelper.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/property.h"
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/environment.h"
+
 
 using namespace std;
 using namespace log4cplus;
@@ -65,21 +66,6 @@ namespace log4cplus
 
 typedef vector<PatternConverter*> PatternConverterList;
 
-static string get_basename(const string& filename)
-{
-#if defined(_MSC_VER)
-	char const dir_sep('\\');
-#else
-	char const dir_sep('/');
-#endif
-
-	string::size_type pos = filename.rfind(dir_sep);
-	if(pos != string::npos)
-		return filename.substr(pos+1);
-	else
-		return filename;
-}
-
 
 static char const ESCAPE_CHAR = '%';
 
@@ -118,11 +104,6 @@ public:
 		LOGLEVEL_CONVERTER,
 		MESSAGE_CONVERTER,
 		NEWLINE_CONVERTER,
-		BASENAME_CONVERTER,
-		FILE_CONVERTER,
-		LINE_CONVERTER,
-		FULL_LOCATION_CONVERTER,
-		FUNCTION_CONVERTER 
 	};
 	BasicPatternConverter(const FormattingInfo& info, PatternConverterType type);
 	virtual void convert(string& result, const InternalLoggingEvent& loggingEvent);
@@ -287,10 +268,6 @@ void BasicPatternConverter::convert(string& result,
 		result = _llmCache.toString(loggingEvent.getLogLevel());
 		return;
 
-	case BASENAME_CONVERTER:
-		result = get_basename(loggingEvent.getFile());
-		return;
-
 	case PROCESS_CONVERTER:
 		{		
 			int pid = 0; 
@@ -311,37 +288,6 @@ void BasicPatternConverter::convert(string& result,
 	case NEWLINE_CONVERTER:
 		result = "\n";
 		return; 
-
-	case FILE_CONVERTER:
-		result = loggingEvent.getFile();
-		return;
-
-	case LINE_CONVERTER:
-		{
-			if(loggingEvent.getLine() != -1)
-				convertIntegerToString(result, loggingEvent.getLine());
-			else
-				result.clear();
-			return;
-		}
-
-	case FULL_LOCATION_CONVERTER:
-		{
-			string const& file = loggingEvent.getFile();
-			if(!file.empty())
-			{
-				result = file;
-				result += ":";
-				result += convertIntegerToString(loggingEvent.getLine());
-			}
-			else
-				result = ":";
-			return;
-		}
-
-	case FUNCTION_CONVERTER:
-		result = loggingEvent.getFunction();
-		return;
 	}
 
 	result = "INTERNAL LOG4CPLUS ERROR";
@@ -445,7 +391,7 @@ string PatternParser::extractOption()
 		{
 			ostringstream buf;
 			buf << "No matching '}' found in conversion pattern string " << _patternString;
-			getLogLog().error(buf.str());
+			LogLog::getLogLog()->error(buf.str());
 			_pos = _patternString.length();
 		}
 	}
@@ -560,7 +506,7 @@ PatternConverterList PatternParser::parse()
 					<< _pos
 					<< ".\n Was expecting digit, instead got char "
 					<< c;
-				getLogLog().error(buf.str());
+				LogLog::getLogLog()->error(buf.str());
 				_parserState = LITERAL_STATE;
 			}
 			break;
@@ -591,9 +537,9 @@ void PatternParser::finalizeConverter(char c)
 	PatternConverter* pc = 0;
 	switch(c) 
 	{
-	case 'b':
-		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::BASENAME_CONVERTER);      
-		break;
+// 	case 'b':
+// 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::BASENAME_CONVERTER);      
+// 		break;
 
 	case 'c':
 		pc = new LoggerPatternConverter(_formattingInfo, extractPrecisionOption());   
@@ -615,29 +561,29 @@ void PatternParser::finalizeConverter(char c)
 		pc = new EnvPatternConverter(_formattingInfo, extractOption());     
 		break;
 
-	case 'F':
-		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::FILE_CONVERTER);     
-		break;
+// 	case 'F':
+// 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::FILE_CONVERTER);     
+// 		break;
 
 	case 'i':
 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::PROCESS_CONVERTER);   
 		break;
 
-	case 'l':
-		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::FULL_LOCATION_CONVERTER);  
-		break;
-
-	case 'L':
-		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::LINE_CONVERTER);   
-		break;
+// 	case 'l':
+// 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::FULL_LOCATION_CONVERTER);  
+// 		break;
+// 
+// 	case 'L':
+// 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::LINE_CONVERTER);   
+// 		break;
 
 	case 'm':
 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::MESSAGE_CONVERTER);    
 		break;
 
-	case 'M':
-		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::FUNCTION_CONVERTER);  
-		break;
+// 	case 'M':
+// 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::FUNCTION_CONVERTER);  
+// 		break;
 
 	case 'n':
 		pc = new BasicPatternConverter(_formattingInfo, BasicPatternConverter::NEWLINE_CONVERTER);     
@@ -652,7 +598,7 @@ void PatternParser::finalizeConverter(char c)
 		buf << "Unexpected char [" << c
 			<< "] at position " << _pos
 			<< " in conversion patterrn.";
-		getLogLog().error(buf.str());
+		LogLog::getLogLog()->error(buf.str());
 		pc = new LiteralPatternConverter(_currentLiteral);
 	}
 
@@ -681,7 +627,7 @@ PatternLayout::PatternLayout(const Properties& properties)
 
 	if(isHasPattern) 
 	{
-		getLogLog().warn("PatternLayout- the Pattern property has been"
+		LogLog::getLogLog()->error("PatternLayout- the Pattern property has been"
 			" deprecated.  Use ConversionPattern instead.");
 	}
 
@@ -695,7 +641,7 @@ PatternLayout::PatternLayout(const Properties& properties)
 	}
 	else
 	{
-		getLogLog().error("ConversionPattern not specified in properties", true);
+		LogLog::getLogLog()->error("ConversionPattern not specified in properties", true);
 	}
 
 }
@@ -712,13 +658,13 @@ void PatternLayout::init(const string& pattern_)
 	{
 		if((*it) == 0 ) 
 		{
-			getLogLog().error("Parsed Pattern created a NULL PatternConverter");
+			LogLog::getLogLog()->error("Parsed Pattern created a NULL PatternConverter");
 			(*it) = new LiteralPatternConverter("");
 		}
 	}
 	if(_parsedPattern.empty()) 
 	{
-		getLogLog().warn("PatternLayout pattern is empty.  Using default...");
+		LogLog::getLogLog()->error("PatternLayout pattern is empty.  Using default...");
 		_parsedPattern.push_back(new BasicPatternConverter(FormattingInfo(), BasicPatternConverter::MESSAGE_CONVERTER));
 	}
 }

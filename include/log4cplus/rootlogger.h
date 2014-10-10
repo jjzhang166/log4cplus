@@ -1,15 +1,12 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    rootlogger.h
-
-/** @file */
 
 #ifndef LOG4CPLUS_SPI_ROOT_LOGGER_HEADER_
 #define LOG4CPLUS_SPI_ROOT_LOGGER_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/loggerimpl.h>
+#include "log4cplus/platform.h"
+#include "log4cplus/loggerimpl.h"
 
 namespace log4cplus {
 

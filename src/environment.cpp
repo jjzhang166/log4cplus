@@ -1,19 +1,19 @@
 
-
-#include <log4cplus/environment.h>
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/loglog.h>
+#include <sys/stat.h>
+#include <cassert>
+#include <cerrno>
+#include <sstream>
+#include <stdexcept>
+#include <string.h>
 
 #ifdef _MSC_VER 
 #include <direct.h>
 #include <tchar.h>
 #endif
 
-#include <sys/stat.h>
-#include <cassert>
-#include <cerrno>
-#include <sstream>
-#include <stdexcept>
+#include "log4cplus/environment.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/loglog.h"
 
 using namespace std;
 using namespace log4cplus;
@@ -126,7 +126,7 @@ static string get_drive_cwd(char drive)
     if(!cstr)
     {
         int const eno = errno;
-        getLogLog().error("_getdcwd: " + convertIntegerToString(eno), true);
+        LogLog::getLogLog()->error("_getdcwd: " + convertIntegerToString(eno), true);
     }
 
     try
@@ -172,12 +172,12 @@ static string get_current_dir()
             if(eno == ERANGE)
                 buf_size *= 2;
             else
-                getLogLog().error("getcwd: " + convertIntegerToString(eno), true);
+                LogLog::getLogLog()->error("getcwd: " + convertIntegerToString(eno), true);
         }
     }
     while(!ret);
 
-    buf.resize(std::strlen(buf.c_str()));
+    buf.resize(strlen(buf.c_str()));
     return buf;
 
 #endif
@@ -401,17 +401,13 @@ static long makeDirectory(string const& dir)
 }
 
 
-static void loglog_makeDirectoryResult(LogLog& loglog, string const& path, long ret)
+static void loglog_makeDirectoryResult(LogLog* loglog, string const& path, long ret)
 {
-    if(ret == 0)
-    {
-        loglog.debug("Created directory " + path);
-    }
-    else
+    if(ret != 0)
     {
         ostringstream oss;
         oss << "Failed to create directory " << path << "; error" << ret;
-        loglog.error(oss.str());
+        loglog->error(oss.str());
     }
 }
 
@@ -437,7 +433,7 @@ void make_dirs(string const& file_path)
 {
     vector<string> components;
     std::size_t special = 0;
-    LogLog& loglog = getLogLog();
+    LogLog* loglog = LogLog::getLogLog();
 
     // Split file path into components.
 

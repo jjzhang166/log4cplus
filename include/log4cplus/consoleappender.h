@@ -1,15 +1,13 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    consoleappender.h
-
-/** @file */
 
 #ifndef LOG4CPLUS_CONSOLE_APPENDER_HEADER_
 #define LOG4CPLUS_CONSOLE_APPENDER_HEADER_
 
-#include <log4cplus/platform.h>
-#include <log4cplus/appender.h>
-#include <log4cplus/mutex.h>
+#include "log4cplus/platform.h"
+#include "log4cplus/appender.h"
+#include "log4cplus/mutex.h"
 
 namespace log4cplus {
     /**
@@ -41,10 +39,6 @@ namespace log4cplus {
 
       // Methods
         virtual void close();
-
-        //!This mutex is used by ConsoleAppender and LogLog
-        //!classes to synchronize output to console.
-        static Mutex const& getOutputMutex();
 
     protected:
         virtual void append(const InternalLoggingEvent& loggingEvent);

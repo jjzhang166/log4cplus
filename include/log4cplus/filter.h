@@ -1,19 +1,14 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    filter.h
 
 
-/** @file 
-* This header defines Filter and all of it's subclasses. */
-
 #ifndef LOG4CPLUS_SPI_FILTER_HEADER_
 #define LOG4CPLUS_SPI_FILTER_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/pointer.h>
-#include <log4cplus/loglevel.h>
-
+#include "log4cplus/platform.h"
+#include "log4cplus/pointer.h"
+#include "log4cplus/loglevel.h"
 
 namespace log4cplus {
 

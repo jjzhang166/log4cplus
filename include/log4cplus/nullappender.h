@@ -1,18 +1,12 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    nullappender.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_NULL_APPENDER_HEADER_
 #define LOG4CPLUS_NULL_APPENDER_HEADER_
 
-#include <log4cplus/platform.h>
-
-
-#include <log4cplus/appender.h>
-
+#include "log4cplus/platform.h"
+#include "log4cplus/appender.h"
 
 namespace log4cplus {
 

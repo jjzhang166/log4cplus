@@ -1,23 +1,18 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    factory.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_SPI_FACTORY_HEADER_
 #define LOG4CPLUS_SPI_FACTORY_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/appender.h>
-#include <log4cplus/layout.h>
-
-#include <log4cplus/filter.h>
-#include <log4cplus/objectregistry.h>
 #include <memory>
 #include <vector>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/appender.h"
+#include "log4cplus/layout.h"
+#include "log4cplus/filter.h"
+#include "log4cplus/objectregistry.h"
 
 namespace log4cplus {
 
@@ -25,7 +20,7 @@ namespace log4cplus {
 	/**
 	* This is the base class for all factories.
 	*/
-	class LOG4CPLUS_EXPORT BaseFactory 
+	class BaseFactory 
 	{
 	public:
 		virtual ~BaseFactory() = 0;
@@ -41,7 +36,7 @@ namespace log4cplus {
 	* This abstract class defines the "Factory" interface to create "Appender"
 	* objects.
 	*/
-	class LOG4CPLUS_EXPORT AppenderFactory : public BaseFactory 
+	class AppenderFactory : public BaseFactory 
 	{
 	public:
 		typedef Appender ProductType;
@@ -62,7 +57,7 @@ namespace log4cplus {
 	* This abstract class defines the "Factory" interface to create "Layout"
 	* objects.
 	*/
-	class LOG4CPLUS_EXPORT LayoutFactory : public BaseFactory {
+	class LayoutFactory : public BaseFactory {
 	public:
 		typedef Layout ProductType;
 		typedef std::auto_ptr<Layout> ProductPtr;
@@ -82,7 +77,7 @@ namespace log4cplus {
 	* This abstract class defines the "Factory" interface to create "Appender"
 	* objects.
 	*/
-	class LOG4CPLUS_EXPORT FilterFactory : public BaseFactory 
+	class FilterFactory : public BaseFactory 
 	{
 	public:
 		typedef Filter ProductType;
@@ -97,17 +92,9 @@ namespace log4cplus {
 		virtual FilterPtr createObject(const Properties& props) = 0;
 	};
 
-	/**
-	* This template class is used as a "Factory Registry".  Objects are
-	* "entered" into the registry with a "name" using the 
-	* <code>put()</code> method. (The registry then owns the object.)  
-	* These object can then be retrieved using the <code>get()</code> 
-	* method.
-	* 
-	* <b>Note:</b>  This class is Thread-safe.
-	*/
+
 	template<class T>
-	class LOG4CPLUS_EXPORT FactoryRegistry : public ObjectRegistryBase
+	class FactoryRegistry : public ObjectRegistryBase
 	{
 	public:
 
@@ -153,17 +140,17 @@ namespace log4cplus {
 	/**
 	* Returns the "singleton" <code>AppenderFactoryRegistry</code>.
 	*/
-	LOG4CPLUS_EXPORT AppenderFactoryRegistry& getAppenderFactoryRegistry();
+	AppenderFactoryRegistry& getAppenderFactoryRegistry();
 
 	/**
 	* Returns the "singleton" <code>LayoutFactoryRegistry</code>.
 	*/
-	LOG4CPLUS_EXPORT LayoutFactoryRegistry& getLayoutFactoryRegistry();
+	LayoutFactoryRegistry& getLayoutFactoryRegistry();
 
 	/**
 	* Returns the "singleton" <code>FilterFactoryRegistry</code>.
 	*/
-	LOG4CPLUS_EXPORT FilterFactoryRegistry& getFilterFactoryRegistry();
+	FilterFactoryRegistry& getFilterFactoryRegistry();
 
 	template <typename ProductFactoryBase>
 	class LocalFactoryBase : public ProductFactoryBase
@@ -194,21 +181,6 @@ namespace log4cplus {
 			return ProductPtr(new LocalProduct(props));
 		}
 	};
-
-
-#define LOG4CPLUS_REG_PRODUCT(reg, name, Factory) \
-	reg.put(																  \
-	std::auto_ptr<Factory>(                                                   \
-	new FactoryTempl<name, Factory>(#name)))
-
-#define LOG4CPLUS_REG_APPENDER(reg, appendername)                             \
-	LOG4CPLUS_REG_PRODUCT(reg, appendername, AppenderFactory) 
-
-#define LOG4CPLUS_REG_LAYOUT(reg, layoutname)                                 \
-	LOG4CPLUS_REG_PRODUCT(reg, layoutname, LayoutFactory)
-
-#define LOG4CPLUS_REG_FILTER(reg, filtername)                                 \
-	LOG4CPLUS_REG_PRODUCT(reg, filtername, FilterFactory)
 }
 
 

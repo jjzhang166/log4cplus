@@ -2,26 +2,17 @@
 // File:    loggingmacros.cpp
 
 
-/** @file
-* This file implements support function for loggingmacros.h file. */
-
-#include <log4cplus/internal.h>
-#include <log4cplus/loggingmacros.h>
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/loggingmacros.h"
 
 using namespace std;
 using namespace log4cplus;
 
 
-snprintfBuf & log4cplus::macro_getStringBuf()
+void log4cplus::macro_forcedLog(Logger const& logger, LogLevel logLevel, string const& msg)
 {
-	return getPerThreadData()->_snprintfBuf;
-}
-
-void log4cplus::macro_forcedLog(Logger const& logger, LogLevel logLevel, 
-	string const& msg, char const* filename, int line, char const* func)
-{
-	InternalLoggingEvent& loggingEvent = getPerThreadData()->_forcedLoggingEvent;
-	loggingEvent.setLoggingEvent(logger.getName(), logLevel, msg, filename, line, func);
+	InternalLoggingEvent& loggingEvent = *getInternalLoggingEvent();
+	loggingEvent.setLoggingEvent(logger.getName(), logLevel, msg);
 	logger.forcedLog(loggingEvent);
 }
 

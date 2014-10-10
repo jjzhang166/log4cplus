@@ -3,9 +3,8 @@
 #define LOG4CPLUS_MUTEX_H_
 
 #include <cassert>
-#include <log4cplus/platform.h>
 
-
+#include "log4cplus/platform.h"
 
 namespace log4cplus
 {

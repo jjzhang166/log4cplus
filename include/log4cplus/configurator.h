@@ -1,21 +1,17 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    configurator.h
-
-/** @file */
 
 #ifndef LOG4CPLUS_CONFIGURATOR_HEADER_
 #define LOG4CPLUS_CONFIGURATOR_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/appender.h>
-#include <log4cplus/logger.h>
-#include <log4cplus/pointer.h>
-#include <log4cplus/property.h>
-
 #include <map>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/appender.h"
+#include "log4cplus/logger.h"
+#include "log4cplus/pointer.h"
+#include "log4cplus/property.h"
 
 namespace log4cplus
 {

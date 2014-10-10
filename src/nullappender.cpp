@@ -2,7 +2,7 @@
 // File:    nullappender.cpp
 
 
-#include <log4cplus/nullappender.h>
+#include "log4cplus/nullappender.h"
 
 
 using namespace log4cplus;

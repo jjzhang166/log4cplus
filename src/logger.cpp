@@ -2,11 +2,11 @@
 // File:    logger.cpp
 
 
-#include <log4cplus/logger.h>
-#include <log4cplus/appender.h>
-#include <log4cplus/hierarchy.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/loggerimpl.h>
+#include "log4cplus/logger.h"
+#include "log4cplus/appender.h"
+#include "log4cplus/hierarchy.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/loggerimpl.h"
 #include <utility>
 
 using namespace std;
@@ -101,7 +101,7 @@ Logger Logger::getParent() const
 	}
 	else
 	{
-		getLogLog().error("********* This logger has no parent: " + getName());
+		LogLog::getLogLog()->error("********* This logger has no parent: " + getName());
 		return *this;
 	}
 }
@@ -161,10 +161,9 @@ void Logger::log(InternalLoggingEvent const& ev) const
 }
 
 
-void Logger::forcedLog(LogLevel ll, const string& message,
-	const char* file, int line, const char* _function) const
+void Logger::forcedLog(LogLevel ll, const string& message) const
 {
-	_pLoggerImpl->forcedLog(ll, message, file, line, _function ? _function : "");
+	_pLoggerImpl->forcedLog(ll, message);
 }
 
 

@@ -1,18 +1,15 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    stringhelper.h
-
-
-/** @file */
 
 #ifndef LOG4CPLUS_HELPERS_STRINGHELPER_HEADER_
 #define LOG4CPLUS_HELPERS_STRINGHELPER_HEADER_
 
-#include <log4cplus/platform.h>
 #include <algorithm>
 #include <vector>
 #include <iterator>
 
+#include "log4cplus/platform.h"
 
 namespace log4cplus { 
 	/**

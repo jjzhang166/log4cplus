@@ -1,0 +1,48 @@
+
+#########################################################################
+###
+###  DESCRIPTION:
+###    Common definitions for all Makefiles in UAS linux project.
+###
+#########################################################################
+
+TOP := ..
+
+COMM_DIR := .
+
+SRC_DIR := $(TOP)/src
+
+## Name and type of the target for this Makefile
+
+ARC_TARGET := log4cplusWapperS
+
+## Define debugging symbols
+DEBUG = 0
+LINUX_COMPILER=_LINUX_# _EQUATOR_, _HHPPC_, _LINUX_ and so on
+PWLIB_SUPPORT = 0
+
+CFLAGS += -fno-omit-frame-pointer
+CFLAGS += -DINSIDE_LOG4CPLUS -DLOG4CPLUS_USE_OSP
+
+## Object files that compose the target(s)
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst %.cpp,%, $(SRCS))
+
+
+## Libraries to include in shared object file
+
+LIBS := pthread log4cplusS
+        
+
+## Add driver-specific include directory to the search path
+
+INC_PATH += ../../include ../include
+           
+LIB_PATH := ../../lib/log4cplus
+
+INSTALL_LIB_PATH = ../../lib/log4cplus
+include $(COMM_DIR)/common.mk
+
+clean:
+	rm -f $(SRC_DIR)/*.o
+	rm -f *.a

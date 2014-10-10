@@ -3,7 +3,7 @@
 
 
 
-#include <log4cplus/pointer.h>
+#include "log4cplus/pointer.h"
 
 #include <cassert>
 

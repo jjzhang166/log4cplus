@@ -14,7 +14,7 @@ SRC_DIR := $(TOP)/src
 
 ## Name and type of the target for this Makefile
 
-ARC_TARGET := log4cplus
+ARC_TARGET := log4cplusS
 
 ## Define debugging symbols
 DEBUG = 0
@@ -25,51 +25,24 @@ CFLAGS += -fno-omit-frame-pointer
 CFLAGS += -DINSIDE_LOG4CPLUS -DLOG4CPLUS_USE_OSP
 
 ## Object files that compose the target(s)
-
-OBJS :=  $(SRC_DIR)/appender \
-	$(SRC_DIR)/appenderattachableimpl \
-	$(SRC_DIR)/configurator \
-	$(SRC_DIR)/consoleappender \
-	$(SRC_DIR)/customappender \
-	$(SRC_DIR)/environment \
-	$(SRC_DIR)/factory \
-	$(SRC_DIR)/fileappender \
-	$(SRC_DIR)/filter \
-	$(SRC_DIR)/global-init \
-	$(SRC_DIR)/hierarchy \
-	$(SRC_DIR)/layout \
-	$(SRC_DIR)/logger \
-	$(SRC_DIR)/loggerimpl \
-	$(SRC_DIR)/loggingevent \
-	$(SRC_DIR)/loggingmacros \
-	$(SRC_DIR)/loglevel \
-	$(SRC_DIR)/loglog \
-	$(SRC_DIR)/logloguser \
-	$(SRC_DIR)/mutex \
-	$(SRC_DIR)/nullappender \
-	$(SRC_DIR)/objectregistry \
-	$(SRC_DIR)/patternlayout \
-	$(SRC_DIR)/pointer \
-	$(SRC_DIR)/property \
-	$(SRC_DIR)/rootlogger \
-	$(SRC_DIR)/sleep \
-	$(SRC_DIR)/snprintf \
-	$(SRC_DIR)/stringhelper \
-	$(SRC_DIR)/timehelper \
-	$(SRC_DIR)/version \
-
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst %.cpp,%, $(SRCS))
 
 
 ## Libraries to include in shared object file
 
-LIBS := pthread osp kdvsys rt
+LIBS := pthread
         
 
 ## Add driver-specific include directory to the search path
 
 INC_PATH += $(TOP)/include 
            
-LIB_PATH := $(TOP)/lib/osp/release/linux
+# LIB_PATH := 
 
 INSTALL_LIB_PATH = $(TOP)/lib/log4cplus
 include $(COMM_DIR)/common.mk
+
+clean:
+	rm -f $(SRC_DIR)/*.o
+	rm -f *.a

@@ -2,11 +2,11 @@
 // File:    timehelper.cpp
 
 
-#include <log4cplus/timehelper.h>
-#include <log4cplus/loglog.h>
+#include "log4cplus/timehelper.h"
+#include "log4cplus/loglog.h"
 
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/internal.h>
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/loggingevent.h"
 
 #include <algorithm>
 #include <vector>

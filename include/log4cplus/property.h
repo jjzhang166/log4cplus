@@ -1,17 +1,14 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    property.h
-
-/** @file */
 
 #ifndef LOG4CPLUS_HELPERS_PROPERTY_HEADER_
 #define LOG4CPLUS_HELPERS_PROPERTY_HEADER_
 
-#include <log4cplus/platform.h>
-
 #include <map>
 #include <vector>
 
+#include "log4cplus/platform.h"
 
 namespace log4cplus { 
 

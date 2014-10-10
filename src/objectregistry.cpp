@@ -2,7 +2,7 @@
 // File:    objectregistry.cpp
 
 
-#include <log4cplus/objectregistry.h>
+#include "log4cplus/objectregistry.h"
 
 using namespace std;
 using namespace log4cplus;

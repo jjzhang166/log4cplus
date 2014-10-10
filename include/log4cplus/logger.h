@@ -1,20 +1,17 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    logger.h
 
 
-/** @file 
-* This header defines the Logger class and the logging macros. */
-
 #ifndef LOG4CPLUS_LOGGERHEADER_
 #define LOG4CPLUS_LOGGERHEADER_
 
-#include <log4cplus/platform.h>
+#include "log4cplus/platform.h"
 
-#include <log4cplus/loglevel.h>
+#include "log4cplus/loglevel.h"
 
-#include <log4cplus/appenderattachable.h>
-#include <log4cplus/loggerfactory.h>
+#include "log4cplus/appenderattachable.h"
+#include "log4cplus/loggerfactory.h"
 
 #include <vector>
 
@@ -128,8 +125,7 @@ namespace log4cplus
 		* This method creates a new logging loggingEvent and logs the loggingEvent
 		* without further checks.  
 		*/
-		void forcedLog(LogLevel ll, const std::string& message,
-			const char* file = NULL, int line = -1, const char* _function = NULL) const;
+		void forcedLog(LogLevel ll, const std::string& message) const;
 
 		void forcedLog(InternalLoggingEvent const&) const;
 

@@ -2,17 +2,16 @@
 // File:    fileappender.cpp
 
 
-#include <log4cplus/fileappender.h>
-#include <log4cplus/layout.h>
+#include "log4cplus/fileappender.h"
+#include "log4cplus/layout.h"
 
-#include <log4cplus/loglog.h>
-#include <log4cplus/stringhelper.h>
-#include <log4cplus/TimeHelper.h>
-#include <log4cplus/property.h>
-#include <log4cplus/loggingevent.h>
-#include <log4cplus/factory.h>
-#include <log4cplus/internal.h>
-#include <log4cplus/environment.h>
+#include "log4cplus/loglog.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/timeHelper.h"
+#include "log4cplus/property.h"
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/factory.h"
+#include "log4cplus/environment.h"
 #include <algorithm>
 #include <sstream>
 #include <cstdio>
@@ -50,25 +49,21 @@ static long removeFile(string const& src)
 
 }
 
-static void loglog_renamingResult(LogLog& loglog, string const& src, string const& target, long ret)
+static void loglog_renamingResult(LogLog* loglog, string const& src, string const& target, long ret)
 {
-	if(ret == 0)
-	{
-		loglog.debug("Renamed file " + src + " to " + target);
-	}
-	else if(ret != LOG4CPLUS_FILE_NOT_FOUND)
+	if(ret != 0 && ret != LOG4CPLUS_FILE_NOT_FOUND)
 	{
 		ostringstream oss;
 		oss << "Failed to rename file from " << src << " to " << target << "; error" << ret;
-		loglog.error(oss.str());
+		loglog->error(oss.str());
 	}
 }
 
-static void loglog_openingResult(LogLog& loglog, ostream const& os, string const& filename)
+static void loglog_openingResult(LogLog* loglog, ostream const& os, string const& filename)
 {
 	if(!os)
 	{
-		loglog.error("Failed to open file " + filename);
+		loglog->error("Failed to open file " + filename);
 	}
 }
 
@@ -103,7 +98,7 @@ static void rolloverFiles(const string& filename, unsigned int maxBackupIndex)
 #endif
 
 		ret = renameFile(source, target);
-		loglog_renamingResult(*loglog, source, target, ret);
+		loglog_renamingResult(loglog, source, target, ret);
 	}
 } // end rolloverFiles()
 
@@ -285,7 +280,7 @@ void RollingFileAppender::init(long maxFileSize_, int maxBackupIndex_)
 		ostringstream oss;
 		oss << "RollingFileAppender: MaxFileSize property value is too small. Resetting to"
 			<< MINIMUM_ROLLING_LOG_SIZE << ".";
-		getLogLog().warn(oss.str());
+		LogLog::getLogLog()->error(oss.str());
 		maxFileSize_ = MINIMUM_ROLLING_LOG_SIZE;
 	}
 
@@ -318,7 +313,7 @@ void RollingFileAppender::append(const InternalLoggingEvent& loggingEvent)
 
 void RollingFileAppender::rollover()
 {
-	LogLog& loglog = getLogLog();
+	LogLog* loglog = LogLog::getLogLog();
 
 	// Close the current file
 	_out.close();
@@ -341,14 +336,8 @@ void RollingFileAppender::rollover()
 		// possible to rename over existing file.
 		ret = removeFile(target);
 #endif
-
-		loglog.debug("Renaming file " + _filename + " to " + target);
 		ret = renameFile(_filename, target);
 		loglog_renamingResult(loglog, _filename, target, ret);
-	}
-	else
-	{
-		loglog.debug(_filename + " has no backups specified");
 	}
 
 	// Open it up again in truncation mode
@@ -388,7 +377,7 @@ DailyRollingFileAppender::DailyRollingFileAppender(const Properties& properties)
 	else if(scheduleStr == "MINUTELY")
 		theSchedule = MINUTELY;
 	else {
-		getLogLog().warn("DailyRollingFileAppender::ctor() - Schedule not valid: " + properties.getProperty("Schedule"));
+		LogLog::getLogLog()->error("DailyRollingFileAppender::ctor() - Schedule not valid: " + properties.getProperty("Schedule"));
 		theSchedule = DAILY;
 	}
 
@@ -503,7 +492,7 @@ void DailyRollingFileAppender::rollover()
 	backup_target_oss << _scheduledFilename << "." << 1;
 	string backupTarget = backup_target_oss.str();
 
-	LogLog& loglog = getLogLog();
+	LogLog* loglog = LogLog::getLogLog();
 	long ret;
 
 #if defined(_MSC_VER)
@@ -522,9 +511,7 @@ void DailyRollingFileAppender::rollover()
 	ret = removeFile(_scheduledFilename);
 #endif
 
-	// Rename filename to scheduledFilename,
-	// e.g. rename "log" to "log.2009-11-07".
-	loglog.debug("Renaming file " + _filename + " to " + _scheduledFilename);
+	// Rename filename to scheduledFilename, e.g. rename "log" to "log.2009-11-07".
 	ret = renameFile(_filename, _scheduledFilename);
 	loglog_renamingResult(loglog, _filename, _scheduledFilename, ret);
 
@@ -556,7 +543,7 @@ TimeHelper DailyRollingFileAppender::calculateNextRolloverTime(const TimeHelper&
 			TimeHelper ret;
 			if(ret.setTime(&nextMonthTime) == -1) 
 			{
-				getLogLog().error(
+				LogLog::getLogLog()->error(
 					"DailyRollingFileAppender::calculateNextRolloverTime()- setTime() returned error");
 				// Set next rollover to 31 days in future.
 				ret =(t + TimeHelper(2678400));
@@ -582,7 +569,7 @@ TimeHelper DailyRollingFileAppender::calculateNextRolloverTime(const TimeHelper&
 
 	default:
 		{
-			getLogLog().error("DailyRollingFileAppender::calculateNextRolloverTime()- invalid schedule value");
+			LogLog::getLogLog()->error("DailyRollingFileAppender::calculateNextRolloverTime()- invalid schedule value");
 			return(t + TimeHelper(24 * 60 * 60));	//DAILY
 		}
 	};
@@ -607,7 +594,7 @@ string DailyRollingFileAppender::getFilename(const TimeHelper& t) const
 	case MINUTELY:
 		pattern = "%Y-%m-%d-%H-%M";	break;
 	default:
-		getLogLog().error("DailyRollingFileAppender::getFilename()- invalid schedule value");
+		LogLog::getLogLog()->error("DailyRollingFileAppender::getFilename()- invalid schedule value");
 	};
 
 	string result(_filename);

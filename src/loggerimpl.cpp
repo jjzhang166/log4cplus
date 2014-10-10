@@ -2,13 +2,12 @@
 // File:    loggerimpl.cpp
 
 
-#include <log4cplus/internal.h>
-#include <log4cplus/loggerimpl.h>
-#include <log4cplus/appender.h>
-#include <log4cplus/hierarchy.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/loggingevent.h>
-#include <log4cplus/rootlogger.h>
+#include "log4cplus/loggerimpl.h"
+#include "log4cplus/appender.h"
+#include "log4cplus/hierarchy.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/rootlogger.h"
 
 using namespace std;
 using namespace log4cplus;	
@@ -34,8 +33,8 @@ void LoggerImpl::callAppenders(const InternalLoggingEvent& loggingEvent)
 	// No appenders in hierarchy, warn user only once.
 	if(!_hierarchy._isEmittedNoAppenderWarning && writes == 0) 
 	{
-		getLogLog().error("No appenders could be found for logger(" + getName() + ").");
-		getLogLog().error("Please initialize the log4cplus system properly.");
+		LogLog::getLogLog()->error("No appenders could be found for logger(" + getName() + ").");
+		LogLog::getLogLog()->error("Please initialize the log4cplus system properly.");
 		_hierarchy._isEmittedNoAppenderWarning = true;
 	}
 }
@@ -63,11 +62,11 @@ bool LoggerImpl::isEnabledFor(LogLevel loglevel) const
 }
 
 
-void LoggerImpl::log(LogLevel loglevel, const string& message, const char* file, int line, const char* _function)
+void LoggerImpl::log(LogLevel loglevel, const string& message)
 {
 	if(isEnabledFor(loglevel))
 	{
-		forcedLog(loglevel, message, file, line, _function ? _function : "");
+		forcedLog(loglevel, message);
 	}
 }
 
@@ -88,7 +87,7 @@ LogLevel LoggerImpl::getChainedLogLevel() const
 		}
 	}
 
-	getLogLog().error("LoggerImpl::getChainedLogLevel()- No valid LogLevel found", true);
+	LogLog::getLogLog()->error("LoggerImpl::getChainedLogLevel()- No valid LogLevel found", true);
 	return NOT_SET_LOG_LEVEL;
 }
 
@@ -99,12 +98,10 @@ Hierarchy& LoggerImpl::getHierarchy() const
 }
 
 
-void LoggerImpl::forcedLog(LogLevel loglevel, const string& message,
-	const char* file, int line, const char* _function)
+void LoggerImpl::forcedLog(LogLevel loglevel, const string& message)
 {
-	InternalLoggingEvent& loggingEvent = getPerThreadData()->_forcedLoggingEvent;
-	assert(_function);
-	loggingEvent.setLoggingEvent(this->getName(), loglevel, message, file, line, _function);
+	InternalLoggingEvent& loggingEvent = *getInternalLoggingEvent();
+	loggingEvent.setLoggingEvent(this->getName(), loglevel, message);
 	callAppenders(loggingEvent);
 }
 

@@ -1,14 +1,13 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    env.h
-
 
 #ifndef LOG4CPLUS_INTERNAL_ENV_H
 #define LOG4CPLUS_INTERNAL_ENV_H
 
-#include <log4cplus/platform.h>
 #include <vector>
 
+#include "log4cplus/platform.h"
 
 //!Get environment variable value.
 bool getEnvString(std::string& envString, std::string const& name);

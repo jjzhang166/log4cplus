@@ -8,37 +8,42 @@
 
 TOP := ..
 
-SRC_DIR := $(TOP)/src
-
 COMM_DIR := .
 
+SRC_DIR := $(TOP)/src
 
 ## Name and type of the target for this Makefile
 
-APP_TARGET := demo
+ARC_TARGET := log4cplusWapperSd
 
 ## Define debugging symbols
-DEBUG = 0
+DEBUG = 1
 LINUX_COMPILER=_LINUX_# _EQUATOR_, _HHPPC_, _LINUX_ and so on
 PWLIB_SUPPORT = 0
 
 CFLAGS += -fno-omit-frame-pointer
-CFLAGS += -D_LINUX
+CFLAGS += -DINSIDE_LOG4CPLUS -DLOG4CPLUS_USE_OSP
 
 ## Object files that compose the target(s)
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst %.cpp,%, $(SRCS))
 
-OBJS :=   ../src/demo  
+
 
 ## Libraries to include in shared object file
 
-LIBS := pthread log4cplus 
+LIBS := pthread log4cplusSd
         
 
 ## Add driver-specific include directory to the search path
 
-INC_PATH += ../../include            
-
+INC_PATH += ../../include ../include 
+           
 LIB_PATH := ../../lib/log4cplus
 
-INSTALL_APP_PATH = ../../bin
+INSTALL_LIB_PATH = ../../lib/log4cplus
 include $(COMM_DIR)/common.mk
+
+clean:
+	rm -f $(SRC_DIR)/*.o
+	rm -f *.a

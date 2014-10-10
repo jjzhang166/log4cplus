@@ -1,18 +1,16 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    loggingevent.h
-
-/** @file */
 
 #ifndef LOG4CPLUS_SPI_INTERNAL_LOGGING_EVENT_HEADER_
 #define LOG4CPLUS_SPI_INTERNAL_LOGGING_EVENT_HEADER_
 
-#include <log4cplus/platform.h>
-
 #include <memory>
-#include <log4cplus/loglevel.h>
 
-#include <log4cplus/timehelper.h>
+#include "log4cplus/platform.h"
+#include "log4cplus/loglevel.h"
+#include "log4cplus/timehelper.h"
+#include "log4cplus/tls.h"
 
 namespace log4cplus { 
 	class TimeHelper;
@@ -34,19 +32,11 @@ namespace log4cplus {
 		* @param logger   The logger of this loggingEvent.
 		* @param loglevel The LogLevel of this loggingEvent.TimeHelper
 		* @param message  The message of this loggingEvent.
-		* @param filename Name of file where this loggingEvent has occurred,
-		* can be NULL.
-		* @param line     Line number in file specified by
-		*                 the <code>filename</code> parameter.
-		* @param function Name of function that is logging this loggingEvent.
 		*/
-		InternalLoggingEvent(const std::string& logger, LogLevel loglevel, 
-				const std::string& message, const char* filename, int line, const char * _function = NULL);
+		InternalLoggingEvent(const std::string& logger, LogLevel loglevel, const std::string& message);
 
 		InternalLoggingEvent(const std::string& logger, LogLevel loglevel,
-			const std::string& message, 
-			TimeHelper time, const std::string& file,
-			int line, const std::string& _function = std::string());
+			const std::string& message, TimeHelper time);
 
 		InternalLoggingEvent();
 
@@ -54,8 +44,7 @@ namespace log4cplus {
 
 		virtual ~InternalLoggingEvent();
 
-		void setLoggingEvent(const std::string& logger, LogLevel ll, const std::string& message,
-				const char * filename, int line, const char * _function = NULL);
+		void setLoggingEvent(const std::string& logger, LogLevel ll, const std::string& message);
 
 		// public virtual methods
 		/** The application supplied message of logging loggingEvent. */
@@ -96,25 +85,10 @@ namespace log4cplus {
 			return _timestamp;
 		}
 
-		/** The is the file where this log statement was written */
-		const std::string& getFile() const
-		{
-			return _file;
-		}
-
-		/** The is the line where this log statement was written */
-		int getLine() const { return _line; }
-
-		std::string const& getFunction() const
-		{
-			return _function;
-		}
-
 		void swap(InternalLoggingEvent &);
 
 		// public operators
-		InternalLoggingEvent&
-			operator=(const InternalLoggingEvent& rhs);
+		InternalLoggingEvent& operator=(const InternalLoggingEvent& rhs);
 
 		// static methods
 		static unsigned int getDefaultType();
@@ -125,10 +99,31 @@ namespace log4cplus {
 		std::string _loggerName;
 		LogLevel _ll;
 		TimeHelper _timestamp;
-		std::string _file;
-		std::string _function;
-		int _line;
 	};
+
+	extern TLSKeyType g_TLS_StorageKey;
+
+	inline void setInternalLoggingEvent(InternalLoggingEvent* p)
+	{
+		TLSSetValue(g_TLS_StorageKey, p);
+	}
+
+	inline InternalLoggingEvent* allocInternalLoggingEvent()
+	{
+		InternalLoggingEvent* p = new InternalLoggingEvent;
+		setInternalLoggingEvent(p);
+		return p;
+	}
+
+	inline InternalLoggingEvent* getInternalLoggingEvent(bool alloc = true)
+	{
+		InternalLoggingEvent* p = reinterpret_cast<InternalLoggingEvent*>(TLSGetValue(g_TLS_StorageKey));
+
+		if(!p && alloc)
+			return allocInternalLoggingEvent();
+
+		return p;
+	}
 
 } // end namespace log4cplus
 

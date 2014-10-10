@@ -2,10 +2,10 @@
 // File:    hierarchy.cpp
 
 
-#include <log4cplus/hierarchy.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/loggerimpl.h>
-#include <log4cplus/rootlogger.h>
+#include "log4cplus/hierarchy.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/loggerimpl.h"
+#include "log4cplus/rootlogger.h"
 #include <utility>
 #include <limits>
 
@@ -135,7 +135,7 @@ Logger Hierarchy::getInstanceImpl(const string& name, LoggerFactory& factory)
 		bool inserted = loggerPtrs.insert(std::make_pair(name, logger)).second;
 		if (!inserted)
 		{
-			getLogLog().error("Hierarchy::getInstanceImpl()- Insert failed", true);
+			LogLog::getLogLog()->error("Hierarchy::getInstanceImpl()- Insert failed", true);
 		}
 
 		ProvisionNodeMap::iterator pnm_it = provisionNodes.find(name);
@@ -145,7 +145,7 @@ Logger Hierarchy::getInstanceImpl(const string& name, LoggerFactory& factory)
 			bool deleted = (provisionNodes.erase(name) > 0);
 			if (!deleted)
 			{
-				getLogLog().error("Hierarchy::getInstanceImpl()- Delete failed", true);
+				LogLog::getLogLog()->error("Hierarchy::getInstanceImpl()- Delete failed", true);
 			}
 		}
 		updateParents(logger);
@@ -199,7 +199,7 @@ void Hierarchy::updateParents(Logger const& logger)
 				//bool inserted = provisionNodes.insert(std::make_pair(substr, node)).second;
 				if(!tmp.second) 
 				{
-					getLogLog().error("Hierarchy::updateParents()- Insert failed", true);
+					LogLog::getLogLog()->error("Hierarchy::updateParents()- Insert failed", true);
 				}
 			}
 		} // end if Logger found

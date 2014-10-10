@@ -1,20 +1,17 @@
-// -*- C++ -*-
+
 // Module:  Log4CPLUS
 // File:    appenderattachableimpl.h
-
 
 #ifndef LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 #define LOG4CPLUS_HELPERS_APPENDER_ATTACHABLE_IMPL_HEADER_
 
-#include <log4cplus/platform.h>
-
-#include <log4cplus/pointer.h>
-#include <log4cplus/appenderattachable.h>
-#include <log4cplus/mutex.h>
-
 #include <memory>
 #include <vector>
 
+#include "log4cplus/platform.h"
+#include "log4cplus/pointer.h"
+#include "log4cplus/appenderattachable.h"
+#include "log4cplus/mutex.h"
 
 namespace log4cplus {
 

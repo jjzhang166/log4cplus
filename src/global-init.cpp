@@ -2,26 +2,24 @@
 // File:    global-init.cpp
 
 
-#include <log4cplus/platform.h>
+#include "log4cplus/platform.h"
 
-#include <log4cplus/logger.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/internal.h>
-#include <log4cplus/tls.h>
-#include <log4cplus/loglog.h>
-#include <log4cplus/factory.h>
-#include <log4cplus/hierarchy.h>
+#include "log4cplus/logger.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/loggingevent.h"
+#include "log4cplus/tls.h"
+#include "log4cplus/loglog.h"
+#include "log4cplus/factory.h"
+#include "log4cplus/hierarchy.h"
 #include <cstdio>
 #include <iostream>
 #include <stdexcept>
-#include <log4cplus/mutex.h>
+#include "log4cplus/mutex.h"
 
 using namespace log4cplus;
 //!Default context.
 struct DefaultContext
 {
-	Mutex			consoleMutex;
-	LogLog			loglog;
 	LogLevelManager logLevelManager;
 	TimeHelper		baseLayoutTime;
 	Hierarchy		hierarchy;
@@ -71,7 +69,7 @@ static void allocDC()
 
 	if(s_defaultContextState == DC_DESTROYED)
 	{
-		s_defaultContext->loglog.error(
+		LogLog::getLogLog()->error(
 		"Re-initializing default context after it has already been destroyed.\n""The memory will be leaked.");
 	}
 	s_defaultContextState = DC_INITIALIZED;
@@ -83,17 +81,6 @@ static DefaultContext* getDC(bool isAlloc = true)
 	if(!s_defaultContext && isAlloc)
 		allocDC();
 	return s_defaultContext;
-}
-
-
-Mutex const& getConsoleOutputMutex()
-{
-	return getDC()->consoleMutex;
-}
-
-LogLog& log4cplus::getLogLog()
-{
-	return getDC()->loglog;
 }
 
 
@@ -132,14 +119,14 @@ FilterFactoryRegistry & log4cplus::getFilterFactoryRegistry()
 }
 
 
-TLSKeyType log4cplus::gTLS_StorageKey;
+TLSKeyType log4cplus::g_TLS_StorageKey;
 
 
 //!Thread local storage clean up function for POSIX threads.
 static void ptdCleanupFunc(void* arg)
 {
-	PerThreadData* const arg_ptd = static_cast<PerThreadData*>(arg);
-	PerThreadData* const ptd = getPerThreadData(false);
+	InternalLoggingEvent* const arg_ptd = static_cast<InternalLoggingEvent*>(arg);
+	InternalLoggingEvent* const ptd = getInternalLoggingEvent(false);
 	(void) ptd;
 
 	// Either it is a dummy value or it should be the per thread data
@@ -148,12 +135,12 @@ static void ptdCleanupFunc(void* arg)
 
 	if(arg == reinterpret_cast<void *>(1))
 	{
-		TLSSetValue(log4cplus::gTLS_StorageKey, 0);
+		TLSSetValue(log4cplus::g_TLS_StorageKey, 0);
 	}
 	else if(arg)
 	{
 		delete arg_ptd;
-		TLSSetValue(log4cplus::gTLS_StorageKey, 0);
+		TLSSetValue(log4cplus::g_TLS_StorageKey, 0);
 	}
 	else
 	{
@@ -168,7 +155,7 @@ static void ptdCleanupFunc(void* arg)
 
 static void threadSetup()
 {
-	getPerThreadData(true);
+	getInternalLoggingEvent(true);
 }
 
 
@@ -178,7 +165,7 @@ void log4cplus::initializeLog4cplus()
 	if(initialized)
 		return;
 
-	log4cplus::gTLS_StorageKey = TLSInit(ptdCleanupFunc);
+	log4cplus::g_TLS_StorageKey = TLSInit(ptdCleanupFunc);
 	threadSetup();
 
 	DefaultContext* dc = getDC(true);
@@ -192,13 +179,13 @@ void log4cplus::initializeLog4cplus()
 void log4cplus::threadCleanup()
 {
 	// Do thread-specific cleanup.
-	PerThreadData* ptd = getPerThreadData(false);
+	InternalLoggingEvent* ptd = getInternalLoggingEvent(false);
 	delete ptd;
-	setPerThreadData(0);
+	setInternalLoggingEvent(0);
 }
 
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && defined(LOG4CPLUS_BUILD_DLL)
 static VOID CALLBACK initializeLog4cplusApcProc(ULONG_PTR /*dwParam*/)
 {
 	log4cplus::initializeLog4cplus();
@@ -238,7 +225,7 @@ static void NTAPI thread_callback(LPVOID /*hinstDLL*/, DWORD fdwReason, LPVOID /
 	case DLL_PROCESS_DETACH:
 		{
 			log4cplus::threadCleanup();
-			TLSCleanup(log4cplus::gTLS_StorageKey);
+			TLSCleanup(log4cplus::g_TLS_StorageKey);
 			break;
 		}
 	} // switch
@@ -269,7 +256,7 @@ static void NTAPI thread_callback(LPVOID /*hinstDLL*/, DWORD fdwReason, LPVOID /
 		{
 			// Last thread cleanup.
 			log4cplus::threadCleanup();
-			log4cplus::TLSCleanup(log4cplus::gTLS_StorageKey);
+			log4cplus::TLSCleanup(log4cplus::g_TLS_StorageKey);
 		}
 	} static initializer;
 
@@ -289,7 +276,7 @@ static void NTAPI thread_callback(LPVOID /*hinstDLL*/, DWORD fdwReason, LPVOID /
 			// Last thread cleanup.
 			log4cplus::threadCleanup();
 
-			log4cplus::TLSCleanup(log4cplus::gTLS_StorageKey);
+			log4cplus::TLSCleanup(log4cplus::g_TLS_StorageKey);
 		}
 	} static initializer;
 

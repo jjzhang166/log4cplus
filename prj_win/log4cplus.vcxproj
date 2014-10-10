@@ -104,7 +104,6 @@
     <ClInclude Include="..\include\log4cplus\fileappender.h" />
     <ClInclude Include="..\include\log4cplus\filter.h" />
     <ClInclude Include="..\include\log4cplus\hierarchy.h" />
-    <ClInclude Include="..\include\log4cplus\internal.h" />
     <ClInclude Include="..\include\log4cplus\layout.h" />
     <ClInclude Include="..\include\log4cplus\logger.h" />
     <ClInclude Include="..\include\log4cplus\loggerfactory.h" />
@@ -113,7 +112,6 @@
     <ClInclude Include="..\include\log4cplus\loggingmacros.h" />
     <ClInclude Include="..\include\log4cplus\loglevel.h" />
     <ClInclude Include="..\include\log4cplus\loglog.h" />
-    <ClInclude Include="..\include\log4cplus\logloguser.h" />
     <ClInclude Include="..\include\log4cplus\mutex.h" />
     <ClInclude Include="..\include\log4cplus\nullappender.h" />
     <ClInclude Include="..\include\log4cplus\objectregistry.h" />
@@ -121,11 +119,9 @@
     <ClInclude Include="..\include\log4cplus\pointer.h" />
     <ClInclude Include="..\include\log4cplus\property.h" />
     <ClInclude Include="..\include\log4cplus\rootlogger.h" />
-    <ClInclude Include="..\include\log4cplus\sleep.h" />
-    <ClInclude Include="..\include\log4cplus\snprintf.h" />
     <ClInclude Include="..\include\log4cplus\stringhelper.h" />
-    <ClInclude Include="..\include\log4cplus\thread\tls.h" />
     <ClInclude Include="..\include\log4cplus\timehelper.h" />
+    <ClInclude Include="..\include\log4cplus\tls.h" />
     <ClInclude Include="..\include\log4cplus\version.h" />
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +143,6 @@
     <ClCompile Include="..\src\loggingmacros.cpp" />
     <ClCompile Include="..\src\loglevel.cpp" />
     <ClCompile Include="..\src\loglog.cpp" />
-    <ClCompile Include="..\src\logloguser.cpp" />
     <ClCompile Include="..\src\mutex.cpp" />
     <ClCompile Include="..\src\nullappender.cpp" />
     <ClCompile Include="..\src\objectregistry.cpp" />
@@ -155,8 +150,6 @@
     <ClCompile Include="..\src\pointer.cpp" />
     <ClCompile Include="..\src\property.cpp" />
     <ClCompile Include="..\src\rootlogger.cpp" />
-    <ClCompile Include="..\src\sleep.cpp" />
-    <ClCompile Include="..\src\snprintf.cpp" />
     <ClCompile Include="..\src\stringhelper.cpp" />
     <ClCompile Include="..\src\timehelper.cpp" />
     <ClCompile Include="..\src\version.cpp" />

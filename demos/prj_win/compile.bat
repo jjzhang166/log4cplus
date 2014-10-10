@@ -4,11 +4,14 @@ echo "demo build begin"
 
 if defined VS100COMNTOOLS (call "%VS100COMNTOOLS%\vsvars32.bat")
 
-devenv demo.vcxproj /Rebuild "Release" 
-devenv demo.vcxproj /Rebuild "Debug" 
+devenv log4cplus_demo.vcxproj /Rebuild "Release" 
+devenv log4cplus_demo.vcxproj /Rebuild "Debug" 
 
-devenv demoS.vcxproj /Rebuild "Release" 
-devenv demoS.vcxproj /Rebuild "Debug" 
+devenv log4cplusS_demo.vcxproj /Rebuild "Release" 
+devenv log4cplusS_demo.vcxproj /Rebuild "Debug" 
+
+devenv log4cpluswapperS_demo.vcxproj /Rebuild "Release" 
+devenv log4cpluswapperS_demo.vcxproj /Rebuild "Debug" 
 
 rmdir /s /q .\debug
 rmdir /s /q .\release

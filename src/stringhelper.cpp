@@ -1,15 +1,17 @@
 // Module:  Log4CPLUS
 // File:    stringhelper.cpp
 
-#include <log4cplus/stringhelper.h>
-
-#include <log4cplus/internal.h>
-
 #include <iterator>
 #include <algorithm>
 #include <cstring>
 #include <cctype>
 #include <cassert>
+#include <limits> 
+
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/loggingevent.h"
+
+
 
 
 using namespace std;
