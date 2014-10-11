@@ -1,24 +1,27 @@
 
+
+#include "log4cplusWapper.h"
+
 #include <iostream>
 #include <exception>
 
-#include "log4cplusWapper.h"
+
 #pragma comment(lib,"log4cplusD.lib")
 #pragma comment(lib,"log4cplusWapperSD.lib")
 
+
 using namespace log4cplusWapper;
 
-#ifdef WIN32
 
+#ifdef _WIN32
 #define PTESTINFO(fmt, ...)\
 	log4cplusWapper::PrintInfo(moduleName1, fmt, __VA_ARGS__);
-
 #else   //__linux__
-
 #define PTESTINFO(fmt, args...)\
 	log4cplusWapper::PrintInfo(moduleName1, fmt, ##args);
-
 #endif
+
+
 const char* moduleName1 = "logFile1";	//exists
 const char* moduleName2 = "logFile2";	//exists
 const char* moduleName3 = "logFile3";	//not exists
@@ -26,7 +29,6 @@ const char* moduleName3 = "logFile3";	//not exists
 
 int main()
 {
-	
 	try
 	{
 		StartLogSystem("urconfig.properties");

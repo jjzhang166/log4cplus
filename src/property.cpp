@@ -1,19 +1,16 @@
 // Module:  Log4CPLUS
 // File:    property.cpp
 
-
-#include "log4cplus/platform.h"
-
-#include <cstring>
-#include <cctype>
-#include <fstream>
-#include <sstream>
-
 #include "log4cplus/stringhelper.h"
 #include "log4cplus/property.h"
 #include "log4cplus/loggingevent.h"
 #include "log4cplus/environment.h"
 #include "log4cplus/loglog.h"
+
+#include <cstring>
+#include <cctype>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 using namespace log4cplus;
@@ -200,18 +197,18 @@ bool Properties::getInt(int& val, string const& key) const
 }
 
 
-bool Properties::getUInt(unsigned & val, string const& key) const
+bool Properties::getUInt(unsigned& val, string const& key) const
 {
 	return getValType(val, key);
 }
 
-bool Properties::getLong(long & val, string const& key) const
+bool Properties::getLong(long& val, string const& key) const
 {
 	return getValType(val, key);
 }
 
 
-bool Properties::getULong(unsigned long & val, string const& key) const
+bool Properties::getULong(unsigned long& val, string const& key) const
 {
 	return getValType(val, key);
 }

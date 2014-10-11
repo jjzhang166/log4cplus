@@ -5,13 +5,13 @@
 #ifndef LOG4CPLUS_LOGGING_MACROS_HEADER_
 #define LOG4CPLUS_LOGGING_MACROS_HEADER_
 
-#include <sstream>
-#include <utility>
-
 #include "log4cplus/platform.h"
 #include "log4cplus/logger.h"
 
-#if defined(_MSC_VER)
+#include <sstream>
+#include <utility>
+
+#ifdef _MSC_VER
 #define LOG4CPLUS_SUPPRESS_DOWHILE_WARNING()  \
     __pragma(warning(push))                 \
     __pragma(warning(disable:4127))           
@@ -55,6 +55,7 @@ inline Logger const& macros_getLogger(Logger & logger)
 {
     return logger;
 }
+
 
 inline Logger macros_getLogger(std::string const& logger)
 {

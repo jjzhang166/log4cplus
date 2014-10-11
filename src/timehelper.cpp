@@ -4,7 +4,6 @@
 
 #include "log4cplus/timehelper.h"
 #include "log4cplus/loglog.h"
-
 #include "log4cplus/stringhelper.h"
 #include "log4cplus/loggingevent.h"
 
@@ -13,16 +12,15 @@
 #include <iomanip>
 #include <cassert>
 #include <cerrno>
-
 #include <sys/types.h>
-
-#if defined(__linux__)
+#ifdef __linux__
 #include <sys/time.h>
 #endif
 
 
 using namespace log4cplus;
 using namespace std;
+
 
 const int ONE_SEC_IN_USEC = 1000000;
 
@@ -43,30 +41,24 @@ TimeHelper::TimeHelper(time_t time) : _tv_seconds(time), _tv_microseconds(0)
 
 TimeHelper TimeHelper::gettimeofday()
 {
-
-#if defined(__linux__)
-	struct timeval tp;
-	::gettimeofday(&tp, 0);
-
-	return TimeHelper(tp.tv_sec, tp.tv_usec);
-
-#elif defined(_MSC_VER)
+#ifdef _MSC_VER
 	FILETIME ft;
 
 	GetSystemTimeAsFileTime(&ft);
 
 	__int64 st100ns = __int64(ft.dwHighDateTime) << 32 | ft.dwLowDateTime;
 
-	// Number of 100-ns intervals between UNIX epoch and Windows system time
-	// is 116444736000000000.
+	// Number of 100-ns intervals between UNIX epoch and Windows system time is 116444736000000000.
 	__int64 const offset = __int64(116444736) * 1000 * 1000 * 1000;
 	__int64 fixed_time = st100ns - offset;
 
 	return TimeHelper(fixed_time /(10 * 1000 * 1000), fixed_time %(10 * 1000 * 1000) / 10);
 
-#else
-#warning "Time::gettimeofday()- low resolution timer: gettimeofday and ftime unavailable"
-	return TimeHelper(::time(0), 0);
+#else // __linux__
+	struct timeval tp;
+	::gettimeofday(&tp, 0);
+
+	return TimeHelper(tp.tv_sec, tp.tv_usec);
 #endif
 }
 
@@ -90,11 +82,11 @@ time_t TimeHelper::getTime() const
 void TimeHelper::localtime(tm* t) const
 {
 	time_t clock = _tv_seconds;
-#if defined(__linux__) 
-	::localtime_r(&clock, t);
-#else
+#ifdef _MSC_VER 
 	tm* tmp = std::localtime(&clock);
 	*t = *tmp;
+#else
+	::localtime_r(&clock, t);
 #endif
 }
 

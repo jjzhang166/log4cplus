@@ -6,79 +6,69 @@
 #ifndef LOG4CPLUS_HELPERS_TIME_HELPER_HEADER_
 #define LOG4CPLUS_HELPERS_TIME_HELPER_HEADER_
 
-#include <ctime>
 
 #include "log4cplus/platform.h"
 #include "log4cplus/timehelper.h"
 
+#include <ctime>
+
+
 namespace log4cplus { 
 
-	/**
-	* This class represents a Epoch time with microsecond accuracy.
-	*/
-	class TimeHelper 
-	{
-	public:
-		TimeHelper();
-		TimeHelper(std::time_t tv_sec, long tv_usec);
-		explicit TimeHelper(std::time_t time);
 
-		static TimeHelper gettimeofday();
+/**
+* This class represents a Epoch time with microsecond accuracy.
+*/
+class TimeHelper 
+{
+public:
+	TimeHelper();
 
-		// Methods
+	TimeHelper(std::time_t tv_sec, long tv_usec);
 
-		time_t sec() const { return _tv_seconds; }
+	explicit TimeHelper(std::time_t time);
 
-		long usec() const { return _tv_microseconds; }
+	static TimeHelper gettimeofday();
 
-		void sec(std::time_t s) { _tv_seconds = s; }
+	time_t sec() const { return _tv_seconds; }
 
-		void usec(long us) { _tv_microseconds = us; }
+	long usec() const { return _tv_microseconds; }
 
-		time_t setTime(std::tm* t);
+	void sec(std::time_t s) { _tv_seconds = s; }
 
-		time_t getTime() const;
+	void usec(long us) { _tv_microseconds = us; }
 
-		void localtime(std::tm* t) const;
+	time_t setTime(std::tm* t);
+	time_t getTime() const;
+	void localtime(std::tm* t) const;
 
-		std::string getFormattedTime(const std::string& fmt) const;
+	std::string getFormattedTime(const std::string& fmt) const;
 
-		// Operators
-		TimeHelper& operator+= (const TimeHelper& rhs);
-		TimeHelper& operator-= (const TimeHelper& rhs);
-		TimeHelper& operator/= (long rhs);
-		TimeHelper& operator*= (long rhs);
+	// Operators
+	TimeHelper& operator+= (const TimeHelper& rhs);
+	TimeHelper& operator-= (const TimeHelper& rhs);
+	TimeHelper& operator/= (long rhs);
+	TimeHelper& operator*= (long rhs);
 
-	private:
-		// Data
-		time_t _tv_seconds;  /* seconds */
-		long _tv_microseconds;  /* microseconds */
-	};
+private:
+	time_t _tv_seconds;		// seconds 
+	long _tv_microseconds;  // microseconds 
+};
+
+
 } // namespace log4cplus
 
 
-
 const log4cplus::TimeHelper operator+(const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 const log4cplus::TimeHelper operator-(const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 const log4cplus::TimeHelper operator/(const log4cplus::TimeHelper& lhs, long rhs);
-
 const log4cplus::TimeHelper operator*(const log4cplus::TimeHelper& lhs, long rhs);
-
 bool operator < (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 bool operator <= (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 bool operator > (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 bool operator >= (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 bool operator == (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
 bool operator != (const log4cplus::TimeHelper& lhs, const log4cplus::TimeHelper& rhs);
-
-
 
 
 #endif // LOG4CPLUS_HELPERS_TIME_HELPER_HEADER_

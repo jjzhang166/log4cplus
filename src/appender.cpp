@@ -1,15 +1,15 @@
 // Module:  Log4CPLUS
 // File:    appender.cpp
 
-
 #include "log4cplus/appender.h"
 #include "log4cplus/layout.h"
 #include "log4cplus/loglog.h"
-#include "log4cplus/pointer.h"
+#include "log4cplus/sharedptr.h"
 #include "log4cplus/stringhelper.h"
 #include "log4cplus/property.h"
 #include "log4cplus/factory.h"
 #include "log4cplus/loggingevent.h"
+
 #include <stdexcept>
 
 using namespace std;
@@ -154,7 +154,7 @@ bool Appender::isClosed() const
 
 void Appender::doAppend(const log4cplus::InternalLoggingEvent& loggingEvent)
 {
-	MutexLock lock(&_access_mutex);
+	MutexLock lock(&_mutex);
 
 	if(_isClosed) 
 	{
@@ -202,14 +202,14 @@ void Appender::setErrorHandler(std::auto_ptr<ErrorHandler> eh)
 		return;
 	}
 
-	MutexLock lock(&_access_mutex);
+	MutexLock lock(&_mutex);
 
 	this->_errorHandler = eh;
 }
 
 void Appender::setLayout(std::auto_ptr<Layout> lo)
 {
-	MutexLock lock(&_access_mutex);
+	MutexLock lock(&_mutex);
 
 	this->_layout = lo;
 }

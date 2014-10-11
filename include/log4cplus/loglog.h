@@ -10,65 +10,63 @@
 
 namespace log4cplus { 
 
+/**
+*
+* All log4cplus internal debug calls go to <code>cout</code>
+* where as internal errormessages are sent to
+* <code>cerr</code>. All internal messages are prepended with
+* the string "log4clus: ".
+*/
+class LOG4CPLUS_EXPORT LogLog
+{
+public:
+	//!Return type of LogLog::getLogLog()->
+
 	/**
-	*
-	* All log4cplus internal debug calls go to <code>cout</code>
-	* where as internal errormessages are sent to
-	* <code>cerr</code>. All internal messages are prepended with
-	* the string "log4clus: ".
+	* Returns a reference to the <code>LogLog</code> singleton.
 	*/
-	class LOG4CPLUS_EXPORT LogLog
-	{
-	public:
-		//!Return type of LogLog::getLogLog()->
+	static LogLog* getLogLog();
 
-		/**
-		* Returns a reference to the <code>LogLog</code> singleton.
-		*/
-		static LogLog* getLogLog();
+	/**
+	* Allows to enable/disable log4cplus internal logging.
+	*/
+	void setInternalDebugging(bool enabled);
 
-		/**
-		* Allows to enable/disable log4cplus internal logging.
-		*/
-		void setInternalDebugging(bool enabled);
+	/**
+	* This method is used to output log4cplus internal debug
+	* statements. Output goes to <code>std::cout</code>.
+	*/
+	void debug(const std::string& msg) const;
+	void debug(char const* msg) const;
 
-		/**
-		* This method is used to output log4cplus internal debug
-		* statements. Output goes to <code>std::cout</code>.
-		*/
-		void debug(const std::string& msg) const;
-		void debug(char const* msg) const;
+	/**
+	* This method is used to output log4cplus internal error
+	* statements. There is no way to disable error
+	* statements.  Output goes to
+	* <code>std::cerr</code>. Optionally, this method can
+	* throw std::runtime_error exception too.
+	*/
+	void error(const std::string& msg, bool throw_flag = false) const;
+	void error(char const* msg, bool throw_flag = false) const;
 
-		/**
-		* This method is used to output log4cplus internal error
-		* statements. There is no way to disable error
-		* statements.  Output goes to
-		* <code>std::cerr</code>. Optionally, this method can
-		* throw std::runtime_error exception too.
-		*/
-		void error(const std::string& msg, bool throw_flag = false) const;
-		void error(char const* msg, bool throw_flag = false) const;
+	// Public ctor  to be used only by internal::DefaultContext.
+	LogLog();
+	virtual ~LogLog();
 
-		// Public ctor and dtor to be used only by internal::DefaultContext.
-		LogLog();
-		virtual ~LogLog();
+private:
 
-	private:
+	void loggingWorker(char const*, std::string const&, bool throw_flag = false) const;
+	
+	mutable bool _isDebugEnabled;
+	Mutex _mutex;
 
-		void loggingWorker(char const*, std::string const&, bool throw_flag = false) const;
-		// Data
-		mutable bool _isDebugEnabled;
-		Mutex _mutex;
+	LogLog(const LogLog&);
+	LogLog& operator =(LogLog const&);
 
-		LogLog(const LogLog&);
-		LogLog& operator =(LogLog const&);
+	static LogLog* s_pLogLog;
+};
 
-		static LogLog* s_pLogLog;
-	};
-
-
-
-}  // end namespace log4cplus 
+}  // namespace log4cplus 
 
 
 #endif // LOG4CPLUS_HELPERS_LOGLOG

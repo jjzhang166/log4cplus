@@ -7,10 +7,13 @@
 #include "log4cplus/hierarchy.h"
 #include "log4cplus/loglog.h"
 #include "log4cplus/loggerimpl.h"
+
 #include <utility>
+
 
 using namespace std;
 using namespace log4cplus;
+
 
 Logger DefaultLoggerFactory::makeNewLoggerInstance(const string& name, Hierarchy& h)
 { 
@@ -18,7 +21,7 @@ Logger DefaultLoggerFactory::makeNewLoggerInstance(const string& name, Hierarchy
 }
 
 //
-Hierarchy & Logger::getDefaultHierarchy()
+Hierarchy& Logger::getDefaultHierarchy()
 {
 	return log4cplus::getDefaultHierarchy();
 }
@@ -57,15 +60,11 @@ Logger::Logger() : _pLoggerImpl(0)
 
 Logger::Logger(LoggerImpl * ptr) : _pLoggerImpl(ptr)
 {
-	if(_pLoggerImpl)
-		_pLoggerImpl->addReference();
 }
 
 
 Logger::Logger(const Logger& rhs): AppenderAttachable(rhs) , _pLoggerImpl(rhs._pLoggerImpl)
 {
-	if(_pLoggerImpl)
-		_pLoggerImpl->addReference();
 }
 
 
@@ -78,8 +77,6 @@ Logger & Logger::operator = (const Logger& rhs)
 
 Logger::~Logger() 
 {
-	if(_pLoggerImpl)
-		_pLoggerImpl->removeReference();
 }
 
 
@@ -197,7 +194,7 @@ void Logger::setLogLevel(LogLevel ll)
 }
 
 
-Hierarchy & Logger::getHierarchy() const
+Hierarchy& Logger::getHierarchy() const
 { 
 	return _pLoggerImpl->getHierarchy();
 }

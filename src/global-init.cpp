@@ -1,9 +1,6 @@
 // Module:  Log4CPLUS
 // File:    global-init.cpp
 
-
-#include "log4cplus/platform.h"
-
 #include "log4cplus/logger.h"
 #include "log4cplus/loglog.h"
 #include "log4cplus/loggingevent.h"
@@ -11,12 +8,18 @@
 #include "log4cplus/loglog.h"
 #include "log4cplus/factory.h"
 #include "log4cplus/hierarchy.h"
+#include "log4cplus/mutex.h"
+#include "log4cplus/fileappender.h"
+
 #include <cstdio>
 #include <iostream>
 #include <stdexcept>
-#include "log4cplus/mutex.h"
+#include <memory>
+
 
 using namespace log4cplus;
+
+
 //!Default context.
 struct DefaultContext
 {
@@ -159,6 +162,15 @@ static void threadSetup()
 }
 
 
+static void initRootLogger()
+{
+	SharedAppenderPtr _append(new RollingFileAppender("root_default.log", 200*1024, 3));
+	_append->setName("root_default");
+	_append->setLayout(std::auto_ptr<Layout>(new SimpleLayout()));
+	Logger::getRoot().addAppender(_append);
+}
+
+
 void log4cplus::initializeLog4cplus()
 {
 	static bool initialized = false;
@@ -170,8 +182,8 @@ void log4cplus::initializeLog4cplus()
 
 	DefaultContext* dc = getDC(true);
 	dc->baseLayoutTime = TimeHelper::gettimeofday();
-	Logger::getRoot();
 	initializeFactoryRegistry();
+	initRootLogger();
 
 	initialized = true;
 }
@@ -236,7 +248,7 @@ static void NTAPI thread_callback(LPVOID /*hinstDLL*/, DWORD fdwReason, LPVOID /
 
 
 
-#if defined(_MSC_VER) 
+#ifdef _MSC_VER  
 
 	#if defined(LOG4CPLUS_BUILD_DLL)
 	extern "C"

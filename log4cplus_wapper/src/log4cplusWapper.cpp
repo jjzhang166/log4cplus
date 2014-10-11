@@ -1,3 +1,9 @@
+
+#include "log4cplusWapper.h"
+#include "log4cplus/configurator.h"
+#include "log4cplus/loggingmacros.h"
+#include "log4cplus/customappender.h"
+
 #include <string>
 #include <map>
 #include <algorithm>
@@ -10,10 +16,6 @@
 #include <tchar.h>
 #endif
 
-#include "log4cplus/configurator.h"
-#include "log4cplus/loggingmacros.h"
-#include "log4cplus/customappender.h"
-#include "log4cplusWapper.h"
 
 using namespace std;
 using namespace log4cplus;
@@ -86,7 +88,8 @@ static Logger getLogger(const char* szModuleName)
 	LoggerMap::const_iterator it = s_loggerMap.find(moduleName);
 	if (it == s_loggerMap.end())
 	{
-		tryInitLoggerInstance(szModuleName);
+		if(!tryInitLoggerInstance(szModuleName))
+			return Logger::getRoot();
 	}
 
 	return s_loggerMap[moduleName];
@@ -112,7 +115,7 @@ void log4cplusWapper::StartLogSystem(const char* properties_filename)
 }
 
 
-void log4cplusWapper::tryInitLoggerInstance(const char* szModuleName)
+bool log4cplusWapper::tryInitLoggerInstance(const char* szModuleName)
 {
 	if (NULL == szModuleName || 0 == strlen(szModuleName))
 	{
@@ -123,13 +126,20 @@ void log4cplusWapper::tryInitLoggerInstance(const char* szModuleName)
 	LoggerMap::const_iterator it = s_loggerMap.find(moduleName);
 	if (it == s_loggerMap.end())
 	{
-		Logger logger = Logger::getInstance(moduleName);
-		SharedAppenderPtrList appenderList = logger.getAllAppenders();
-		if (0 == appenderList.size())
-			throw std::logic_error(string(moduleName + " logger not exist").c_str());
-		else
+		vector<string> loggerName = PropertyConfigurator::getLoggerNames();
+		vector<string>::iterator result = std::find(loggerName.begin(), loggerName.end(), moduleName);
+		if (result != loggerName.end())
+		{
+			Logger logger = Logger::getInstance(moduleName);
 			s_loggerMap[moduleName] = logger;
+		}
+		else
+		{
+			return false;
+		}
 	}
+
+	return true;
 }
 
 void log4cplusWapper::StopLogSystem()
@@ -140,21 +150,6 @@ void log4cplusWapper::StopLogSystem()
 void log4cplusWapper::PrintDebug(const char* loggerName, const char* pszFormat, ...)
 {
 	LOGGER_MACO(loggerName, pszFormat, LOG4CPLUS_DEBUG);
-/*
-	do{												    
-		if (NULL == fmt || NULL == loggerName || 0 == *loggerName) break; 
-			va_list args;							
-			va_start(args, fmt);							
-			std::vector<char> buffer;						
-			std::size_t const fmt_len = std::char_traits<char>::length(fmt);
-			std::size_t const output_estimate = fmt_len + fmt_len / 2 + 1;	
-			buffer.resize(output_estimate);					
-			int nWritten = std::vsprintf(&buffer[0], fmt, args);
-			buffer[nWritten] = 0;							
-			if (nWritten > 0)	LOG4CPLUS_DEBUG(getLogger(loggerName), &buffer[0]);	
-				va_end(args);									
-	}while(0);
-	*/
 }
 
 
@@ -162,6 +157,7 @@ void log4cplusWapper::PrintInfo(const char* loggerName, const char* pszFormat, .
 {
 	LOGGER_MACO(loggerName, pszFormat, LOG4CPLUS_INFO);
 }
+
 
 void log4cplusWapper::PrintError(const char* loggerName, const char* pszFormat, ...)
 {

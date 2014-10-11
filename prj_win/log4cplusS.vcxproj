@@ -115,9 +115,9 @@
     <ClInclude Include="..\include\log4cplus\nullappender.h" />
     <ClInclude Include="..\include\log4cplus\objectregistry.h" />
     <ClInclude Include="..\include\log4cplus\platform.h" />
-    <ClInclude Include="..\include\log4cplus\pointer.h" />
     <ClInclude Include="..\include\log4cplus\property.h" />
     <ClInclude Include="..\include\log4cplus\rootlogger.h" />
+    <ClInclude Include="..\include\log4cplus\sharedptr.h" />
     <ClInclude Include="..\include\log4cplus\stringhelper.h" />
     <ClInclude Include="..\include\log4cplus\timehelper.h" />
     <ClInclude Include="..\include\log4cplus\version.h" />
@@ -146,7 +146,6 @@
     <ClCompile Include="..\src\nullappender.cpp" />
     <ClCompile Include="..\src\objectregistry.cpp" />
     <ClCompile Include="..\src\patternlayout.cpp" />
-    <ClCompile Include="..\src\pointer.cpp" />
     <ClCompile Include="..\src\property.cpp" />
     <ClCompile Include="..\src\rootlogger.cpp" />
     <ClCompile Include="..\src\stringhelper.cpp" />

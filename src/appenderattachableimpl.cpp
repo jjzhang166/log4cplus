@@ -1,14 +1,13 @@
 // Module:  Log4CPLUS
 // File:    appenderattachableimpl.cpp
 
-
-
-#include "log4cplus/appender.h"
 #include "log4cplus/appenderattachableimpl.h"
+#include "log4cplus/appender.h"
 #include "log4cplus/loglog.h"
 #include "log4cplus/loggingevent.h"
 
 #include <algorithm>
+
 
 using namespace std;
 using namespace log4cplus;
@@ -25,7 +24,7 @@ AppenderAttachableImpl::~AppenderAttachableImpl() {}
 
 void AppenderAttachableImpl::addAppender(SharedAppenderPtr newAppender)
 {
-	if(newAppender == NULL) 
+	if(!newAppender) 
 	{
 		LogLog::getLogLog()->error("Tried to add NULL appender");
 		return;
@@ -76,7 +75,8 @@ void AppenderAttachableImpl::removeAllAppenders()
 
 void AppenderAttachableImpl::removeAppender(SharedAppenderPtr appender)
 {
-	if(appender == NULL) {
+	if(!appender) 
+	{
 		LogLog::getLogLog()->error("Tried to remove NULL appender");
 		return;
 	}
@@ -92,12 +92,10 @@ void AppenderAttachableImpl::removeAppender(SharedAppenderPtr appender)
 }
 
 
-
 void AppenderAttachableImpl::removeAppender(const string& name)
 {
 	removeAppender(getAppender(name));
 }
-
 
 
 int AppenderAttachableImpl::appendLoopOnAppenders(const InternalLoggingEvent& loggingEvent) const
@@ -109,7 +107,7 @@ int AppenderAttachableImpl::appendLoopOnAppenders(const InternalLoggingEvent& lo
 	for(ListType::const_iterator it=_appenderList.begin(); it!=_appenderList.end(); ++it)
 	{
 		++count;
-		(*it)->doAppend(loggingEvent);
+		static_cast<SharedAppenderPtr>(*it)->doAppend(loggingEvent);
 	}
 
 	return count;

@@ -5,33 +5,38 @@
 #ifndef LOG4CPLUS_HELPERS_LOGLOG_USER
 #define LOG4CPLUS_HELPERS_LOGLOG_USER
 
+
 #include "log4cplus/platform.h"
 
+
 namespace log4cplus { 
-	// forward declarations
-	class LogLog;
+	
 
-	/**
-	* This class used to simplify the use of the LogLog class.  Any class
-	* that uses the LogLog class should extend this class and retrieve
-	* their reference to LogLog using the method provided.
-	*/
-	class LOG4CPLUS_EXPORT LogLogUser
-	{
-	public:
-		// ctor and dtor
-		LogLogUser();
-		LogLogUser(const LogLogUser&);
-		virtual ~LogLogUser();
+class LogLog;
 
-		// public methods
-		LogLog& getLogLog() const;
 
-		// operators
-		LogLogUser& operator= (const LogLogUser& rhs);
-	};
+/**
+* This class used to simplify the use of the LogLog class.  Any class
+* that uses the LogLog class should extend this class and retrieve
+* their reference to LogLog using the method provided.
+*/
+class LOG4CPLUS_EXPORT LogLogUser
+{
+public:
+		 
+	LogLogUser();
+	LogLogUser(const LogLogUser&);
+	virtual ~LogLogUser();
 
-} // end namespace log4cplus 
+	// public methods
+	LogLog& getLogLog() const;
+
+	// operators
+	LogLogUser& operator= (const LogLogUser& rhs);
+};
+
+
+} // namespace log4cplus 
 
 
 #endif // LOG4CPLUS_HELPERS_LOGLOG_USER

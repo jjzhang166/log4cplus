@@ -1,7 +1,6 @@
 // Module:  LOG4CPLUS
 // File:    configurator.cpp
 
-
 #include "log4cplus/configurator.h"
 #include "log4cplus/hierarchy.h"
 #include "log4cplus/loglog.h"
@@ -18,6 +17,8 @@
 using namespace std;
 using namespace log4cplus;
 
+
+std::vector<std::string> PropertyConfigurator::_loggerNames;
 void initializeLog4cplus();
 
 
@@ -59,12 +60,12 @@ void PropertyConfigurator::doConfigure(const string& file, Hierarchy& h)
 	tmp.configure();
 }
 
+
 void PropertyConfigurator::configure()
 {
 	initializeLog4cplus();
 	configureAppenders();
 	configureLoggers();
-
 
 	// Erase the appenders so that we are not artificially keeping them "alive".
 	_appenders.clear();
@@ -76,10 +77,12 @@ Properties const& PropertyConfigurator::getProperties() const
 	return _properties;
 }
 
+
 string const& PropertyConfigurator::getPropertyFilename() const
 {
 	return _propertyFilename;
 }
+
 
 void PropertyConfigurator::configureLoggers()
 {
@@ -90,14 +93,15 @@ void PropertyConfigurator::configureLoggers()
 	}
 
 	Properties loggerProperties = _properties.getPropertySubset("logger.");
-	vector<string> loggers = loggerProperties.propertyNames();
+	_loggerNames = loggerProperties.propertyNames();
 
-	for(vector<string>::iterator it=loggers.begin(); it!=loggers.end(); ++it)
+	for(vector<string>::iterator it = _loggerNames.begin(); it != _loggerNames.end(); ++it)
 	{
 		Logger log = getLogger(*it);
 		configureLogger(log, loggerProperties.getProperty(*it));
 	}
 }
+
 
 void PropertyConfigurator::configureLogger(Logger logger, const string& config)
 {
@@ -140,6 +144,7 @@ void PropertyConfigurator::configureLogger(Logger logger, const string& config)
 		addAppender(logger, appenderIt->second);
 	}
 }
+
 
 void PropertyConfigurator::configureAppenders()
 {
@@ -189,20 +194,21 @@ Logger PropertyConfigurator::getLogger(const string& name)
 	return _hierarchy.getInstance(name);
 }
 
-void PropertyConfigurator::addAppender(Logger &logger, SharedAppenderPtr& appender)
+
+void PropertyConfigurator::addAppender(Logger& logger, SharedAppenderPtr& appender)
 {
 	logger.addAppender(appender);
 }
 
 
-
 BasicConfigurator::BasicConfigurator(Hierarchy& hier, bool logToStdErr)
-	: PropertyConfigurator("", hier )
+	: PropertyConfigurator("", hier)
 {
 	_properties.setProperty("rootLogger", "DEBUG, STDOUT");
 	_properties.setProperty("appender.STDOUT", "log4cplus::ConsoleAppender");
 	_properties.setProperty("appender.STDOUT.logToStdErr", logToStdErr ? "1" : "0");
 }
+
 
 BasicConfigurator::~BasicConfigurator()
 {

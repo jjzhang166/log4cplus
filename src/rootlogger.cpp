@@ -3,6 +3,8 @@
 
 #include "log4cplus/rootlogger.h"
 #include "log4cplus/loglog.h"
+#include "log4cplus/fileappender.h"
+
 
 using namespace log4cplus;
 

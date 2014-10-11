@@ -17,7 +17,7 @@ Hierarchy::Hierarchy() : defaultFactory(new DefaultLoggerFactory()), root(NULL)
 	// Don't disable any LogLevel level by default.
 	, _nDisableValue(NOT_SET_LOG_LEVEL), _isEmittedNoAppenderWarning(false)
 {
-	root = Logger( new RootLogger(*this, DEBUG_LOG_LEVEL));
+	root = Logger(new RootLogger(*this, DEBUG_LOG_LEVEL));
 }
 
 Hierarchy::~Hierarchy()
@@ -65,10 +65,12 @@ void Hierarchy::disableAllLevel()
 	disableLevel((std::numeric_limits<LogLevel>::max) ());
 }
 
+
 void Hierarchy::enableAllLevel() 
 { 
 	_nDisableValue = NOT_SET_LOG_LEVEL; 
 }
+
 
 Logger Hierarchy::getInstance(const string& name) 
 { 
@@ -83,6 +85,7 @@ Logger Hierarchy::getInstance(const string& name, LoggerFactory& factory)
 	return getInstanceImpl(name, factory);
 }
 
+
 LoggerList Hierarchy::getCurrentLoggers()
 {
 	LoggerList retList;
@@ -92,6 +95,7 @@ LoggerList Hierarchy::getCurrentLoggers()
 
 	return retList;
 }
+
 
 bool Hierarchy::isDisabled(LogLevel level) 
 { 
@@ -103,16 +107,17 @@ Logger Hierarchy::getRoot() const
 	return root; 
 }
 
+
 void Hierarchy::setLoggerFactory(std::auto_ptr<LoggerFactory> factory) 
 { 
 	defaultFactory = factory; 
 }
 
+
 LoggerFactory * Hierarchy::getLoggerFactory()
 {
 	return defaultFactory.get();
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -124,7 +129,7 @@ Logger Hierarchy::getInstanceImpl(const string& name, LoggerFactory& factory)
 	Logger logger;
 	LoggerMap::iterator lm_it;
 
-	if (name.empty ())
+	if (name.empty())
 		logger = root;
 	else if ((lm_it = loggerPtrs.find(name)) != loggerPtrs.end())
 		logger = lm_it->second;

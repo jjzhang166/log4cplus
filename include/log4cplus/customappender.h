@@ -13,35 +13,36 @@ typedef void (__stdcall *pCustomFuncCallBack)(const char*);
 typedef void (*pCustomFuncCallBack)(const char*);
 #endif	
 
+
 namespace log4cplus {
 
-	class LOG4CPLUS_EXPORT CustomAppender : public Appender
-	{
-	public:
 
-		// Ctors
-		CustomAppender();
-		CustomAppender(const Properties& properties);
+class LOG4CPLUS_EXPORT CustomAppender : public Appender
+{
+public:
+	CustomAppender();
 
-		// Dtor
-		virtual ~CustomAppender();
+	CustomAppender(const Properties& properties);
 
-		// Methods
-		virtual void close();
+	virtual ~CustomAppender();
 
-		static void setCustomFunc(pCustomFuncCallBack pCustomFunc);	
+	virtual void close();
 
-	protected:
-		virtual void append(const InternalLoggingEvent& loggingEvent);
+	static void setCustomFunc(pCustomFuncCallBack pCustomFunc);	
 
-	private:
-		// Disallow copying of instances of this class
-		CustomAppender(const CustomAppender&);
-		CustomAppender& operator=(const CustomAppender&);
-		static pCustomFuncCallBack _pCustomFunc;
-	};
+protected:
+	virtual void append(const InternalLoggingEvent& loggingEvent);
 
-} // end namespace log4cplus
+private:
+	CustomAppender(const CustomAppender&);
+
+	CustomAppender& operator=(const CustomAppender&);
+
+	static pCustomFuncCallBack _pCustomFunc;
+};
+
+
+} // namespace log4cplus
 
 #endif // _LOG4CPLUS_OSP_APPENDER_HEADER_
 

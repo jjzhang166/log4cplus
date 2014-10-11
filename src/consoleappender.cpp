@@ -1,14 +1,13 @@
 // Module:  Log4CPLUS
 // File:    consoleappender.cpp
 
-#include "log4cplus/platform.h"
-#include "log4cplus/layout.h"
 #include "log4cplus/consoleappender.h"
-
+#include "log4cplus/layout.h"
 #include "log4cplus/loglog.h"
 #include "log4cplus/stringhelper.h"
 #include "log4cplus/property.h"
 #include "log4cplus/loggingevent.h"
+
 #include <ostream>
 
 using namespace log4cplus;

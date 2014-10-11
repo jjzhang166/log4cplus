@@ -271,7 +271,7 @@ void BasicPatternConverter::convert(string& result,
 	case PROCESS_CONVERTER:
 		{		
 			int pid = 0; 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 			pid = (int)GetCurrentProcessId();
 #else
 			pid = (int)getpid();

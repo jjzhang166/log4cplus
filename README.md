@@ -1,8 +1,8 @@
 #log4cplus
 
-基于log4cplus-1.2.0精简（下载地址：http://sourceforge.net/projects/log4cplus/files/log4cplus-stable/）
+基于log4cplus修改（下载地址：http://sourceforge.net/projects/log4cplus/files/log4cplus-stable/）
 
-精简内容：
+修改内容：
 
 1) 只支持Windows和Linux平台，去掉其他平台的支持（vs2010和gcc4.4测试通过）。
 

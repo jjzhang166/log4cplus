@@ -78,9 +78,6 @@
     <ClInclude Include="..\include\log4cplus\loglog.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\log4cplus\pointer.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\log4cplus\stringhelper.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -97,6 +94,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\log4cplus\platform.h" />
+    <ClInclude Include="..\include\log4cplus\sharedptr.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\appender.cpp">
@@ -157,9 +157,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\patternlayout.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\pointer.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\property.cpp">

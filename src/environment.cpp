@@ -1,4 +1,8 @@
 
+#include "log4cplus/environment.h"
+#include "log4cplus/stringhelper.h"
+#include "log4cplus/loglog.h"
+
 #include <sys/stat.h>
 #include <cassert>
 #include <cerrno>
@@ -11,14 +15,10 @@
 #include <tchar.h>
 #endif
 
-#include "log4cplus/environment.h"
-#include "log4cplus/stringhelper.h"
-#include "log4cplus/loglog.h"
-
 using namespace std;
 using namespace log4cplus;
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 string const dir_sep("\\");
 #else
 string const dir_sep("/");
@@ -87,19 +87,22 @@ bool parse2bool(bool& val, string const& str)
     return result;
 }
 
+
 static bool is_sep(char ch)
 {
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 	return ch == '\\' || ch == '/';
 #else
 	return ch == '/';
 #endif
 }
 
+
 static bool isStringEmpty(string const& str)
 {
 	return str.empty();
 }
+
 
 static void remove_empty(vector<string>& cont, std::size_t special)
 {
@@ -114,7 +117,7 @@ static bool is_drive_letter(char ch)
 }
 
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 
 static string get_drive_cwd(char drive)
 {
@@ -148,7 +151,7 @@ static string get_drive_cwd(char drive)
 
 static string get_current_dir()
 {
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
     string result(0x8000, '\0');
 
     DWORD len = GetCurrentDirectory(static_cast<DWORD>(result.size()), &result[0]);
@@ -184,7 +187,7 @@ static string get_current_dir()
 }
 
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 static char get_current_drive()
 {
     string const cwd = get_current_dir();
@@ -194,6 +197,7 @@ static char get_current_drive()
         return 0;
 }
 #endif
+
 
 static void split_into_components(vector<string>& components, string const& path)
 {
@@ -207,6 +211,7 @@ static void split_into_components(vector<string>& components, string const& path
             ++it;
     }
 }
+
 
 static void expandDriveRelativePath(vector<string>& components, std::size_t rel_path_index)
 {
@@ -273,7 +278,7 @@ retry_recognition:;
     std::size_t const comp_count = components.size();
     std::size_t comp_0_size;
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
     // Special Windows paths recognition:
     // \\?\UNC\hostname\share\ - long UNC path
     // \\?\ - UNC path
@@ -388,7 +393,7 @@ retry_recognition:;
 
 static long makeDirectory(string const& dir)
 {
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
     if(_mkdir(dir.c_str()) == 0)
 
 #else
@@ -413,7 +418,7 @@ static void loglog_makeDirectoryResult(LogLog* loglog, string const& path, long 
 
 int checkFileOK(string const& name)
 {
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 	struct _stat fileStatus;
 	if(_tstat(name.c_str(), &fileStatus) == -1)
 		return -1;

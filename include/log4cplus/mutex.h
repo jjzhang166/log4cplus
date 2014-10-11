@@ -2,35 +2,38 @@
 #ifndef LOG4CPLUS_MUTEX_H_
 #define LOG4CPLUS_MUTEX_H_
 
-#include <cassert>
-
 #include "log4cplus/platform.h"
+
+#include <cassert>
 
 namespace log4cplus
 {
+
+
 #ifdef _MSC_VER
 	typedef CRITICAL_SECTION MutexType;
-
 #else	
 	typedef pthread_mutex_t MutexType;
-
 #endif
-	class Mutex 
-	{
-	public:
-		Mutex();
-		~Mutex();
 
-		void Lock();    
-		void Unlock(); 
 
-	private:
-		MutexType _mutex;
+class Mutex 
+{
+public:
+	Mutex();
+	~Mutex();
 
-		Mutex(Mutex* /*ignored*/) {}
-		Mutex(const Mutex&);
-		void operator=(const Mutex&);
-	};
+	void Lock();    
+	void Unlock(); 
+
+private:
+	MutexType _mutex;
+
+	Mutex(Mutex* /*ignored*/) {}
+	Mutex(const Mutex&);
+	void operator=(const Mutex&);
+
+};	
 
 
 // MutexLock(mu) acquires mu when constructed and releases it when destroyed.
@@ -42,7 +45,9 @@ public:
 		assert(0 != m_pMutex);
 		m_pMutex->Lock(); 
 	}
+
 	~MutexLock() { this->Unlock(); }
+
 	void Unlock() 
 	{
 		if (!_isUnlocked)
@@ -51,6 +56,7 @@ public:
 			_isUnlocked = true;
 		}
 	}
+
 private:		
 	Mutex* const m_pMutex;
 	bool _isUnlocked;
@@ -58,6 +64,7 @@ private:
 	void operator=(const MutexLock&);
 };
 
+
 }  // namespace log4cplus
 
-#endif  /* #define LOG4CPLUS_MUTEX_H_ */
+#endif  // #define LOG4CPLUS_MUTEX_H_ 

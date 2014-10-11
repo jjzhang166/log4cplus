@@ -8,7 +8,7 @@ namespace log4cplusWapper
 
 	void  StopLogSystem();
 
-	void tryInitLoggerInstance(const char* szModuleName);
+	bool tryInitLoggerInstance(const char* szModuleName);
 
 	void PrintDebug(const char* loggerName, const char* pszFormat, ...);
 

@@ -4,7 +4,6 @@
 
 #include "log4cplus/fileappender.h"
 #include "log4cplus/layout.h"
-
 #include "log4cplus/loglog.h"
 #include "log4cplus/stringhelper.h"
 #include "log4cplus/timeHelper.h"
@@ -12,25 +11,22 @@
 #include "log4cplus/loggingevent.h"
 #include "log4cplus/factory.h"
 #include "log4cplus/environment.h"
+
 #include <algorithm>
 #include <sstream>
 #include <cstdio>
 #include <stdexcept>
-
 #include <cerrno>
+
 
 using namespace std;
 using namespace log4cplus;
 
+
 const long DEFAULT_ROLLING_LOG_SIZE = 10 * 1024 * 1024L;
 const long MINIMUM_ROLLING_LOG_SIZE = 200*1024L;
-
-
-///////////////////////////////////////////////////////////////////////////////
-// File LOCAL definitions
-///////////////////////////////////////////////////////////////////////////////
-
 long const LOG4CPLUS_FILE_NOT_FOUND = ENOENT;
+
 
 static long renameFile(string const& src, string const& target)
 {
@@ -40,14 +36,15 @@ static long renameFile(string const& src, string const& target)
 		return errno;
 }
 
+
 static long removeFile(string const& src)
 {
 	if(std::remove(src.c_str()) == 0)
 		return 0;
 	else
 		return errno;
-
 }
+
 
 static void loglog_renamingResult(LogLog* loglog, string const& src, string const& target, long ret)
 {
@@ -59,6 +56,7 @@ static void loglog_renamingResult(LogLog* loglog, string const& src, string cons
 	}
 }
 
+
 static void loglog_openingResult(LogLog* loglog, ostream const& os, string const& filename)
 {
 	if(!os)
@@ -66,6 +64,7 @@ static void loglog_openingResult(LogLog* loglog, ostream const& os, string const
 		loglog->error("Failed to open file " + filename);
 	}
 }
+
 
 static void rolloverFiles(const string& filename, unsigned int maxBackupIndex)
 {
@@ -91,7 +90,7 @@ static void rolloverFiles(const string& filename, unsigned int maxBackupIndex)
 		string const source(source_oss.str());
 		string const target(target_oss.str());
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 		// Try to remove the target first. It seems it is not
 		// possible to rename over existing file.
 		ret = removeFile(target);
@@ -103,21 +102,21 @@ static void rolloverFiles(const string& filename, unsigned int maxBackupIndex)
 } // end rolloverFiles()
 
 
-FileAppender::FileAppender(const string& filename_, std::ios_base::openmode mode_, bool immediateFlush_, bool createDirs_)
-	: _immediateFlush(immediateFlush_), _isCreateDirs(createDirs_)
+FileAppender::FileAppender(const string& filename, std::ios_base::openmode mode, bool immediateFlush, bool createDirs)
+	: _immediateFlush(immediateFlush), _isCreateDirs(createDirs)
 	, _reopenDelay(1), _ofstreamBufferSize(0)
 	, _ofstreamBuffer(0)
 {
-	init(filename_, mode_);
+	init(filename, mode);
 }
 
 
-FileAppender::FileAppender(const Properties& props, std::ios_base::openmode mode_)
+FileAppender::FileAppender(const Properties& props, std::ios_base::openmode mode)
 	: Appender(props), _immediateFlush(true)
 	, _isCreateDirs(false), _reopenDelay(1)
 	, _ofstreamBufferSize(0), _ofstreamBuffer(0)
 {
-	bool app =(mode_ &(std::ios_base::app | std::ios_base::ate)) != 0;
+	bool app =(mode &(std::ios_base::app | std::ios_base::ate)) != 0;
 	string const& fn = props.getProperty("File");
 	if(fn.empty())
 	{
@@ -163,7 +162,7 @@ FileAppender::~FileAppender()
 
 void FileAppender::close()
 {
-	MutexLock lock(&_access_mutex);
+	MutexLock lock(&_mutex);
 
 	_out.close();
 	delete[] _ofstreamBuffer;
@@ -240,11 +239,11 @@ bool FileAppender::reopen()
 }
 
 
-RollingFileAppender::RollingFileAppender(const string& filename_,
-	long maxFileSize_, int maxBackupIndex_, bool immediateFlush_, bool createDirs_)
-	: FileAppender(filename_, std::ios_base::app, immediateFlush_, createDirs_)
+RollingFileAppender::RollingFileAppender(const string& filename,
+	long maxFileSize, int maxBackupIndex, bool immediateFlush, bool createDirs)
+	: FileAppender(filename, std::ios_base::app, immediateFlush, createDirs)
 {
-	init(maxFileSize_, maxBackupIndex_);
+	init(maxFileSize, maxBackupIndex);
 }
 
 
@@ -254,6 +253,7 @@ RollingFileAppender::RollingFileAppender(const Properties& properties)
 	long tmpMaxFileSize = DEFAULT_ROLLING_LOG_SIZE;
 	int tmpMaxBackupIndex = 1;
 	string tmp(toUpper(properties.getProperty("MaxFileSize")));
+
 	if(!tmp.empty())
 	{
 		tmpMaxFileSize = std::atoi(tmp.c_str());
@@ -273,19 +273,19 @@ RollingFileAppender::RollingFileAppender(const Properties& properties)
 }
 
 
-void RollingFileAppender::init(long maxFileSize_, int maxBackupIndex_)
+void RollingFileAppender::init(long maxFileSize, int maxBackupIndex)
 {
-	if(maxFileSize_ < MINIMUM_ROLLING_LOG_SIZE)
+	if(maxFileSize < MINIMUM_ROLLING_LOG_SIZE)
 	{
 		ostringstream oss;
 		oss << "RollingFileAppender: MaxFileSize property value is too small. Resetting to"
 			<< MINIMUM_ROLLING_LOG_SIZE << ".";
 		LogLog::getLogLog()->error(oss.str());
-		maxFileSize_ = MINIMUM_ROLLING_LOG_SIZE;
+		maxFileSize = MINIMUM_ROLLING_LOG_SIZE;
 	}
 
-	_maxFileSize = maxFileSize_;
-	_maxBackupIndex =(std::max)(maxBackupIndex_, 1);
+	_maxFileSize = maxFileSize;
+	_maxBackupIndex =(std::max)(maxBackupIndex, 1);
 }
 
 
@@ -331,7 +331,7 @@ void RollingFileAppender::rollover()
 
 		long ret;
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 		// Try to remove the target first. It seems it is not
 		// possible to rename over existing file.
 		ret = removeFile(target);
@@ -495,7 +495,7 @@ void DailyRollingFileAppender::rollover()
 	LogLog* loglog = LogLog::getLogLog();
 	long ret;
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 	// Try to remove the target first. It seems it is not
 	// possible to rename over existing file, e.g. "log.2009-11-07.1".
 	ret = removeFile(backupTarget);
@@ -505,7 +505,7 @@ void DailyRollingFileAppender::rollover()
 	ret = renameFile(_scheduledFilename, backupTarget);
 	loglog_renamingResult(loglog, _scheduledFilename, backupTarget, ret);
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER 
 	// Try to remove the target first. It seems it is not
 	// possible to rename over existing file, e.g. "log.2009-11-07".
 	ret = removeFile(_scheduledFilename);
