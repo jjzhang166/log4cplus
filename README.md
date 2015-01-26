@@ -1,6 +1,6 @@
 #log4cplus
 
-基于log4cplus修改（下载地址：http://sourceforge.net/projects/log4cplus/files/log4cplus-stable/）
+基于[log4cplus](http://sourceforge.net/projects/log4cplus/files/log4cplus-stable/)修改
 
 修改内容：
 
